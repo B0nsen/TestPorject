@@ -12,7 +12,7 @@ import CatalogSlider from "@/components/CatalogSlider";
 async function getHomepageData() {
    const url = process.env.NEXT_PUBLIC_API_URL;
   const API_URL = `${url}/api/homepage`;
-
+    console.log(API_URL);
   try {
     const res = await fetch(API_URL, { cache: "no-store" });
     if (res.ok) {
