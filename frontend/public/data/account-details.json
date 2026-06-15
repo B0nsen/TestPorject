@@ -1,0 +1,17 @@
+{
+  "firstName": "Sasha",
+  "lastName": "Hordiiuk",
+  "avatar": "/images/avatar.jpg",
+  "email": "spinjitsumaster@gmail.com",
+  "password": "randompassword",
+  "phone": "123456789",
+  "dob": "02/03/2005",
+  "country": "Romania",
+  "address": {
+    "street": "",
+    "houseNumber": "",
+    "city": "",
+    "state": "",
+    "postalCode": ""
+  }
+}

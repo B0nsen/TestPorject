@@ -1,0 +1,17 @@
+{
+  "id": "1",
+  "orderNumber": "ORD-000001",
+  "date": "March 2, 2025",
+  "total": 12.99,
+  "deliveryEstimate": "Thursday, March 4, 2025 by 5pm",
+  "item": {
+    "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "price": 12.99,
+    "image": "/images/img-cart.jpg"
+  },
+  "payment": {
+    "name": "Alina Florentina",
+    "method": "Credit card Visa - 5449",
+    "expiry": "10/31"
+  }
+}

@@ -1,0 +1,41 @@
+{
+    "productId": "1",
+    "reviews": [
+        {
+            "id": 1,
+            "userName": "User Name",
+            "title": "Great watch for even a greater price.",
+            "date": "2025-12-28",
+            "country": "United States",
+            "fullText": "This watch is just as good as the higher named brand priced ones...",
+            "helpfulCount": 27,
+            "images": [
+                "/placeholder-image.jpg",
+                "/placeholder-image.jpg"
+            ]
+        },
+        {
+            "id": 2,
+            "userName": "Another User",
+            "title": "Very reliable smartwatch",
+            "date": "2026-01-10",
+            "country": "United States",
+            "fullText": "Battery lasts long, GPS is accurate, and it tracks all workouts correctly.",
+            "helpfulCount": 14,
+            "images": []
+        }
+    ],
+    "reviewStats": {
+        "averageRating": 4.4,
+        "ratingCount": 4382,
+        "verifiedCount": 3120,
+        "clientsRecommend": 89,
+        "ratingCounts": [
+            200,
+            50,
+            20,
+            20,
+            10
+        ]
+    }
+}

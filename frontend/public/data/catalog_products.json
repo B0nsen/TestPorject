@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "title": "Wireless Gaming Headset Pro X",
+      "price": 99.99,
+      "rating": 4.5,
+      "imageUrl": "/images/catalog-img.png"
+    },
+    {
+      "id": "2",
+      "title": "RGB Mechanical Gaming K87",
+      "price": 59.99,
+      "rating": 2.7,
+      "imageUrl": "/images/catalog-img.png"
+    },
+    {
+      "id": "3",
+      "title": "Precision Gaming Mouse X5 ...",
+      "price": 39.99,
+      "rating": 4.6,
+      "imageUrl": "/images/catalog-img.png"
+    },
+       {
+      "id": "4",
+      "title": "Precision Gaming Mouse X5 ...",
+      "price": 39.99,
+      "rating": 4.6,
+      "imageUrl": "/images/catalog-img.png"
+    },
+       {
+      "id": "5",
+      "title": "Precision Gaming Mouse X5 ...",
+      "price": 39.99,
+      "rating": 4.6,
+      "imageUrl": "/images/catalog-img.png"
+    },
+    {
+      "id": "6",
+      "title": "Precision Gaming Mouse X5 ...",
+      "price": 39.99,
+      "rating": 4.6,
+      "imageUrl": "/images/catalog-img.png"
+    }
+  ]
+}

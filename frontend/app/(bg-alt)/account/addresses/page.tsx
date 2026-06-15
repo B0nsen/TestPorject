@@ -1,0 +1,31 @@
+"use client";
+
+import useSWR from "swr";
+import { USER_KEY, fetcher } from "@/lib/api/user";
+import AddressForm from "@/components/AddressForm";
+
+export default function AccountAddresses() {
+  const { data: userData } = useSWR(USER_KEY, fetcher);
+
+  if (!userData) return <div>Loading...</div>;
+
+  const handleSubmit = async (data: any) => {
+    await fetch(`http://localhost:5012/api/address/info`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log("Saved data:", data);
+  };
+
+  return (
+    <AddressForm
+      defaultValues={userData}
+      onSubmit={handleSubmit}
+    />
+  );
+}

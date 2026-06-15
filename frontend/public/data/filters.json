@@ -1,0 +1,46 @@
+[
+  {
+    "key": "department",
+    "title": "Department",
+    "type": "single_select",
+    "options": [
+      "Mobile Phones",
+      "Laptops & Notebooks",
+      "Tablets & eReaders",
+      "Smart Watches & Wearables",
+      "Headphones & Earbuds",
+      "Speakers & Audio Systems",
+      "Gaming Consoles",
+      "PC Components",
+      "Computer Accessories",
+      "Cameras & Photography",
+      "Smart Home Devices",
+      "Storage Devices",
+      "Networking Equipment"
+    ]
+  },
+  {
+    "key": "rating",
+    "title": "Customer Reviews",
+    "type": "rating"
+  },
+  {
+    "key": "brand",
+    "title": "Featured Brands",
+    "type": "multiselect",
+    "options": ["Razer", "ASUS", "Logitech", "Lenovo", "MSI", "SteelSeries", "HP"]
+  },
+  {
+    "key": "price",
+    "title": "Price",
+    "type": "range",
+    "min": 50,
+    "max": 2000
+  },
+  {
+    "key": "condition",
+    "title": "Condition",
+    "type": "multiselect",
+    "options": ["New", "Renewed", "Used"]
+  }
+]

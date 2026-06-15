@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "SmartFit Pro X AMOLED Smartwatch with GPS & Health Tracking",
+      "listPrice": 30,
+      "price": 25.25,
+      "discount": 16,
+      "quantity": 1,
+      "inStock": true,
+      "image": "/images/img-cart.jpg"
+    },
+    {
+      "id": 2,
+      "title": "SmartFit Pro X AMOLED Smartwatch with GPS & Health Tracking",
+      "price": 50,
+      "quantity": 1,
+      "inStock": true,
+      "image": "/images/img-cart.jpg"
+    },
+    {
+      "id": 3,
+      "title": "SmartFit Pro X AMOLED Smartwatch with GPS & Health Tracking",
+      "listPrice": 60,
+      "price": 50,
+      "discount": 17,
+      "quantity": 1,
+      "inStock": false,
+      "image": "/images/img-cart.jpg"
+    }
+  ],
+  "shipping": 10
+}

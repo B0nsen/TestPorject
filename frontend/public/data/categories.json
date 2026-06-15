@@ -1,0 +1,453 @@
+{
+    "categories": [
+        {
+            "title": "Electronics",
+            "icon": "/icons/electronics.svg",
+            "subsections": [
+                {
+                    "title": "Computers & Accessories",
+                    "items": [
+                        {
+                            "label": "Laptops",
+                            "key": "laptops"
+                        },
+                        {
+                            "label": "Desktop PCs",
+                            "key": "desktop_pcs"
+                        },
+                        {
+                            "label": "Monitors",
+                            "key": "monitors"
+                        },
+                        {
+                            "label": "Keyboards & Mice",
+                            "key": "keyboards_mice"
+                        },
+                        {
+                            "label": "Webcams",
+                            "key": "webcams"
+                        },
+                        {
+                            "label": "External Storage (SSD, HDD)",
+                            "key": "external_storage"
+                        }
+                    ]
+                },
+                {
+                    "title": "Audio",
+                    "items": [
+                        {
+                            "label": "Headphones",
+                            "key": "headphones"
+                        },
+                        {
+                            "label": "Wireless Earbuds",
+                            "key": "wireless_earbuds"
+                        },
+                        {
+                            "label": "Speakers",
+                            "key": "speakers"
+                        },
+                        {
+                            "label": "Soundbars",
+                            "key": "soundbars"
+                        },
+                        {
+                            "label": "Microphones",
+                            "key": "microphones"
+                        }
+                    ]
+                },
+                {
+                    "title": "Gaming",
+                    "items": [
+                        {
+                            "label": "Gaming Consoles",
+                            "key": "gaming_consoles"
+                        },
+                        {
+                            "label": "Controllers",
+                            "key": "controllers"
+                        },
+                        {
+                            "label": "Gaming Headsets",
+                            "key": "gaming_headsets"
+                        },
+                        {
+                            "label": "Gaming Keyboards",
+                            "key": "gaming_keyboards"
+                        },
+                        {
+                            "label": "VR Headsets",
+                            "key": "vr_headsets"
+                        },
+                        {
+                            "label": "Accessories",
+                            "key": "gaming_accessories"
+                        }
+                    ]
+                },
+                {
+                    "title": "Smart Home",
+                    "items": [
+                        {
+                            "label": "Smart Lights",
+                            "key": "smart_lights"
+                        },
+                        {
+                            "label": "Smart Plugs",
+                            "key": "smart_plugs"
+                        },
+                        {
+                            "label": "Security Cameras",
+                            "key": "security_cameras"
+                        },
+                        {
+                            "label": "Smart Locks",
+                            "key": "smart_locks"
+                        },
+                        {
+                            "label": "Voice Assistants",
+                            "key": "voice_assistants"
+                        },
+                        {
+                            "label": "Thermostats",
+                            "key": "thermostats"
+                        }
+                    ]
+                },
+                {
+                    "title": "Mobile Devices",
+                    "items": [
+                        {
+                            "label": "Smartphones",
+                            "key": "smartphones"
+                        },
+                        {
+                            "label": "Tablets",
+                            "key": "tablets"
+                        },
+                        {
+                            "label": "Smartwatches",
+                            "key": "smartwatches"
+                        },
+                        {
+                            "label": "Phone Cases",
+                            "key": "phone_cases"
+                        },
+                        {
+                            "label": "Screen Protectors",
+                            "key": "screen_protectors"
+                        },
+                        {
+                            "label": "Chargers & Cables",
+                            "key": "chargers_cables"
+                        },
+                        {
+                            "label": "Power Banks",
+                            "key": "power_banks"
+                        }
+                    ]
+                },
+                {
+                    "title": "Cameras & Photo",
+                    "items": [
+                        {
+                            "label": "Digital Cameras",
+                            "key": "digital_cameras"
+                        },
+                        {
+                            "label": "Action Cameras",
+                            "key": "action_cameras"
+                        },
+                        {
+                            "label": "Camera Lenses",
+                            "key": "camera_lenses"
+                        },
+                        {
+                            "label": "Tripods",
+                            "key": "tripods"
+                        },
+                        {
+                            "label": "Lighting Equipment",
+                            "key": "lighting_equipment"
+                        },
+                        {
+                            "label": "Memory Cards",
+                            "key": "memory_cards"
+                        }
+                    ]
+                },
+                {
+                    "title": "TV & Home Entertainment",
+                    "items": [
+                        {
+                            "label": "Smart TVs",
+                            "key": "smart_tvs"
+                        },
+                        {
+                            "label": "Streaming Devices",
+                            "key": "streaming_devices"
+                        },
+                        {
+                            "label": "Sound Systems",
+                            "key": "sound_systems"
+                        },
+                        {
+                            "label": "Projectors",
+                            "key": "projectors"
+                        },
+                        {
+                            "label": "TV Mounts",
+                            "key": "tv_mounts"
+                        }
+                    ]
+                },
+                {
+                    "title": "Wearable Tech",
+                    "items": [
+                        {
+                            "label": "Fitness Trackers",
+                            "key": "fitness_trackers"
+                        },
+                        {
+                            "label": "Smart Glasses",
+                            "key": "smart_glasses"
+                        },
+                        {
+                            "label": "Health Devices",
+                            "key": "health_devices"
+                        },
+                        {
+                            "label": "Wearable Accessories",
+                            "key": "wearable_accessories"
+                        }
+                    ]
+                },
+                {
+                    "title": "Networking",
+                    "items": [
+                        {
+                            "label": "Routers",
+                            "key": "routers"
+                        },
+                        {
+                            "label": "Modems",
+                            "key": "modems"
+                        },
+                        {
+                            "label": "Wi-Fi Extenders",
+                            "key": "wifi_extenders"
+                        },
+                        {
+                            "label": "Network Switches",
+                            "key": "network_switches"
+                        },
+                        {
+                            "label": "Ethernet Cables",
+                            "key": "ethernet_cables"
+                        },
+                        {
+                            "label": "Access Points",
+                            "key": "access_points"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Accessories",
+            "icon": "/icons/aod_watch.svg",
+            "subsections": [
+                {
+                    "title": "Everyday Accessories",
+                    "items": [
+                        {
+                            "label": "Wallets",
+                            "key": "wallets"
+                        },
+                        {
+                            "label": "Belts",
+                            "key": "belts"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Home & Lighting",
+            "icon": "/icons/home.svg",
+            "subsections": [
+                {
+                    "title": "Lighting",
+                    "items": [
+                        {
+                            "label": "LED Bulbs",
+                            "key": "led_bulbs"
+                        },
+                        {
+                            "label": "Table Lamps",
+                            "key": "table_lamps"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Arts & Crafts",
+            "icon": "/icons/theater_comedy.svg",
+            "subsections": [
+                {
+                    "title": "Craft Supplies",
+                    "items": [
+                        {
+                            "label": "Paints",
+                            "key": "paints"
+                        },
+                        {
+                            "label": "Sketchbooks",
+                            "key": "sketchbooks"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Beauty and Personal Care",
+            "icon": "/icons/spa.svg",
+            "subsections": [
+                {
+                    "title": "Skincare",
+                    "items": [
+                        {
+                            "label": "Face Creams",
+                            "key": "face_creams"
+                        },
+                        {
+                            "label": "Cleansers",
+                            "key": "cleansers"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Women’s Fashion",
+            "icon": "/icons/fertile.svg",
+            "subsections": [
+                {
+                    "title": "Clothing",
+                    "items": [
+                        {
+                            "label": "Dresses",
+                            "key": "dresses"
+                        },
+                        {
+                            "label": "Tops",
+                            "key": "womens_tops"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Men’s Fashion",
+            "icon": "/icons/apparel.svg",
+            "subsections": [
+                {
+                    "title": "Clothing",
+                    "items": [
+                        {
+                            "label": "Shirts",
+                            "key": "mens_shirts"
+                        },
+                        {
+                            "label": "Jeans",
+                            "key": "mens_jeans"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Kitchen",
+            "icon": "/icons/chef_hat.svg",
+            "subsections": [
+                {
+                    "title": "Cookware",
+                    "items": [
+                        {
+                            "label": "Pots & Pans",
+                            "key": "pots_pans"
+                        },
+                        {
+                            "label": "Utensils",
+                            "key": "utensils"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Sports and Outdoors",
+            "icon": "/icons/directions_run.svg",
+            "subsections": [
+                {
+                    "title": "Fitness",
+                    "items": [
+                        {
+                            "label": "Dumbbells",
+                            "key": "dumbbells"
+                        },
+                        {
+                            "label": "Yoga Mats",
+                            "key": "yoga_mats"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "recommended": [
+        {
+            "key": "laptops",
+            "title": "Laptops",
+            "image": "/images/catalog_recommended/laptops.jpg"
+        },
+        {
+            "key": "wireless_earbuds",
+            "title": "Wireless Earbuds",
+            "image": "/images/catalog_recommended/wireless_earbuds.jpg"
+        },
+        {
+            "key": "gaming_consoles",
+            "title": "Gaming Consoles",
+            "image": "/images/catalog_recommended/gaming_consoles.jpg"
+        },
+        {
+            "key": "smart_watches",
+            "title": "Smart Watches",
+            "image": "/images/catalog_recommended/smart_watches.jpg"
+        },
+        {
+            "key": "pc_gaming_gear",
+            "title": "PC Gaming Gear",
+            "image": "/images/catalog_recommended/pc_gaming_gear.jpg"
+        },
+        {
+            "key": "vr_headsets",
+            "title": "VR Headsets",
+            "image": "/images/catalog_recommended/vr_headsets.jpg"
+        },
+        {
+            "key": "vacuum_cleaners",
+            "title": "Vacuum Cleaners",
+            "image": "/images/catalog_recommended/vacuum_cleaners.jpg"
+        },
+        {
+            "key": "streaming_devices",
+            "title": "Streaming Devices",
+            "image": "/images/catalog_recommended/streaming_devices.jpg"
+        }
+    ]
+}

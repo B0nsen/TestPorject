@@ -1,0 +1,380 @@
+@import "tailwindcss";
+
+:root {
+  --background: #090d1b;
+  --foreground: #e6eaf2;
+
+  --surface-0: #ffffff;
+  --surface-1: #e0e0e0;
+  --surface-2: #d3d3d3;
+  --surface-3: #666666;
+  --surface-4: #565959;
+  --surface-10: #000000;
+
+  --text-1: #666666;
+  --text-2: #e6ecf5;
+  --text-3: #c5cee3;
+  --text-4: #090d1b;
+  --text-5: #434a5a;
+
+  --interactive-1: #666666;
+
+  --color-1: #d4d8c2;
+  --color-2: #202328;
+  --color-3: #10141c;
+  --color-4: #485b62;
+  --color-5: #81a9ab;
+  --color-6: #304149;
+  --color-7: #000000;
+  --color-8: #666666;
+  --color-9: #d9d9d9;
+  --color-10: #d5d9d9;
+  --color-11: #888c8c;
+  --color-12: #4c7dff;
+  --color-13: #afcbff;
+  --color-14: #1f2636;
+  --color-15: #e6ecf5;
+  --color-16: #ffc94a;
+  --color-17: #0f1111;
+  --color-18: #ff9b98;
+  --color-19: #304149;
+  --color-20: #2f3a52;
+
+  --border-1: #2f3a52;
+  --border-2: #d5d9d9;
+
+  --color-page-default: #090d1b;
+}
+
+@theme inline {
+  --color-page-default: var(--color-page-default);
+
+  --color-border-default: var(--color-10);
+  --color-border-muted: var(--color-11);
+
+  --color-default: var(--color-7);
+  --color-main: var(--color-15);
+  --color-light: var(--color-15);
+  --color-dark: var(--color-17);
+  --color-muted: var(--color-8);
+  --color-accent: var(--color-12);
+  --color-accent-muted: var(--color-13);
+  --color-non-active: var(--text-5);
+  --color-error: var(--color-18);
+  --color-input: var(--color-19);
+
+  --color-button-hover: var(--color-20);
+  
+  /* bg */
+  --color-surface-default: var(--color-1);
+  --color-surface-light: var(--color-1);
+  --color-surface-dark: var(--color-3);
+  --color-surface-muted: var(--color-2);
+
+  --color-surface-card: var(--surface-0);
+
+  --color-surface-accent: var(--color-12);
+  --color-surface-accent-muted: var(--color-13);
+
+  --color-card-dark: var(--color-14);
+
+  /* icon */
+  --color-icon-surface-light: var(--color-1);
+
+  /* all inputs */
+  --color-input-surface-default: var(--color-15);
+  --color-input-placeholder-default: var(--color-1);
+
+  /* header */
+  --color-input-header-surface: var(--color-6);
+  --color-button-header-dark: var(--color-4);
+  --color-button-header-light: var(--color-5);
+
+  /* button */
+  --color-button-default: var(--color-1);
+  --color-button-muted: var(--color-9);
+ 
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --breakpoint-xs: 480px;
+
+  --breakpoint-layout-mobile: 640px;
+
+  --breakpoint-layout-category-sm: 680px;
+
+  --breakpoint-layout-xs: 480px;
+  --breakpoint-layout-sm: 992px;
+
+  --breakpoint-layout-product-xs: 620px;
+  --breakpoint-layout-product-sm: 720px;
+  --breakpoint-layout-product-md: 830px;
+  --breakpoint-layout-product-lg: 1330px;
+
+  --breakpoint-layout-account-xs: 480px;
+  --breakpoint-layout-account-sm: 950px;
+
+  --breakpoint-layout-catalog-xs: 456px;
+  --breakpoint-layout-catalog-md: 800px;
+  --breakpoint-layout-catalog-lg: 1100px;
+ 
+  --breakpoint-layout-filters-xs: 320px;
+  --breakpoint-layout-filters-sm: 456px;
+  --breakpoint-layout-filters-md: 700px;
+  --breakpoint-layout-filters-lg: 880px;
+
+  --breakpoint-layout-wishlist-xs: 350px;
+  --breakpoint-layout-wishlist-sm: 520px;
+
+  --breakpoint-layout-checkout-md: 880px;
+
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface-4: var(--surface-4);
+  --color-surface-10: var(--surface-10);
+
+  --color-card-default: var(--color-14);
+  --color-card-light: var(--color-15);
+
+  --color-star: var(--color-16);
+
+  --color-card-border: var(--border-1);
+  --color-card-border-light: var(--border-2);
+
+  --color-text-main: var(--text-2);
+  --color-text-main-muted: var(--text-3);
+  --color-text-dark: var(--color-17);
+  --color-text-accent-muted: var(--color-13);
+  
+  /* banner */
+  --font-anta: var(--font-anta);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  margin: 0;
+}
+
+@layer components {
+  .header-padding {
+    @apply px-[23px] layout-sm:px-[42px];
+  }
+  .header-gap {
+    @apply layout-sm:gap-[45px];
+  }
+
+  .layout-px {
+    @apply px-[23px] layout-sm:px-[42px];
+  }
+  .layout-mx {
+    @apply mx-[23px] layout-sm:mx-[42px];
+  }
+  .layout-pl {
+    @apply px-[23px] layout-sm:px-[42px];
+  }
+
+  .btn-pill {
+    @apply w-[87px] h-[29px] rounded-[25px] text-black text-[13px] leading-[20px] flex items-center justify-center;
+  }
+  .text-title-md {
+    @apply text-[24px] leading-[32px] font-bold;
+  }
+  .text-title-sm {
+    @apply text-[19px] leading-[27px] font-bold;
+  }
+  .text-section-title {
+    @apply font-normal text-[20px] leading-[100%] align-middle text-text-main;
+  }
+  .text-body {
+    @apply text-[13px] leading-[20px] align-middle;
+  }
+  .text-title {
+    @apply font-bold text-[13px] leading-[20px] align-middle;
+  }
+  .text-meta {
+    @apply text-[12px] leading-[19px] align-middle;
+  }
+  .card-default {
+    @apply bg-card-default rounded-[15px] border border-card-border;
+  }
+  .card-checkout {
+    @apply bg-card-light flex px-[22px] py-[14px] rounded-[10px] border border-card-border-light;
+  }
+
+  .checkout-text-lg {
+    @apply font-semibold text-[20px] leading-[24px];
+  }
+  .checkout-text-md {
+    @apply font-semibold text-[16px] leading-[24px];
+  }
+  .checkout-text-sm {
+    @apply font-semibold text-[14px] leading-[24px];
+  }
+  .cart-price-text {
+    @apply text-[clamp(16px,2.5vw,24px)] leading-[100%] font-normal align-middle;
+  }
+  .input-default {
+    @apply bg-input-surface-default rounded-[10px] text-black focus:outline-none text-[16px] leading-[100%];
+  }
+  .error-text {
+    @apply mt-[10px] text-error text-[13px] leading-[13px];
+  }
+
+  /* category */
+  .category-px {
+    @apply sm:px-[30px] px-[12px];
+  }
+
+  .category-pt {
+    @apply sm:px-[30px] px-[12px];
+  }
+
+  .text-category-md {
+    @apply sm:font-[700] font-[600] text-[clamp(14px,2.5vw,20px)] leading-[clamp(20px,3vw,27px)];
+  }
+  .text-category-sm {
+    @apply text-[clamp(12px,2.5vw,14px)] leading-[clamp(14px,2.5vw,16px)];
+  }
+  .text-category-card {
+    @apply text-[clamp(12px,1.4vw,16px)] leading-[clamp(18px,1.4vw,14px)] text-center;
+  }
+  .text-category-lg {
+    @apply sm:font-[700] font-[600] text-[clamp(16px,2.5vw,24px)] leading-[clamp(28px,3vw,32px)];
+  }
+
+  .text-checkout-item {
+     @apply font-[Inter] font-[400] text-[16px] leading-[20px] tracking-normal align-middle;
+  }
+  .title-checkout-item {
+     @apply font-[Inter] font-[600]  text-[20px] leading-[32px] tracking-normal align-middle text-accent-muted;
+  }
+  .category-rounded {
+    @apply sm:rounded-[24px] rounded-[12px];
+  }
+
+  /* СТИЛИ КОМПОНЕНТОВ БАННЕРА */
+  .banner-title {
+    @apply font-anta text-[clamp(28px,5vw,96px)] leading-[100%] text-white tracking-normal font-normal;
+  }
+
+  /* ИСПРАВЛЕНО ТУТ: Абсолютно прозрачный фон без багов. Рамка создается скругленной двойной тенью */
+  .banner-badge {
+    @apply flex items-center justify-center bg-transparent
+      rounded-[12px] sm:rounded-[20px] 
+      py-[6px] sm:py-[10px] px-[16px] sm:px-[24px] 
+      backdrop-blur-md
+      font-sans italic font-semibold text-[clamp(12px,2.5vw,48px)] leading-[100%] text-white;
+    
+    /* Тень изнутри и снаружи создает идеальный контур толщиной 1.5px, плавно переходящий из синего в нежно-голубой */
+    box-shadow: 
+      0 0 0 1.5px var(--color-12), 
+      inset 0 0 0 1.5px var(--color-13);
+  }
+
+  .banner-btn {
+    @apply bg-accent hover:bg-button-hover text-white rounded-[100px] 
+      w-[130px] sm:w-[180px] md:w-[263px] 
+      h-[34px] sm:h-[48px] md:h-[68px]
+      font-sans font-semibold 
+      text-[clamp(12px,2vw,36px)] leading-[100%] 
+      flex items-center justify-center text-center
+      cursor-pointer transition-colors shadow-lg whitespace-nowrap
+      no-underline;
+  }
+
+  /* scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    margin-top: var(--scrollbar-track-margin, 0px);
+    background: var(--color-13);
+    border-radius: 10px;
+    border-left: 2.5px solid transparent;
+    border-right: 2.5px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-12);
+    border-radius: 10px;
+  }
+}
+
+@layer utilities {
+  .border-card {
+    @apply border border-border-default;
+  }
+  .border-interactive {
+    @apply border border-border-muted;
+  }
+  .text-small-default {
+    @apply text-[11.5px];
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .layout-product-px {
+    @apply px-[23px] layout-sm:px-[42px];
+  }
+  .layout-product-mx {
+    @apply mx-[23px] layout-sm:mx-[42px];
+  }
+  .layout-product-pl {
+    @apply px-[23px] layout-sm:px-[42px];
+  }
+  .layout-product-product-hidden {
+    @apply block layout-product-xs:hidden layout-product-lg:block;
+  }
+}
+
+.global-page-bg {
+  background-size: contain;
+  background-image: linear-gradient(to bottom, transparent 40%, var(--background) 95%), url('/images/homepage/bg.jpg');
+}
+
+.home-responsive-bg {
+  background-size: contain;
+  background-image: linear-gradient(to bottom, transparent 40%, var(--background) 95%), url('/images/homepage/bg.jpg');
+}
+
+@media (min-width: 992px) {
+  .home-responsive-bg {
+    background-size: cover;
+    background-image: linear-gradient(to bottom, transparent 10%, var(--background) 75%), url('/images/homepage/bg-home.jpg');
+  }
+
+  body:has(.is-homepage_desktop_bg_active) .global-page-bg {
+    background-image: none !important;
+  }
+}
+
+@layer base {
+  next-route-announcer,
+  nextjs-portal,
+  [data-nextjs-toast],
+  [data-nextjs-dialog],
+  #nextjs__container_build_error_label,
+  [id^="nextjs"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  
+  html, body {
+    overflow: auto !important;
+    padding-right: 0 !important;
+  }
+}

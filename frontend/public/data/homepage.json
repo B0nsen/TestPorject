@@ -1,0 +1,211 @@
+{
+  "recommendedRow1": [
+    {
+      "title": "Electronics & Gadgets",
+      "items": [
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        }
+      ]
+    },
+    {
+      "title": "Home & Kitchen",
+      "items": [
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        }
+      ]
+    },
+    {
+      "title": "Gaming & Entertainment",
+      "items": [
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        }
+      ]
+    },
+    {
+      "title": "Fashion & Accessories",
+      "items": [
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        },
+        {
+          "id": 19,
+          "name": "Headphones",
+          "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+        }
+      ]
+    }
+  ],
+  "recommendedRow2": [
+    {
+      "id": 19,
+      "name": "Headphones",
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+    },
+    {
+      "id": 19,
+      "name": "Headphones",
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+    },
+    {
+      "id": 19,
+      "name": "Headphones",
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+    },
+    {
+      "id": 19,
+      "name": "Headphones",
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/be517248-97fe-4176-a9be-e1fd1f335d5e.png"
+    }
+  ],
+  "catalogSlider": [
+    {
+      "id": 3,
+      "title": "Logitech G Pro X 2 Lightspeed Wireless Headphones Black",
+      "price": 263,
+      "rating": 5,
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/a0482c9b-8021-468a-a1ad-74ef5790b28d.png"
+    },
+    {
+      "id": 4,
+      "title": "Logitech G Pro X 2 Lightspeed Wireless Headphones Black",
+      "price": 600,
+      "rating": 0,
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/e5158e28-4959-4f36-9079-f645b668953e.png"
+    },
+    {
+      "id": 5,
+      "title": "Logitech G Pro X 2 Lightspeed Wireless Headphones Black",
+      "price": 350,
+      "rating": 0,
+      "imageUrl": "https://amazon-clone-image-bucket.s3.amazonaws.com/a126dfa3-9832-4b55-b217-5418c45d0b74.png"
+    }
+  ],
+  "recommendedRow3": [
+    {
+      "id": 3,
+      "type": "product",
+      "title": "Featured Product",
+      "name": "Logitech G Pro X 2 Lightspeed Wireless Headphones Black",
+      "price": 263,
+      "images": [
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/a0482c9b-8021-468a-a1ad-74ef5790b28d.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/01cba280-c9d7-42ef-8fce-92b70ea9676f.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/69e6b531-453e-41c7-a650-91e057cdce25.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/77a3b63f-f6b1-4491-bf84-c5e13c4155ce.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/fe1382ac-8175-4f17-9e26-1d8ea8f82ab7.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/eb6d32dd-d652-4b56-9a0b-b62147e5876f.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/c9427661-92e6-42c6-b412-328f5b95e935.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/bfe754ff-128c-4910-bff1-0151c0d1818f.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/3f295182-931c-4ec5-ba95-21460a8f57fd.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/d0ccdfb8-45ee-403b-82b1-22cf82d745d7.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/da4d16ce-e8f7-4f7c-9b3e-3b5e2c181964.png"
+      ],
+      "imageSrc": null
+    },
+    {
+      "id": 1,
+      "type": "category",
+      "title": "TestCategory",
+      "name": null,
+      "price": null,
+      "images": null,
+      "imageSrc": null
+    },
+    {
+      "id": 3,
+      "type": "product",
+      "title": "Top Deal",
+      "name": "Logitech G Pro X 2 Lightspeed Wireless Headphones Black",
+      "price": 263,
+      "images": [
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/a0482c9b-8021-468a-a1ad-74ef5790b28d.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/01cba280-c9d7-42ef-8fce-92b70ea9676f.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/69e6b531-453e-41c7-a650-91e057cdce25.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/77a3b63f-f6b1-4491-bf84-c5e13c4155ce.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/fe1382ac-8175-4f17-9e26-1d8ea8f82ab7.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/eb6d32dd-d652-4b56-9a0b-b62147e5876f.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/c9427661-92e6-42c6-b412-328f5b95e935.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/bfe754ff-128c-4910-bff1-0151c0d1818f.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/3f295182-931c-4ec5-ba95-21460a8f57fd.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/d0ccdfb8-45ee-403b-82b1-22cf82d745d7.png",
+        "https://amazon-clone-image-bucket.s3.amazonaws.com/da4d16ce-e8f7-4f7c-9b3e-3b5e2c181964.png"
+      ],
+      "imageSrc": null
+    },
+    {
+      "id": 1,
+      "type": "category",
+      "title": "TestCategory",
+      "name": null,
+      "price": null,
+      "images": null,
+      "imageSrc": null
+    }
+  ]
+}
