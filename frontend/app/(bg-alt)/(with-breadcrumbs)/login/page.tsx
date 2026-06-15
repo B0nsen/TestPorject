@@ -14,8 +14,6 @@ import { useCart } from "@/lib/hooks/useCart";
 import { mutate } from "swr";
 import { USER_KEY } from "@/lib/api/user";
 
-import { API_URL } from "@/lib/api/api";
-
 export default function LogInPage() {
   const router = useRouter();
   const setEmail = useAuthStore((s) => s.setEmail);
@@ -42,7 +40,7 @@ export default function LogInPage() {
     try {
       setIsLoading(true);
 
-      const response = await fetch(`${API_URL}/api/user/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`, {
         method: "POST",
         credentials: "include",
         headers: {

@@ -10,8 +10,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
-import { API_URL } from "@/lib/api/api";
-
 export default function SignUpPage() {
   const router = useRouter();
   const [sentEmail, setSentEmail] = useState<string | null>(null);
@@ -35,7 +33,7 @@ export default function SignUpPage() {
     try {
       setIsLoading(true);
 
-     const response = await fetch(`${API_URL}/api/user/sign-up`, {
+     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/sign-up`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

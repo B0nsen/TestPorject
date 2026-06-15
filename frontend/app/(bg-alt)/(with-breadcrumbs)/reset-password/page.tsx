@@ -14,7 +14,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const API_BASE =
-    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5012";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5012";
 
 export default function ResetPasswordPage() {
   const [error, setError] = useState("");
@@ -70,33 +70,33 @@ export default function ResetPasswordPage() {
   };
 
   return (
-      <div className="flex items-center justify-center">
-        <AuthCard
-            buttonText="Reset password"
-            onSubmit={handleSubmit(handleValidSubmit)}
-            title="reset-password"
-        >
-          <div className="flex flex-col gap-4">
-            <AuthInput
-                placeholder="New password"
-                type="password"
-                autoComplete="new-password"
-                error={errors.password?.message}
-                {...register("password")}
-            />
+    <div className="flex items-center justify-center">
+      <AuthCard
+        buttonText="Reset password"
+        onSubmit={handleSubmit(handleValidSubmit)}
+        title="reset-password"
+      >
+        <div className="flex flex-col gap-4">
+          <AuthInput
+            placeholder="New password"
+            type="password"
+            autoComplete="new-password"
+            error={errors.password?.message}
+            {...register("password")}
+          />
 
-            <AuthInput
-                placeholder="Confirm new password"
-                type="password"
-                autoComplete="new-password"
-                error={errors.confirmPassword?.message}
-                {...register("confirmPassword")}
-            />
+          <AuthInput
+            placeholder="Confirm new password"
+            type="password"
+            autoComplete="new-password"
+            error={errors.confirmPassword?.message}
+            {...register("confirmPassword")}
+          />
 
-            {error && <p className="text-sm text-red-500">{error}</p>}
-            {success && <p className="text-sm text-green-600">{success}</p>}
-          </div>
-        </AuthCard>
-      </div>
+          {error && <p className="text-sm text-red-500">{error}</p>}
+          {success && <p className="text-sm text-green-600">{success}</p>}
+        </div>
+      </AuthCard>
+    </div>
   );
 }
