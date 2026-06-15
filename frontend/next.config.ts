@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: 'http://orbis.eu-central-1.elasticbeanstalk.com/api/:path*',
+            },
+        ];
+    },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: any) =>
       rule.test?.test?.(".svg")
