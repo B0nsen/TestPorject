@@ -20,7 +20,10 @@ export default function CatalogPage() {
   const [limitedProducts, setLimitedProducts] = useState<Limited[]>([]);
   const [filters, setFilters] = useState<any[]>([]);
   const [totalPages, setTotalPages] = useState(1);
-  const searchParams = useSearchParams();
+    const rawSearchParams = useSearchParams();
+    const searchParams = typeof window === "undefined"
+        ? new URLSearchParams()
+        : rawSearchParams;
 
   const [totalCount, setTotalCount] = useState(0);
   const [pageSize, setPageSize] = useState(2);
