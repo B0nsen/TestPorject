@@ -8,7 +8,7 @@ import arrowDownIcon from "@/assets/icons/arrow-down.svg";
 import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import searchIcon from "@/assets/icons/search.svg";
 
-const API = "http://localhost:5012/api/product";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/product`;
 
 const CATEGORIES = [
     "Tech",
