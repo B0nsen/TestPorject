@@ -25,7 +25,7 @@ export default function UserReview({ review, isUserReview }: UserReviewProps) {
   const [isLiked, setIsLiked] = useState(Boolean);
   const AddHelpful = () => {
     const offset = isLiked ? -1 : 1;
-    fetch(`http://localhost:5012/api/review/helpful/${id}`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/review/helpful/${id}`, {
       method: "PUT",
       credentials: "include",
       headers: {

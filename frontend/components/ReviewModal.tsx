@@ -91,8 +91,8 @@ export default function ReviewModal({
 
     try {
       const url = isEditMode
-        ? `http://localhost:5012/api/review/edit`
-        : "http://localhost:5012/api/review/create";
+          ? `${process.env.NEXT_PUBLIC_API_URL}/api/review/edit`
+          : '${process.env.NEXT_PUBLIC_API_URL}/api/review/create';
 
       const method = isEditMode ? "PUT" : "POST";
 

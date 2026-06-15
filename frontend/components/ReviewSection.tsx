@@ -59,7 +59,7 @@ export default function ReviewSection({
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const loginRes = await fetch("http://localhost:5012/api/user/islogin", {
+        const loginRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/islogin`, {
           credentials: "include",
         });
 
