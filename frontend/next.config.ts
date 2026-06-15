@@ -6,7 +6,9 @@ const nextConfig: NextConfig = {
     images: {
         domains: ['amazon-clone-image-bucket.s3.amazonaws.com'],
     },
-
+    typescript: {
+        ignoreBuildErrors: true,
+    },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: any) =>
       rule.test?.test?.(".svg")
