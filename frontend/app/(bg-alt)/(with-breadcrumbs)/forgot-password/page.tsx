@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/lib/stores/auth-store";
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5012";
+  process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ForgotPasswordPage() {
   const [sentEmail, setSentEmail] = useState<string | null>(null);
