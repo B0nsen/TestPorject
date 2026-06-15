@@ -14,6 +14,8 @@ import { useCart } from "@/lib/hooks/useCart";
 import { mutate } from "swr";
 import { USER_KEY } from "@/lib/api/user";
 
+import { API_URL } from "@/lib/api/api";
+
 export default function LogInPage() {
   const router = useRouter();
   const setEmail = useAuthStore((s) => s.setEmail);
@@ -40,7 +42,7 @@ export default function LogInPage() {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5012/api/user/login", {
+      const response = await fetch(`${API_URL}/api/user/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -61,7 +63,7 @@ export default function LogInPage() {
       const result = await response.json();
 
       setRoleId(result.roleId);
-await mutate(USER_KEY);
+      await mutate(USER_KEY);
       if (result.roleId === 2 || result.roleId === 3) {
         router.push("/admin");
       } else {

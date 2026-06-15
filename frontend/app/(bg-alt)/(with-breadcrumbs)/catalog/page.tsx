@@ -15,7 +15,6 @@ import { useIsAbove } from "@/lib/hooks/useIsAbove";
 import { useSearchParams } from "next/navigation";
 import { Limited } from "@/lib/types/limited";
 
-
 import { API_URL } from "@/lib/api/api";
 
 export default function CatalogPage() {

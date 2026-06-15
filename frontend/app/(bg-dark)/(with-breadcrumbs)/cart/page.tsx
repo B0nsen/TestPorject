@@ -13,6 +13,7 @@ import CheckoutLayout from "@/components/CheckoutLayout";
 import CatalogSlider from "@/components/CatalogSlider";
 
 import { CartItemType } from "@/contexts/cart.context";
+import { API_URL } from "@/lib/api/api";
 
 export default function CartPage() {
   const [open, setOpen] = useState(false);
@@ -37,10 +38,8 @@ export default function CartPage() {
 
   useEffect(() => {
     const loadSliderData = async () => {
-      const API_URL = "http://localhost:5012/api/homepage";
-      
       try {
-        const res = await fetch(API_URL, { cache: "no-store" });
+       const res = await fetch(`${API_URL}/api/homepage`, { cache: "no-store" });
         
         if (!res.ok) {
           throw new Error(`Server responded with status: ${res.status}`);
