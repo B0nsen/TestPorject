@@ -34,8 +34,8 @@ builder.Services.AddSession(options =>
     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; // HTTPS только
     options.Cookie.IsEssential = true;
     options.IdleTimeout = TimeSpan.FromMinutes(30); // время жизни сессии
-    options.Cookie.SameSite = SameSiteMode.Lax;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 builder.Services.AddControllers();
 
