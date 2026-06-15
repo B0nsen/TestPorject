@@ -7,7 +7,7 @@ import React from "react";
 import WishlistModal from "@/components/WishlistModal";
 import WishlistHeader from "@/components/WishlistHeader";
 
-const API = "http://localhost:5012/api/wishlist";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/wishlist`;
 import { createDefaultWishlist, loadUserWishlists } from "@/lib/api/wishlist";
 import ModalWrapper from "@/components/ModalWrapper";
 

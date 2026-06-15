@@ -3,7 +3,7 @@ import "./globals.css";
 import { CartProvider } from "@/contexts/cart.context";
 import ClientLayout from "@/components/ClientLayout";
 import { Inter, Genos, Anta } from "next/font/google"; 
-import { Suspense } from "react";
+import {Suspense } from 'react'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,20 +37,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${genos.variable} ${anta.variable} antialiased min-h-screen flex flex-col relative bg-[#070913]`}
-      >
-        <div className="relative z-10 flex-1 flex flex-col">
-          <CartProvider>
+      <html lang="en">
+          <body
+              className={`${inter.variable} ${genos.variable} ${anta.variable} antialiased min-h-screen flex flex-col relative bg-[#070913]`}
+          >
+              <div className="relative z-10 flex-1 flex flex-col">
+                  <CartProvider>
                       <ClientLayout>
                           <Suspense fallback={<div className="w-full text-center pt-20 text-white">Loading...</div>}>
                               {children}
                           </Suspense>
                       </ClientLayout>
-          </CartProvider>
-        </div>
-      </body>
-    </html>
+                  </CartProvider>
+              </div>
+          </body>
+      </html>
   );
 }

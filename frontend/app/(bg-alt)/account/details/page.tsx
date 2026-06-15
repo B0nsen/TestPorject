@@ -100,11 +100,11 @@ export default function AccountDetails() {
       console.log(key, value);
     }
 
-    await fetch(`http://localhost:5012/api/user/info`, {
-      method: "PUT",
-      credentials: "include",
-      body: formData,
-    });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/info`, {
+          method: "PUT",
+          credentials: "include",
+          body: formData,
+      });
   };
 
   if (!userData) {

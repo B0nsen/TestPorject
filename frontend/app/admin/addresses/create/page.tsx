@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const API = "http://localhost:5012/api/address";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/address`;
 
 export default function CreateAddressPage() {
     const router = useRouter();
@@ -50,14 +50,14 @@ export default function CreateAddressPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Добавить адрес</h1>
+                <h1 style={styles.title}>Add address</h1>
 
                 <div style={styles.form}>
                     <input
                         name="country"
                         value={form.country}
                         onChange={handleChange}
-                        placeholder="Страна"
+                        placeholder="Country"
                         style={styles.input}
                     />
 
@@ -65,7 +65,7 @@ export default function CreateAddressPage() {
                         name="city"
                         value={form.city}
                         onChange={handleChange}
-                        placeholder="Город"
+                        placeholder="City"
                         style={styles.input}
                     />
 
@@ -73,7 +73,7 @@ export default function CreateAddressPage() {
                         name="street"
                         value={form.street}
                         onChange={handleChange}
-                        placeholder="Улица"
+                        placeholder="Street"
                         style={styles.input}
                     />
 
@@ -81,7 +81,7 @@ export default function CreateAddressPage() {
                         name="postalCode"
                         value={form.postalCode}
                         onChange={handleChange}
-                        placeholder="Индекс"
+                        placeholder="Postal Code"
                         style={styles.input}
                     />
 
@@ -89,7 +89,7 @@ export default function CreateAddressPage() {
                         name="houseNumber"
                         value={form.houseNumber}
                         onChange={handleChange}
-                        placeholder="Дом"
+                        placeholder="House number"
                         style={styles.input}
                     />
 
@@ -109,19 +109,19 @@ export default function CreateAddressPage() {
                                 setForm({ ...form, isDefault: e.target.checked })
                             }
                         />
-                        По умолчанию
+                        Default
                     </label>
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleCreate}>
-                            Добавить
+                            Add
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/addresses")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

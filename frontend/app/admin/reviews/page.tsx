@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5012/api/review";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/review`;
 
 type Review = {
     id: number;
@@ -20,7 +20,6 @@ export default function ReviewsPage() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const router = useRouter();
     const [search, setSearch] = useState("");
-
 
     useEffect(() => {
         const loadReviews = async () => {
@@ -39,7 +38,7 @@ export default function ReviewsPage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить отзыв?");
+        const confirmed = window.confirm("Are you sure you want to delete this review?");
 
         if (!confirmed) return;
 
@@ -62,83 +61,79 @@ export default function ReviewsPage() {
             .some((v) => v.includes(normalizedSearch))
     );
 
-    
-
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Отзывы</h1>
+                <h1 style={styles.title}>Reviews</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/reviews/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
-
 
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по названию, комментарию, рейтингу, пользователю"
+                placeholder="Search by title, comment, rating, user"
                 style={styles.searchInput}
             />
 
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Rating</th>
-                        <th style={styles.th}>Title</th>
-                        <th style={styles.th}>Comment</th>
-                        <th style={styles.th}>Helpful</th>
-                        <th style={styles.th}>User ID</th>
-                        <th style={styles.th}>Product ID</th>
-                        <th style={styles.th}>Дата</th>
-                        <th style={styles.th}>Действия</th>
-                    </tr>
+                        <tr>
+                            <th style={styles.th}>ID</th>
+                            <th style={styles.th}>Rating</th>
+                            <th style={styles.th}>Title</th>
+                            <th style={styles.th}>Comment</th>
+                            <th style={styles.th}>Helpful</th>
+                            <th style={styles.th}>User ID</th>
+                            <th style={styles.th}>Product ID</th>
+                            <th style={styles.th}>Date</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {filteredReviews.map((r) => (
-                        <tr key={r.id} style={styles.tr}>
-                            <td style={styles.td}>{r.id}</td>
-                            <td style={styles.td}>{r.rating}</td>
-                            <td style={styles.td}>{r.title}</td>
-                            <td style={styles.td}>{r.comment}</td>
-                            <td style={styles.td}>{r.helpful}</td>
-                            <td style={styles.td}>{r.userId}</td>
-                            <td style={styles.td}>{r.productId}</td>
-                            <td style={styles.td}>
-                                {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : "-"}
-                            </td>
+                        {filteredReviews.map((r) => (
+                            <tr key={r.id} style={styles.tr}>
+                                <td style={styles.td}>{r.id}</td>
+                                <td style={styles.td}>{r.rating}</td>
+                                <td style={styles.td}>{r.title}</td>
+                                <td style={styles.td}>{r.comment}</td>
+                                <td style={styles.td}>{r.helpful}</td>
+                                <td style={styles.td}>{r.userId}</td>
+                                <td style={styles.td}>{r.productId}</td>
+                                <td style={styles.td}>
+                                    {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : "-"}
+                                </td>
 
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.editBtn}
-                                    onClick={() => router.push(`/admin/reviews/${r.id}`)}
-                                >
-                                    Edit
-                                </button>
+                                <td style={styles.td}>
+                                    <button
+                                        style={styles.editBtn}
+                                        onClick={() => router.push(`/admin/reviews/${r.id}`)}
+                                    >
+                                        Edit
+                                    </button>
 
-                                <button
-                                    style={styles.deleteBtn}
-                                    onClick={() => handleDelete(r.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                    <button
+                                        style={styles.deleteBtn}
+                                        onClick={() => handleDelete(r.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
         </div>
     );
 }
-
 const styles: any = {
     page: {
         padding: "40px",

@@ -37,12 +37,12 @@ export default function AccountLayoutClient({
             ${isRoot ? "hidden layout-account-sm:flex" : ""}
           `}
         >
-          <h1 className="font-semibold text-[24px] leading-[28px] align-middle mb-[20px]">
+          <h1 className="font-semibold text-[24px] leading-[28px] align-middle mb-[20px] ">
             {pageTitle}
           </h1>
           
          
-          <div className="card-default bg-transparent layout-account-sm:px-[20px] py-[20px] px-[10px] gap-[12px]">
+          <div className="card-default layout-account-sm:px-[20px] py-[20px] px-[10px] gap-[12px]">
             {children}
           </div>
         </div>

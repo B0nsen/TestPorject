@@ -1,3 +1,5 @@
+"use client";
+
 import Icon from "@/assets/icons/favorite.svg?react";
 
 type WishlistButtonProps = {

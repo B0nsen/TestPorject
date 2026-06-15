@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5012/api/cartitem";
+const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cartitem`;
 
 export const cartApi = {
   getCart: async () => {

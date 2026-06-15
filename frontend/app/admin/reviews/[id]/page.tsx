@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const API = "http://localhost:5012/api/review";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/review`;
 
 export default function EditReviewPage() {
     const { id } = useParams();
@@ -39,7 +39,7 @@ export default function EditReviewPage() {
         return <div style={styles.page}>Loading...</div>;
     }
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value,
@@ -72,7 +72,7 @@ export default function EditReviewPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать отзыв</h1>
+                <h1 style={styles.title}>Edit Review</h1>
 
                 <div style={styles.form}>
                     <input
@@ -133,14 +133,14 @@ export default function EditReviewPage() {
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/reviews")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>
@@ -148,7 +148,6 @@ export default function EditReviewPage() {
         </div>
     );
 }
-
 const styles: any = {
     page: {
         padding: "40px",

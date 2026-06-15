@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const API = "http://localhost:5012/api/user";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/user`;
 
 export default function EditUserPage() {
     const { id } = useParams();
@@ -39,7 +39,7 @@ export default function EditUserPage() {
         return <div style={styles.page}>Loading...</div>;
     }
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value,
@@ -69,15 +69,15 @@ export default function EditUserPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать пользователя</h1>
+                <h1 style={styles.title}>Edit User</h1>
 
                 <div style={styles.form}>
-                    <input name="name" value={form.name} onChange={handleChange} placeholder="Имя" style={styles.input} />
+                    <input name="name" value={form.name} onChange={handleChange} placeholder="Name" style={styles.input} />
                     <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email" style={styles.input} />
                     <input name="hashPassword" value={form.hashPassword} onChange={handleChange} placeholder="HashPassword" style={styles.input} />
                     <input name="salt" value={form.salt} onChange={handleChange} placeholder="Salt" style={styles.input} />
-                    <input name="country" value={form.country} onChange={handleChange} placeholder="Страна" style={styles.input} />
-                    <input name="phone" value={form.phone} onChange={handleChange} placeholder="Телефон" style={styles.input} />
+                    <input name="country" value={form.country} onChange={handleChange} placeholder="Country" style={styles.input} />
+                    <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone" style={styles.input} />
                     <input name="avatarUrl" value={form.avatarUrl} onChange={handleChange} placeholder="Avatar URL" style={styles.input} />
                     <input name="fileName" value={form.fileName} onChange={handleChange} placeholder="File Name" style={styles.input} />
                     <input name="dateOfBirth" type="date" value={form.dateOfBirth} onChange={handleChange} style={styles.input} />
@@ -85,14 +85,14 @@ export default function EditUserPage() {
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/users")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

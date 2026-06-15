@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5012/api/role";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/role`;
 
 type Role = {
     id: number;
@@ -14,7 +14,6 @@ export default function RolesPage() {
     const [roles, setRoles] = useState<Role[]>([]);
     const router = useRouter();
     const [search, setSearch] = useState("");
-
 
     useEffect(() => {
         const loadRoles = async () => {
@@ -33,7 +32,7 @@ export default function RolesPage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить роль?");
+        const confirmed = window.confirm("Are you sure you want to delete this role?");
 
         if (!confirmed) return;
 
@@ -51,70 +50,65 @@ export default function RolesPage() {
 
     const normalizedSearch = search.trim().toLowerCase();
 
-    
     const filteredRoles = roles.filter((r) =>
         [r.id, r.name]
             .map((v) => String(v ?? "").toLowerCase())
             .some((v) => v.includes(normalizedSearch))
     );
 
-
-   
-
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Роли</h1>
+                <h1 style={styles.title}>Roles</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/roles/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
-
 
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по названию роли"
+                placeholder="Search by role name"
                 style={styles.searchInput}
             />
 
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Название</th>
-                        <th style={styles.th}>Действия</th>
-                    </tr>
+                        <tr>
+                            <th style={styles.th}>ID</th>
+                            <th style={styles.th}>Name</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {filteredRoles.map((r) => (
-                        <tr key={r.id} style={styles.tr}>
-                            <td style={styles.td}>{r.id}</td>
-                            <td style={styles.td}>{r.name}</td>
+                        {filteredRoles.map((r) => (
+                            <tr key={r.id} style={styles.tr}>
+                                <td style={styles.td}>{r.id}</td>
+                                <td style={styles.td}>{r.name}</td>
 
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.editBtn}
-                                    onClick={() => router.push(`/admin/roles/${r.id}`)}
-                                >
-                                    Edit
-                                </button>
+                                <td style={styles.td}>
+                                    <button
+                                        style={styles.editBtn}
+                                        onClick={() => router.push(`/admin/roles/${r.id}`)}
+                                    >
+                                        Edit
+                                    </button>
 
-                                <button
-                                    style={styles.deleteBtn}
-                                    onClick={() => handleDelete(r.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                    <button
+                                        style={styles.deleteBtn}
+                                        onClick={() => handleDelete(r.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

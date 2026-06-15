@@ -137,20 +137,33 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const loadCart = async () => {
-    const savedChecked = localStorage.getItem("cartChecked");
-    const checkedIds: number[] = savedChecked ? JSON.parse(savedChecked) : [];
+      try {
+          const data = await cartApi.getCart();
 
-    const data = await cartApi.getCart();
+          if (!data) {
+              console.warn("Error");
+              return;
+          }
 
-    setShipping(data.shipping);
+          const savedChecked = localStorage.getItem("cartChecked");
+          const checkedIds: number[] = savedChecked ? JSON.parse(savedChecked) : [];
 
-    const itemsWithChecked = data.items.map((item: CartItemType) => ({
-      ...item,
-      listPrice: item.listPrice ?? item.price,
-      checked: checkedIds.includes(item.id),
-    }));
+          if (data.shipping !== undefined) {
+              setShipping(data.shipping);
+          }
 
-    setCartItems(itemsWithChecked);
+          if (data.items !== undefined) {
+              const itemsWithChecked = data.items.map((item: CartItemType) => ({
+                  ...item,
+                  listPrice: item.listPrice ?? item.price,
+                  checked: checkedIds.includes(item.id),
+              }));
+
+              setCartItems(itemsWithChecked);
+          }
+      } catch (error) {
+          console.error("Error:", error);
+      }
   };
 
   useEffect(() => {

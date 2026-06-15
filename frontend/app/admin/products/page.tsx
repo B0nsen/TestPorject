@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API_BASE = "http://localhost:5012";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 const API = `${API_BASE}/api/product`;
 
 type ProductImage = {
@@ -79,7 +79,7 @@ export default function ProductsPage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить продукт?");
+        const confirmed = window.confirm("Are you sure you want to delete this product?");
 
         if (!confirmed) return;
 
@@ -115,98 +115,98 @@ export default function ProductsPage() {
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Продукты</h1>
+                <h1 style={styles.title}>Products</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/products/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
 
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по названию, описанию, цене, скидке, гарантии, количеству"
+                placeholder="Search by name, description, price, sale, warranty, quantity"
                 style={styles.searchInput}
             />
 
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Фото</th>
-                        <th style={styles.th}>Название</th>
-                        <th style={styles.th}>Цена</th>
-                        <th style={styles.th}>Sale</th>
-                        <th style={styles.th}>Available</th>
-                        <th style={styles.th}>Кол-во</th>
-                        <th style={styles.th}>Metadata</th>
-                        <th style={styles.th}>Действия</th>
-                    </tr>
+                        <tr>
+                            <th style={styles.th}>ID</th>
+                            <th style={styles.th}>Photo</th>
+                            <th style={styles.th}>Name</th>
+                            <th style={styles.th}>Price</th>
+                            <th style={styles.th}>Sale</th>
+                            <th style={styles.th}>Available</th>
+                            <th style={styles.th}>Quantity</th>
+                            <th style={styles.th}>Metadata</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {filteredProducts.map((p) => {
-                        const mainImage = getMainImage(p.images);
-                        const imageSrc = mainImage ? getImageSrc(mainImage.imageUrl) : "";
+                        {filteredProducts.map((p) => {
+                            const mainImage = getMainImage(p.images);
+                            const imageSrc = mainImage ? getImageSrc(mainImage.imageUrl) : "";
 
-                        return (
-                            <tr key={p.id} style={styles.tr}>
-                                <td style={styles.td}>{p.id}</td>
+                            return (
+                                <tr key={p.id} style={styles.tr}>
+                                    <td style={styles.td}>{p.id}</td>
 
-                                <td style={styles.td}>
-                                    {imageSrc ? (
-                                        <img
-                                            src={imageSrc}
-                                            alt={mainImage.fileName || p.name}
-                                            style={styles.image}
-                                        />
-                                    ) : (
-                                        "-"
-                                    )}
-                                </td>
+                                    <td style={styles.td}>
+                                        {imageSrc ? (
+                                            <img
+                                                src={imageSrc}
+                                                alt={mainImage.fileName || p.name}
+                                                style={styles.image}
+                                            />
+                                        ) : (
+                                            "-"
+                                        )}
+                                    </td>
 
-                                <td style={styles.td}>{p.name}</td>
-                                <td style={styles.td}>{p.price}</td>
-                                <td style={styles.td}>{p.sale ?? "-"}</td>
+                                    <td style={styles.td}>{p.name}</td>
+                                    <td style={styles.td}>{p.price}</td>
+                                    <td style={styles.td}>{p.sale ?? "-"}</td>
 
-                                <td style={styles.td}>
-                                    {p.available ? (
-                                        <span style={styles.badge}>Yes</span>
-                                    ) : (
-                                        <span style={styles.badge1}>No</span>
-                                    )}
-                                </td>
+                                    <td style={styles.td}>
+                                        {p.available ? (
+                                            <span style={styles.badge}>Yes</span>
+                                        ) : (
+                                            <span style={styles.badge1}>No</span>
+                                        )}
+                                    </td>
 
-                                <td style={styles.td}>{p.maxQuantity}</td>
+                                    <td style={styles.td}>{p.maxQuantity}</td>
 
-                                <td style={styles.td}>
-                                    <pre style={styles.jsonPreview}>
-                                        {formatMetadata(p.metadata)}
-                                    </pre>
-                                </td>
+                                    <td style={styles.td}>
+                                        <pre style={styles.jsonPreview}>
+                                            {formatMetadata(p.metadata)}
+                                        </pre>
+                                    </td>
 
-                                <td style={styles.td}>
-                                    <button
-                                        style={styles.editBtn}
-                                        onClick={() => router.push(`/admin/products/${p.id}`)}
-                                    >
-                                        Edit
-                                    </button>
+                                    <td style={styles.td}>
+                                        <button
+                                            style={styles.editBtn}
+                                            onClick={() => router.push(`/admin/products/${p.id}`)}
+                                        >
+                                            Edit
+                                        </button>
 
-                                    <button
-                                        style={styles.deleteBtn}
-                                        onClick={() => handleDelete(p.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        );
-                    })}
+                                        <button
+                                            style={styles.deleteBtn}
+                                            onClick={() => handleDelete(p.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

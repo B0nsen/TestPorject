@@ -41,6 +41,9 @@ export default function ProductPage() {
   const [isWishlistAuthorized, setIsWishlistAuthorized] = useState(true);
   const { addToWishlist } = useWishlist();
 
+  // ДОБАВЛЕНО ТУТ: Глобальный стейт для отслеживания статуса инверсии кнопки на странице товара
+  const [isProductFavorite, setIsProductFavorite] = useState(false);
+
   const fetchReviews = async () => {
     try {
       const reviewsRes = await fetch(
@@ -97,9 +100,13 @@ export default function ProductPage() {
     }
   };
 
+  // ИСПРАВЛЕНО ТУТ: Смена цвета сердечка происходит СТРОГО при подтверждении и сохранении
   const handleConfirmWishlist = (wishlistId: number) => {
     if (!productData) return;
     addToWishlist(productData.id, wishlistId);
+    
+    // Включаем инверсию цветов у кнопки, так как товар успешно сохранен в список
+    setIsProductFavorite(true);
   };
 
   // Загружаем данные продукта
@@ -193,8 +200,10 @@ export default function ProductPage() {
             product={productData}
             onWishlistClick={openWishlistModal}
           />
+          {/* ИСПРАВЛЕНО ТУТ: Передаем состояние isFavorite в блок действий */}
           <ProductActionsSection
             product={productData}
+            isFavorite={isProductFavorite}
             onWishlistClick={openWishlistModal}
           />
         </div>
@@ -220,7 +229,6 @@ export default function ProductPage() {
           userReview={userReview}
         />
 
-        
         {sliderProducts.length > 0 && (
           <div className="w-full mt-6 border-t border-white/10 pt-[44px]">
             <CatalogSlider data={sliderProducts} />

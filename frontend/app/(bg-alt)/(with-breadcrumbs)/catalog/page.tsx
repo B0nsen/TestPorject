@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-export const dynamic = 'force-dynamic';
+
 import ProductCard from "@/components/ProductCard";
 import FiltersDesktop from "@/components/FiltersDesktop";
 import FiltersMobile from "@/components/FiltersMobile";
@@ -12,46 +12,40 @@ import { CatalogGrid } from "@/components/CatalogGrid";
 
 import { useFilters } from "@/lib/hooks/useFilters";
 import { useIsAbove } from "@/lib/hooks/useIsAbove";
+import { useSearchParams } from "next/navigation";
 import { Limited } from "@/lib/types/limited";
 
+
+import { API_URL } from "@/lib/api/api";
+
 export default function CatalogPage() {
-    const [products, setProducts] = useState<any[]>([]);
-    const [limitedProducts, setLimitedProducts] = useState<Limited[]>([]);
-    const [filters, setFilters] = useState<any[]>([]);
-    const [totalPages, setTotalPages] = useState(1);
+  const [products, setProducts] = useState<any[]>([]);
+  const [limitedProducts, setLimitedProducts] = useState<Limited[]>([]);
+  const [filters, setFilters] = useState<any[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const searchParams = useSearchParams();
 
-    // Безопасная инициализация параметров URL без использования useSearchParams
-    const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams());
-    const [page, setPageInternal] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
 
-    // Синхронизируем параметры URL только при рендере в браузере
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const params = new URLSearchParams(window.location.search);
-            setSearchParams(params);
-            setPageInternal(Number(params.get("page")) || 1);
-        }
-    }, []);
+  const page = Number(searchParams.get("page")) || 1;
 
-    const [totalCount, setTotalCount] = useState(0);
-    const [pageSize, setPageSize] = useState(2);
-    const [currentPage, setCurrentPage] = useState(1);
+  const {
+    selectedFilters,
+    getNormalizedFilters,
+    updateFilter,
+    removeFilter,
+    clearFilters,
+  } = useFilters(filters, searchParams);
 
-    // Вызываем кастомный хук useFilters ОДИН раз и сразу забираем всё необходимое
-    const {
-        selectedFilters,
-        getNormalizedFilters,
-        updateFilter,
-        removeFilter,
-        clearFilters,
-        setPage: handlePageChange, // Переименовали, чтобы избежать конфликта имен
-    } = useFilters(filters, searchParams);
+  const showThird = useIsAbove(847);
 
-    const showThird = useIsAbove(847);
+  const { setPage } = useFilters(filters, searchParams);
 
   useEffect(() => {
     const fetchFilters = async () => {
-      const res = await fetch(`http://localhost:5012/api/product/filters`);
+      const res = await fetch(`${API_URL}/api/product/filters`);
       const data = await res.json();
       setFilters(data);
     };
@@ -69,7 +63,7 @@ export default function CatalogPage() {
 
       console.log("final query string:", queryString);
       const pageSize = 9;
-      const url = `http://localhost:5012/api/product/catalog/${pageSize}?${queryString}`;
+      const url = `${API_URL}/api/product/catalog/${pageSize}?${queryString}`;
 
       console.log("final request URL:", url);
 
@@ -87,7 +81,7 @@ export default function CatalogPage() {
     };
 
     fetchProducts();
-  }, [page, searchParams]);
+  }, [searchParams]);
 
   if (showThird === null) {
     return null;
@@ -151,9 +145,9 @@ export default function CatalogPage() {
             ))}
           </CatalogGrid>
           <Pagination
-                      currentPage={page}
-                      totalPages={totalPages}
-                      onPageChange={handlePageChange}
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
           />
         </div>
       </div>

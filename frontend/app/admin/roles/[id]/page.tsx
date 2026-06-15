@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const API = "http://localhost:5012/api/role";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/role`;
 
 export default function EditRolePage() {
     const { id } = useParams();
@@ -31,7 +31,7 @@ export default function EditRolePage() {
         return <div style={styles.page}>Loading...</div>;
     }
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value,
@@ -58,27 +58,27 @@ export default function EditRolePage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать роль</h1>
+                <h1 style={styles.title}>Edit Role</h1>
 
                 <div style={styles.form}>
                     <input
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Название"
+                        placeholder="Name"
                         style={styles.input}
                     />
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/roles")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

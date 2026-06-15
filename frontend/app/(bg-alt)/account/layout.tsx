@@ -14,12 +14,12 @@ export default async function AccountLayout({
     .map((cookie) => `${cookie.name}=${cookie.value}`)
     .join("; ");
 
-  const res = await fetch("http://localhost:5012/api/user/islogin", {
-    headers: {
-      Cookie: cookieHeader,
-    },
-    cache: "no-store",
-  });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/islogin`, {
+        headers: {
+            Cookie: cookieHeader,
+        },
+        cache: "no-store",
+    });
 
   const isLoggedIn = await res.json();
   if (!isLoggedIn) {

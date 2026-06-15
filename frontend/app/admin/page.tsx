@@ -3,17 +3,15 @@
 import { useRouter } from "next/navigation";
 
 const adminSections = [
-    { name: "Адреса", path: "/admin/addresses" },
-    { name: "Пользователи", path: "/admin/users" },
-    { name: "Товары", path: "/admin/products" },
-    { name: "Категории", path: "/admin/categories" },
-    { name: "Роли", path: "/admin/roles" },
-    { name: "Отзывы", path: "/admin/reviews" },
-    { name: "Кредитные карты", path: "/admin/cards" },
-    { name: "Заказы", path: "/admin/orders" },
+    { name: "Addresses", path: "/admin/addresses" },
+    { name: "Users", path: "/admin/users" },
+    { name: "Products", path: "/admin/products" },
+    { name: "Categories", path: "/admin/categories" },
+    { name: "Roles", path: "/admin/roles" },
+    { name: "Reviews", path: "/admin/reviews" },
+    { name: "Credit Cards", path: "/admin/cards" },
+    { name: "Orders", path: "/admin/orders" },
 ];
-
-
 
 export default function AdminPage() {
     const router = useRouter();
@@ -21,8 +19,8 @@ export default function AdminPage() {
     return (
         <div style={styles.wrapper}>
             <div style={styles.container}>
-                <h1 style={styles.title}>Админ панель</h1>
-                <p style={styles.subtitle}>Выберите категорию:</p>
+                <h1 style={styles.title}>Admin Panel</h1>
+                <p style={styles.subtitle}>Select a category:</p>
 
                 <div style={styles.grid}>
                     {adminSections.map((section) => (

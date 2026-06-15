@@ -3,7 +3,6 @@ import {
   Category,
   RecommendedItem,
 } from "../types/menu";
-import { json } from "zod";
 
 export function useCategories() {
   const [categories, setCategories] = useState<Category[]>([]);

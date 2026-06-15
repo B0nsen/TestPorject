@@ -97,10 +97,9 @@ export default function SearchBar() {
         setIsOpen(false);
     };
 
-    
     const handleCategorySelect = (category: string) => {
-  setIsCategoryOpen(false);
-  router.push(`/catalog?department=${encodeURIComponent(category)}`);
+        setIsCategoryOpen(false);
+        router.push(`/catalog?department=${encodeURIComponent(category)}`);
     };
 
     return (
@@ -110,7 +109,6 @@ export default function SearchBar() {
         >
             <div ref={categoryMenuRef} className="relative h-full flex items-center">
                 <SearchBarButton
-                    
                     icon={isCategoryOpen ? arrowUpIcon : arrowDownIcon}
                     label="All" 
                     onClick={() => setIsCategoryOpen(!isCategoryOpen)}
@@ -157,21 +155,54 @@ export default function SearchBar() {
             />
 
             {isOpen && (
-                <div className="absolute left-[45px] right-0 top-[44px] z-50 bg-white text-black rounded-[8px] shadow-lg overflow-hidden border border-[#2F3A52]/20">
-                    {suggestions.map((product) => {
-                        const title = product.name || product.title || "Untitled product";
+                <div className="absolute left-[45px] max-layout-sm:left-0 right-10 top-[42px] z-50 bg-[#1F2636] rounded-[8px] shadow-2xl overflow-hidden border border-[#2F3A52] max-h-[340px] overflow-y-auto custom-scrollbar">
+                    <ul className="flex flex-col py-1.5">
+                        {suggestions.map((product) => {
+                            const title = product.name || product.title || "Untitled product";
 
-                        return (
-                            <button
-                                key={product.id}
-                                type="button"
-                                onMouseDown={() => handleSelect(product)}
-                                className="w-full text-left px-[12px] py-[10px] text-[14px] hover:bg-gray-100 transition-colors"
-                            >
-                                {title}
-                            </button>
-                        );
-                    })}
+                            const highlightMatch = (text: string, searchWord: string) => {
+                                if (!searchWord.trim()) return <span className="text-[#C5CEE3]">{text}</span>;
+                                const regex = new RegExp(`(${searchWord.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, "gi");
+                                const parts = text.split(regex);
+                                
+                                return parts.map((part, i) =>
+                                    regex.test(part) ? (
+                                        <span key={i} className="text-white font-semibold">{part}</span>
+                                    ) : (
+                                        <span key={i} className="text-[#C5CEE3] font-normal">{part}</span>
+                                    )
+                                );
+                            };
+
+                            return (
+                                <li key={product.id} className="w-full">
+                                    <button
+                                        type="button"
+                                        onMouseDown={() => handleSelect(product)}
+                                        className="w-full flex items-center gap-3 px-[14px] py-[10px] text-left hover:bg-[#2F3A52] transition-colors group"
+                                    >
+                                        <svg
+                                            className="w-3.5 h-3.5 text-[#5E6E8F] group-hover:text-[#AFCBFF] transition-colors shrink-0"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2.5"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.603 10.601Z"
+                                            />
+                                        </svg>
+                                        
+                                        <span className="text-[14px] leading-[100%] truncate block w-full select-none">
+                                            {highlightMatch(title, search)}
+                                        </span>
+                                    </button>
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
             )}
         </form>

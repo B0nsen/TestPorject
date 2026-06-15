@@ -1,6 +1,6 @@
 import WishlistClient from "@/components/WishlistClient";
 
-const API_BASE = "http://localhost:5012";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 const API = `${API_BASE}/api/wishlist`;
 
 type WishlistItemDTO = {

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const ORDER_API = "http://localhost:5012/api/order";
-const ORDER_ITEM_API = "http://localhost:5012/api/orderitem";
+const ORDER_API = `${process.env.NEXT_PUBLIC_API_URL}/api/order`;
+const ORDER_ITEM_API = `${process.env.NEXT_PUBLIC_API_URL}/api/orderitem`;
 
 type OrderItemForm = {
     id?: number;
@@ -145,7 +145,7 @@ export default function EditOrderPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать заказ</h1>
+                <h1 style={styles.title}>Edit Order</h1>
 
                 <div style={styles.form}>
                     <input
@@ -156,7 +156,7 @@ export default function EditOrderPage() {
                         style={styles.input}
                     />
 
-                    <h2 style={styles.subtitle}>Товары заказа</h2>
+                    <h2 style={styles.subtitle}>Order Items</h2>
 
                     {items.map((item, index) => (
                         <div key={item.id || index} style={styles.itemRow}>
@@ -174,7 +174,7 @@ export default function EditOrderPage() {
                                 onChange={(e) =>
                                     handleItemChange(index, "quantity", e.target.value)
                                 }
-                                placeholder="Количество"
+                                placeholder="Quantity"
                                 style={styles.input}
                             />
 
@@ -183,25 +183,25 @@ export default function EditOrderPage() {
                                 onClick={() => removeItem(index)}
                                 type="button"
                             >
-                                Удалить
+                                Delete
                             </button>
                         </div>
                     ))}
 
                     <button style={styles.addItemBtn} onClick={addItem} type="button">
-                        + Добавить товар
+                        + Add Item
                     </button>
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/orders")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5012/api/user";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/user`;
 
 type User = {
     id: number;
@@ -24,7 +24,6 @@ export default function UsersPage() {
     const router = useRouter();
     const [search, setSearch] = useState("");
 
-
     useEffect(() => {
         const loadUsers = async () => {
             const res = await fetch(API);
@@ -42,13 +41,18 @@ export default function UsersPage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить пользователя?");
+        const confirmed = window.confirm("Are you sure you want to delete this user?");
 
         if (!confirmed) return;
 
-        await fetch(`${API}/${id}`, {
+        const res = await fetch(`${API}/${id}`, {
             method: "DELETE",
         });
+
+        if (!res.ok) {
+            console.error("Failed to delete user:", res.status);
+            return;
+        }
 
         setUsers(users.filter((u) => u.id !== id));
     };
@@ -59,74 +63,72 @@ export default function UsersPage() {
             .map((v) => String(v ?? "").toLowerCase())
             .some((v) => v.includes(normalizedSearch))
     );
-  
 
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Пользователи</h1>
+                <h1 style={styles.title}>Users</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/users/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
-
 
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по имени, почте, телефону, стране, userId"
+                placeholder="Search by name, email, phone, country, user ID"
                 style={styles.searchInput}
             />
 
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Имя</th>
-                        <th style={styles.th}>Email</th>
-                        <th style={styles.th}>Страна</th>
-                        <th style={styles.th}>Телефон</th>
-                        <th style={styles.th}>Дата рождения</th>
-                        <th style={styles.th}>Role ID</th>
-                        <th style={styles.th}>Действия</th>
-                    </tr>
+                        <tr>
+                            <th style={styles.th}>ID</th>
+                            <th style={styles.th}>Name</th>
+                            <th style={styles.th}>Email</th>
+                            <th style={styles.th}>Country</th>
+                            <th style={styles.th}>Phone</th>
+                            <th style={styles.th}>Date of Birth</th>
+                            <th style={styles.th}>Role ID</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {filteredUsers.map((u) => (
-                        <tr key={u.id} style={styles.tr}>
-                            <td style={styles.td}>{u.id}</td>
-                            <td style={styles.td}>{u.name}</td>
-                            <td style={styles.td}>{u.email}</td>
-                            <td style={styles.td}>{u.country || "-"}</td>
-                            <td style={styles.td}>{u.phone || "-"}</td>
-                            <td style={styles.td}>
-                                {u.dateOfBirth ? u.dateOfBirth.slice(0, 10) : "-"}
-                            </td>
-                            <td style={styles.td}>{u.roleId}</td>
+                        {filteredUsers.map((u) => (
+                            <tr key={u.id} style={styles.tr}>
+                                <td style={styles.td}>{u.id}</td>
+                                <td style={styles.td}>{u.name}</td>
+                                <td style={styles.td}>{u.email}</td>
+                                <td style={styles.td}>{u.country || "-"}</td>
+                                <td style={styles.td}>{u.phone || "-"}</td>
+                                <td style={styles.td}>
+                                    {u.dateOfBirth ? u.dateOfBirth.slice(0, 10) : "-"}
+                                </td>
+                                <td style={styles.td}>{u.roleId}</td>
 
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.editBtn}
-                                    onClick={() => router.push(`/admin/users/${u.id}`)}
-                                >
-                                    Edit
-                                </button>
+                                <td style={styles.td}>
+                                    <button
+                                        style={styles.editBtn}
+                                        onClick={() => router.push(`/admin/users/${u.id}`)}
+                                    >
+                                        Edit
+                                    </button>
 
-                                <button
-                                    style={styles.deleteBtn}
-                                    onClick={() => handleDelete(u.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                    <button
+                                        style={styles.deleteBtn}
+                                        onClick={() => handleDelete(u.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

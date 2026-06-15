@@ -176,9 +176,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const PRODUCT_API = "http://localhost:5012/api/product/admin-add";
-const CATEGORY_API = "http://localhost:5012/api/category";
-const PRODUCT_IMAGE_API = "http://localhost:5012/api/productimage";
+const PRODUCT_API = `${process.env.NEXT_PUBLIC_API_URL}/api/product/admin-add`;
+const CATEGORY_API = `${process.env.NEXT_PUBLIC_API_URL}/api/category`;
+const PRODUCT_IMAGE_API = `${process.env.NEXT_PUBLIC_API_URL}/api/productimage`;
 
 type Category = {
     id: number;
@@ -195,8 +195,8 @@ export default function CreateProductPage() {
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
-    const [mainFile, setMainFile] = useState<File | null>(null);     // ← Одна главная картинка
-    const [additionalFiles, setAdditionalFiles] = useState<File[]>([]); // ← Дополнительные (по желанию)
+    const [mainFile, setMainFile] = useState<File | null>(null);
+    const [additionalFiles, setAdditionalFiles] = useState<File[]>([]);
     const [attributes, setAttributes] = useState<Attribute[]>([
     ]);
 
@@ -271,20 +271,19 @@ export default function CreateProductPage() {
             warranty: form.warranty,
             maxQuantity: Number(form.maxQuantity),
             metadata,
-            catalogId: Number(form.catalogId),   // ← Отправляем категории вместе с продуктом
+            catalogId: Number(form.catalogId),
         };
 
-        // Если есть главная картинка — добавляем её как file
         const formData = new FormData();
         formData.append("product", JSON.stringify(productData));
 
         if (mainFile) {
-            formData.append("file", mainFile);   // ← Именно имя "file", как ты просил
+            formData.append("file", mainFile);
         }
         console.log(productData);
         const res = await fetch(PRODUCT_API, {
             method: "POST",
-            body: formData,   // Отправляем FormData (чтобы файл + JSON)
+            body: formData,
         });
 
 
@@ -293,7 +292,7 @@ export default function CreateProductPage() {
             return;
         }
 
-        
+
         const product = await res.json();
         const productId = product.id ?? product.Id;
 
@@ -302,7 +301,6 @@ export default function CreateProductPage() {
             return;
         }
 
-        // Загружаем дополнительные изображения (если есть)
         if (additionalFiles.length > 0) {
             for (let i = 0; i < additionalFiles.length; i++) {
                 const imgFormData = new FormData();
@@ -324,15 +322,14 @@ export default function CreateProductPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Добавить продукт</h1>
+                <h1 style={styles.title}>Add Product</h1>
 
                 <div style={styles.form}>
-                    <input name="name" value={form.name} onChange={handleChange} placeholder="Название" style={styles.input} />
+                    <input name="name" value={form.name} onChange={handleChange} placeholder="Name" style={styles.input} />
 
-                    <input name="price" value={form.price} onChange={handleChange} placeholder="Цена" style={styles.input} />
-                    <input name="sale" value={form.sale} onChange={handleChange} placeholder="Скидка" style={styles.input} />
+                    <input name="price" value={form.price} onChange={handleChange} placeholder="Price" style={styles.input} />
+                    <input name="sale" value={form.sale} onChange={handleChange} placeholder="Sale" style={styles.input} />
 
-                    {/* Отдельные поля Brand и Condition */}
                     <input name="brand" value={form.brand} onChange={handleChange} placeholder="Brand" style={styles.input} />
 
                     <select name="quality" value={form.quality} onChange={handleChange} style={styles.input}>
@@ -341,21 +338,21 @@ export default function CreateProductPage() {
                         <option value="Used">Used</option>
                     </select>
 
-                    <textarea name="description" value={form.description} onChange={handleChange} placeholder="Описание" style={styles.textarea} />
-                    <textarea name="aboutItems" value={form.aboutItems} onChange={handleChange} placeholder="About items (каждый пункт с новой строки)" style={styles.textarea} />
+                    <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" style={styles.textarea} />
+                    <textarea name="aboutItems" value={form.aboutItems} onChange={handleChange} placeholder="About items (each item on a new line)" style={styles.textarea} />
                     <div style={styles.section}>
-                        <h3>Атрибуты (Key-Value)</h3>
+                        <h3>Attributes (Key-Value)</h3>
                         {attributes.map((attr, index) => (
                             <div key={index} style={styles.attributeRow}>
                                 <input
                                     value={attr.key}
-                                    placeholder="Ключ (например: Color)"
+                                    placeholder="Key (e.g., Color)"
                                     onChange={(e) => handleAttributeChange(index, "key", e.target.value)}
                                     style={styles.input}
                                 />
                                 <input
                                     value={attr.value}
-                                    placeholder="Значение"
+                                    placeholder="Value"
                                     onChange={(e) => handleAttributeChange(index, "value", e.target.value)}
                                     style={styles.input}
                                 />
@@ -365,15 +362,14 @@ export default function CreateProductPage() {
                             </div>
                         ))}
                         <button onClick={addAttribute} style={styles.addBtn}>
-                            + Добавить атрибут
+                            + Add Attribute
                         </button>
                     </div>
-                    <input name="warranty" value={form.warranty} onChange={handleChange} placeholder="Гарантия" style={styles.input} />
-                    <input name="maxQuantity" value={form.maxQuantity} onChange={handleChange} placeholder="Максимальное количество" style={styles.input} />
+                    <input name="warranty" value={form.warranty} onChange={handleChange} placeholder="Warranty" style={styles.input} />
+                    <input name="maxQuantity" value={form.maxQuantity} onChange={handleChange} placeholder="Maximum quantity" style={styles.input} />
 
-                    {/* Баннер */}
                     <div>
-                        <label style={{ color: "black", fontWeight: 500 }}>Баннер (file)</label>
+                        <label style={{ color: "black", fontWeight: 500 }}>Banner (file)</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -388,9 +384,8 @@ export default function CreateProductPage() {
                         )}
                     </div>
 
-                    {/* Картинки продукта */}
                     <div>
-                        <label style={{ color: "black", fontWeight: 500 }}>Картинки продукта(первая будет главной)(file)</label>
+                        <label style={{ color: "black", fontWeight: 500 }}>Product Images (the first one will be the main one) (file)</label>
                         <input
                             type="file"
                             multiple
@@ -409,7 +404,7 @@ export default function CreateProductPage() {
                             </div>
                         )}
                     </div>
-                    {/* Категории */}
+
                     <select
                         name="catalogId"
                         value={form.catalogId}
@@ -429,15 +424,15 @@ export default function CreateProductPage() {
                             checked={form.available}
                             onChange={(e) => setForm({ ...form, available: e.target.checked })}
                         />
-                        Доступен
+                        Available
                     </label>
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleCreate}>
-                            Добавить
+                            Add
                         </button>
                         <button style={styles.cancelBtn} onClick={() => router.push("/admin/products")}>
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

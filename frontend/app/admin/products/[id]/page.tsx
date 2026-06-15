@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const PRODUCT_API = "http://localhost:5012/api/product";
-const IMAGE_UPLOAD_API = "http://localhost:5012/api/productimage/upload";
+const PRODUCT_API = `${process.env.NEXT_PUBLIC_API_URL}/api/product`;
+const IMAGE_UPLOAD_API = `${process.env.NEXT_PUBLIC_API_URL}/api/productimage/upload`;
 
 type ProductImage = {
     id: number;
@@ -113,23 +113,23 @@ export default function EditProductPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать продукт</h1>
+                <h1 style={styles.title}>Edit Product</h1>
 
                 <div style={styles.form}>
-                    <input name="name" value={form.name} onChange={handleChange} placeholder="Название" style={styles.input} />
-                    <input name="price" value={form.price} onChange={handleChange} placeholder="Цена" style={styles.input} />
-                    <input name="sale" value={form.sale} onChange={handleChange} placeholder="Скидка" style={styles.input} />
+                    <input name="name" value={form.name} onChange={handleChange} placeholder="Name" style={styles.input} />
+                    <input name="price" value={form.price} onChange={handleChange} placeholder="Price" style={styles.input} />
+                    <input name="sale" value={form.sale} onChange={handleChange} placeholder="Sale" style={styles.input} />
 
                     <textarea
                         name="description"
                         value={form.description}
                         onChange={handleChange}
-                        placeholder="Описание"
+                        placeholder="Description"
                         style={styles.textarea}
                     />
 
-                    <input name="warranty" value={form.warranty} onChange={handleChange} placeholder="Гарантия" style={styles.input} />
-                    <input name="maxQuantity" value={form.maxQuantity} onChange={handleChange} placeholder="Максимальное количество" style={styles.input} />
+                    <input name="warranty" value={form.warranty} onChange={handleChange} placeholder="Warranty" style={styles.input} />
+                    <input name="maxQuantity" value={form.maxQuantity} onChange={handleChange} placeholder="Maximum quantity" style={styles.input} />
 
                     <label style={styles.checkbox}>
                         <input
@@ -139,7 +139,7 @@ export default function EditProductPage() {
                                 setForm({ ...form, available: e.target.checked })
                             }
                         />
-                        Доступен
+                        Available
                     </label>
 
                     <textarea
@@ -191,14 +191,14 @@ export default function EditProductPage() {
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/products")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

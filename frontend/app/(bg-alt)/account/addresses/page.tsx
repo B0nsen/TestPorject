@@ -10,14 +10,14 @@ export default function AccountAddresses() {
   if (!userData) return <div>Loading...</div>;
 
   const handleSubmit = async (data: any) => {
-    await fetch(`http://localhost:5012/api/address/info`, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/address/info`, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+      });
 
     console.log("Saved data:", data);
   };

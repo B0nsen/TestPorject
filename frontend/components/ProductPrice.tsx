@@ -8,10 +8,12 @@ export default function ProductPrice({ price = 0 }: ProductPriceProps) {
   const [dollars, cents] = price.toFixed(2).split(".");
 
   return (
-    <div className="flex items-start">
-      <span className="text-[11.7px]">$</span>
-      <span className="text-[26.1px]">{dollars}.</span>
-      <span className="text-[11.7px]">{cents}</span>
+    <div className="flex items-start font-['Inter',_sans-serif] text-[#10141C]">
+      <span className="text-[13px] font-normal mt-0.5 mr-0.5">$</span>
+      <span className="text-[32px] leading-[32px] font-bold tracking-tight">
+        {dollars}
+      </span>
+      <span className="text-[13px] font-normal mt-0.5">{cents}</span>
     </div>
   );
 }

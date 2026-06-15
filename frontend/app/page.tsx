@@ -10,16 +10,15 @@ import BestSellersBanner from "@/components/BestSellersBanner";
 import CatalogSlider from "@/components/CatalogSlider";
 
 async function getHomepageData() {
-   const url = process.env.NEXT_PUBLIC_API_URL;
-  const API_URL = `${url}/api/homepage`;
-    console.log(API_URL);
+    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/homepage`;
+
   try {
     const res = await fetch(API_URL, { cache: "no-store" });
     if (res.ok) {
       console.log("Данные главной страницы успешно загружены с API!");
       return await res.json();
     }
-    throw new Error(`Бэкенд ответил со статусом: ${res.status}`);
+    throw new Error(`Error: ${res.status}`);
 
   } catch (error) {
     console.warn(
@@ -86,11 +85,9 @@ export default async function Home() {
             </div>
           </div>
 
-          <Link href="/catalog?sale=true" passHref legacyBehavior>
-            <a className="banner-btn">
-              Shop Now
-            </a>
-          </Link>
+                  <Link href="/catalog?sale=true" className="banner-btn">
+                      Shop Now
+                  </Link>
         </SalesBanner>
       </div>
 

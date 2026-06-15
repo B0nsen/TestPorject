@@ -1,6 +1,6 @@
 "use client";
 
-const API_BASE = "http://localhost:5012";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 const WISHLIST_ITEM_API = `${API_BASE}/api/wishlistitem`;
 
 export function useWishlist() {

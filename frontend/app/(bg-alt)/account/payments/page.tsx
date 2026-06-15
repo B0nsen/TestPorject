@@ -5,7 +5,7 @@ import PaymentForm from "@/components/PaymentForm";
 import PaymentBenefits from "@/components/PaymentBenefits";
 import { PaymentData } from "@/lib/types/payment";
 
-const API = "http://localhost:5012/api/creditcard/add";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/creditcard/add`;
 
 const parseExpiryDate = (value: string) => {
     const [monthRaw, yearRaw] = value.split("/");

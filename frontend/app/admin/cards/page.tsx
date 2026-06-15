@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5012/api/creditcard";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/creditcard`;
 
 type CreditCard = {
     id: number;
@@ -37,7 +37,7 @@ export default function CreditCardsPage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить карту?");
+        const confirmed = window.confirm("Are you sure you want to delete the card?");
 
         if (!confirmed) return;
 
@@ -68,19 +68,19 @@ export default function CreditCardsPage() {
             .some((value) => value.includes(normalizedSearch));
     });
 
-   
+
 
 
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Карты</h1>
+                <h1 style={styles.title}>Cards</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/cards/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
 
@@ -88,54 +88,54 @@ export default function CreditCardsPage() {
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по номеру карты, владельцу или User ID"
+                placeholder="Search by card number, holder, or User ID"
                 style={styles.searchInput}
             />
 
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Номер карты</th>
-                        <th style={styles.th}>Владелец</th>
-                        <th style={styles.th}>Срок</th>
-                        <th style={styles.th}>CVV</th>
-                        <th style={styles.th}>User ID</th>
-                        <th style={styles.th}>Действия</th>
-                    </tr>
+                        <tr>
+                            <th style={styles.th}>ID</th>
+                            <th style={styles.th}>Card Number</th>
+                            <th style={styles.th}>Holder Name</th>
+                            <th style={styles.th}>Expiry</th>
+                            <th style={styles.th}>CVV</th>
+                            <th style={styles.th}>User ID</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {filteredCards.map((c) => (
+                        {filteredCards.map((c) => (
 
-                        <tr key={c.id} style={styles.tr}>
-                            <td style={styles.td}>{c.id}</td>
-                            <td style={styles.td}>{c.cardNumber}</td>
-                            <td style={styles.td}>{c.holderName}</td>
-                            <td style={styles.td}>
-                                {c.expiry ? c.expiry.slice(0, 10) : "-"}
-                            </td>
-                            <td style={styles.td}>{c.cvv}</td>
-                            <td style={styles.td}>{c.userId}</td>
+                            <tr key={c.id} style={styles.tr}>
+                                <td style={styles.td}>{c.id}</td>
+                                <td style={styles.td}>{c.cardNumber}</td>
+                                <td style={styles.td}>{c.holderName}</td>
+                                <td style={styles.td}>
+                                    {c.expiry ? c.expiry.slice(0, 10) : "-"}
+                                </td>
+                                <td style={styles.td}>{c.cvv}</td>
+                                <td style={styles.td}>{c.userId}</td>
 
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.editBtn}
-                                    onClick={() => router.push(`/admin/cards/${c.id}`)}
-                                >
-                                    Edit
-                                </button>
+                                <td style={styles.td}>
+                                    <button
+                                        style={styles.editBtn}
+                                        onClick={() => router.push(`/admin/cards/${c.id}`)}
+                                    >
+                                        Edit
+                                    </button>
 
-                                <button
-                                    style={styles.deleteBtn}
-                                    onClick={() => handleDelete(c.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                    <button
+                                        style={styles.deleteBtn}
+                                        onClick={() => handleDelete(c.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

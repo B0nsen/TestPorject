@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5012/api/address";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/address`;
 
 type Address = {
     id: number;
@@ -41,7 +41,7 @@ export default function AddressesPage() {
 
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить адрес?");
+        const confirmed = window.confirm("Are you sure you want to delete this address");
 
         if (!confirmed) return;
 
@@ -65,20 +65,20 @@ export default function AddressesPage() {
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Адреса</h1>
+                <h1 style={styles.title}>Addresses</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/addresses/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
 
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по номеру, стране, улице, почтовому коду, номеру дома, userId"
+                placeholder="Search by phone, country, street, postal code, house number, userId"
                 style={styles.searchInput}
             />
 
@@ -87,13 +87,13 @@ export default function AddressesPage() {
                     <thead>
                     <tr>
                         <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Страна</th>
-                        <th style={styles.th}>Город</th>
-                        <th style={styles.th}>Улица</th>
-                        <th style={styles.th}>Дом</th>
-                        <th style={styles.th}>Индекс</th>
+                        <th style={styles.th}>Country</th>
+                        <th style={styles.th}>City</th>
+                        <th style={styles.th}>Street</th>
+                        <th style={styles.th}>House</th>
+                        <th style={styles.th}>Postal Code</th>
                         <th style={styles.th}>Default</th>
-                        <th style={styles.th}>Действия</th>
+                        <th style={styles.th}>Actions</th>
                     </tr>
                     </thead>
 

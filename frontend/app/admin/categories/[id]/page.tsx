@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const API = "http://localhost:5012/api/category";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/category`;
 
 export default function EditCategoryPage() {
     const { id } = useParams();
@@ -58,27 +58,27 @@ export default function EditCategoryPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать категорию</h1>
+                <h1 style={styles.title}>Edit Category</h1>
 
                 <div style={styles.form}>
                     <input
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Название"
+                        placeholder="Name"
                         style={styles.input}
                     />
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/categories")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5012/api/order";
+const ORDER_API = `${process.env.NEXT_PUBLIC_API_URL}/api/order`;
 
 type OrderItem = {
     id: number;
@@ -45,7 +45,7 @@ export default function OrdersPage() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm("Вы уверены, что хотите удалить заказ?");
+        const confirmed = window.confirm("Are you sure you want to delete the order?");
 
         if (!confirmed) return;
 
@@ -83,85 +83,85 @@ export default function OrdersPage() {
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.title}>Заказы</h1>
+                <h1 style={styles.title}>Orders</h1>
 
                 <button
                     style={styles.addBtn}
                     onClick={() => router.push("/admin/orders/create")}
                 >
-                    + Добавить
+                    + Add
                 </button>
             </div>
 
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск по ID заказа, дате, Product ID или товару"
+                placeholder="Search by order ID, date, Product ID, or item"
                 style={styles.searchInput}
             />
 
             <div style={styles.resultInfo}>
-                Найдено: {filteredOrders.length} из {orders.length}
+                Found: {filteredOrders.length} out of {orders.length}
             </div>
 
 
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>Дата заказа</th>
-                        <th style={styles.th}>Товары</th>
-                        <th style={styles.th}>Кол-во позиций</th>
-                        <th style={styles.th}>Действия</th>
-                    </tr>
+                        <tr>
+                            <th style={styles.th}>ID</th>
+                            <th style={styles.th}>Order Date</th>
+                            <th style={styles.th}>Items</th>
+                            <th style={styles.th}>Items Count</th>
+                            <th style={styles.th}>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {filteredOrders.map((o) => (
-                        <tr key={o.id} style={styles.tr}>
-                            <td style={styles.td}>{o.id}</td>
+                        {filteredOrders.map((o) => (
+                            <tr key={o.id} style={styles.tr}>
+                                <td style={styles.td}>{o.id}</td>
 
-                            <td style={styles.td}>
-                                {o.orderDate ? new Date(o.orderDate).toLocaleDateString() : "-"}
-                            </td>
+                                <td style={styles.td}>
+                                    {o.orderDate ? new Date(o.orderDate).toLocaleDateString() : "-"}
+                                </td>
 
-                            <td style={styles.td}>
-                                {o.items?.length ? (
-                                    <div style={styles.itemsList}>
-                                        {o.items.map((item) => (
-                                            <div key={item.id} style={styles.itemLine}>
-                                                <span>
-                                                    {item.product?.name || `Product ID: ${item.productId}`}
-                                                </span>
-                                                <span style={styles.badge}>x{item.quantity}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    "-"
-                                )}
-                            </td>
+                                <td style={styles.td}>
+                                    {o.items?.length ? (
+                                        <div style={styles.itemsList}>
+                                            {o.items.map((item) => (
+                                                <div key={item.id} style={styles.itemLine}>
+                                                    <span>
+                                                        {item.product?.name || `Product ID: ${item.productId}`}
+                                                    </span>
+                                                    <span style={styles.badge}>x{item.quantity}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        "-"
+                                    )}
+                                </td>
 
-                            <td style={styles.td}>{o.items?.length || 0}</td>
+                                <td style={styles.td}>{o.items?.length || 0}</td>
 
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.editBtn}
-                                    onClick={() => router.push(`/admin/orders/${o.id}`)}
-                                >
-                                    Edit
-                                </button>
+                                <td style={styles.td}>
+                                    <button
+                                        style={styles.editBtn}
+                                        onClick={() => router.push(`/admin/orders/${o.id}`)}
+                                    >
+                                        Edit
+                                    </button>
 
-                                <button
-                                    style={styles.deleteBtn}
-                                    onClick={() => handleDelete(o.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                    <button
+                                        style={styles.deleteBtn}
+                                        onClick={() => handleDelete(o.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

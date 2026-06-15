@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-const API = "http://localhost:5012/api/creditcard";
+const API = `${process.env.NEXT_PUBLIC_API_URL}/api/creditcard`;
 
 export default function EditCreditCardPage() {
     const { id } = useParams();
@@ -69,14 +69,14 @@ export default function EditCreditCardPage() {
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1 style={styles.title}>Редактировать карту</h1>
+                <h1 style={styles.title}>Edit Card</h1>
 
                 <div style={styles.form}>
                     <input
                         name="cardNumber"
                         value={form.cardNumber}
                         onChange={handleChange}
-                        placeholder="Номер карты"
+                        placeholder="Card Number"
                         style={styles.input}
                     />
 
@@ -84,7 +84,7 @@ export default function EditCreditCardPage() {
                         name="holderName"
                         value={form.holderName}
                         onChange={handleChange}
-                        placeholder="Имя владельца"
+                        placeholder="Holder Name"
                         style={styles.input}
                     />
 
@@ -114,14 +114,14 @@ export default function EditCreditCardPage() {
 
                     <div style={styles.actions}>
                         <button style={styles.saveBtn} onClick={handleSave}>
-                            Сохранить
+                            Save
                         </button>
 
                         <button
                             style={styles.cancelBtn}
                             onClick={() => router.push("/admin/cards")}
                         >
-                            Отмена
+                            Cancel
                         </button>
                     </div>
                 </div>

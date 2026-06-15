@@ -6,7 +6,8 @@ import truckIcon from "@/assets/icons/delivery.svg";
 export default function DeliveryInfo() {
   return (
     <div 
-      className="hidden layout-sm:flex items-center gap-1 w-[130px] h-[40px] py-[5px] text-[#E6ECF5] flex-shrink-0"
+     
+      className="hidden layout-sm:flex items-center gap-1 w-[130px] h-[40px] py-[5px] text-[#E6ECF5] flex-shrink-0 layout-sm:ml-[35px]"
     >
       <div className="w-[40px] h-[40px] relative flex-shrink-0">
         <Image
@@ -17,7 +18,6 @@ export default function DeliveryInfo() {
         />
       </div>
 
-     
       <div className="flex flex-col justify-center leading-tight text-text-main">
         <span className="text-[11px] font-normal leading-[14px]">
           Delivery to:
