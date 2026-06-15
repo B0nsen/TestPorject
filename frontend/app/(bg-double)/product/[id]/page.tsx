@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 import CatalogSlider from "@/components/CatalogSlider";
 
-const API_BASE = "http://localhost:5012";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 type Wishlist = {
   id: number;
