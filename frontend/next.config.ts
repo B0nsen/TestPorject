@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     async rewrites() {
         return [
             {
-                source: '/api/:path*',
+                source: '//api/:path*',
                 destination: 'http://orbis.eu-central-1.elasticbeanstalk.com/api/:path*',
             },
         ];
