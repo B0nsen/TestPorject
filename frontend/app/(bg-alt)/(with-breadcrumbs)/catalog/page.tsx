@@ -20,11 +20,11 @@ export default function CatalogPage() {
     const [filters, setFilters] = useState<any[]>([]);
     const [totalPages, setTotalPages] = useState(1);
 
-    // Безопасная инициализация параметров URL без использования useSearchParams
+    // Р‘РµР·РѕРїР°СЃРЅР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ URL Р±РµР· РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ useSearchParams
     const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams());
     const [page, setPageInternal] = useState(1);
 
-    // Синхронизируем параметры URL только при рендере в браузере
+    // РЎРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРј РїР°СЂР°РјРµС‚СЂС‹ URL С‚РѕР»СЊРєРѕ РїСЂРё СЂРµРЅРґРµСЂРµ РІ Р±СЂР°СѓР·РµСЂРµ
     useEffect(() => {
         if (typeof window !== "undefined") {
             const params = new URLSearchParams(window.location.search);
@@ -37,14 +37,14 @@ export default function CatalogPage() {
     const [pageSize, setPageSize] = useState(2);
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Вызываем кастомный хук useFilters ОДИН раз и сразу забираем всё необходимое
+    // Р’С‹Р·С‹РІР°РµРј РєР°СЃС‚РѕРјРЅС‹Р№ С…СѓРє useFilters РћР”РРќ СЂР°Р· Рё СЃСЂР°Р·Сѓ Р·Р°Р±РёСЂР°РµРј РІСЃС‘ РЅРµРѕР±С…РѕРґРёРјРѕРµ
     const {
         selectedFilters,
         getNormalizedFilters,
         updateFilter,
         removeFilter,
         clearFilters,
-        setPage: handlePageChange, // Переименовали, чтобы избежать конфликта имен
+        setPage: handlePageChange, // РџРµСЂРµРёРјРµРЅРѕРІР°Р»Рё, С‡С‚РѕР±С‹ РёР·Р±РµР¶Р°С‚СЊ РєРѕРЅС„Р»РёРєС‚Р° РёРјРµРЅ
     } = useFilters(filters, searchParams);
 
     const showThird = useIsAbove(847);
