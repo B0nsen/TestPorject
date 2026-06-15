@@ -12,36 +12,42 @@ import { CatalogGrid } from "@/components/CatalogGrid";
 
 import { useFilters } from "@/lib/hooks/useFilters";
 import { useIsAbove } from "@/lib/hooks/useIsAbove";
-import { useSearchParams } from "next/navigation";
 import { Limited } from "@/lib/types/limited";
 
 export default function CatalogPage() {
-  const [products, setProducts] = useState<any[]>([]);
-  const [limitedProducts, setLimitedProducts] = useState<Limited[]>([]);
-  const [filters, setFilters] = useState<any[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-    const rawSearchParams = useSearchParams();
-    const searchParams = typeof window === "undefined"
-        ? new URLSearchParams()
-        : rawSearchParams;
+    const [products, setProducts] = useState<any[]>([]);
+    const [limitedProducts, setLimitedProducts] = useState<Limited[]>([]);
+    const [filters, setFilters] = useState<any[]>([]);
+    const [totalPages, setTotalPages] = useState(1);
 
-  const [totalCount, setTotalCount] = useState(0);
-  const [pageSize, setPageSize] = useState(2);
-  const [currentPage, setCurrentPage] = useState(1);
+    // Безопасная инициализация параметров URL без использования useSearchParams
+    const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams());
+    const [page, setPageInternal] = useState(1);
 
-  const page = Number(searchParams.get("page")) || 1;
+    // Синхронизируем параметры URL только при рендере в браузере
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const params = new URLSearchParams(window.location.search);
+            setSearchParams(params);
+            setPageInternal(Number(params.get("page")) || 1);
+        }
+    }, []);
 
-  const {
-    selectedFilters,
-    getNormalizedFilters,
-    updateFilter,
-    removeFilter,
-    clearFilters,
-  } = useFilters(filters, searchParams);
+    const [totalCount, setTotalCount] = useState(0);
+    const [pageSize, setPageSize] = useState(2);
+    const [currentPage, setCurrentPage] = useState(1);
 
-  const showThird = useIsAbove(847);
+    // Вызываем кастомный хук useFilters ОДИН раз и сразу забираем всё необходимое
+    const {
+        selectedFilters,
+        getNormalizedFilters,
+        updateFilter,
+        removeFilter,
+        clearFilters,
+        setPage: handlePageChange, // Переименовали, чтобы избежать конфликта имен
+    } = useFilters(filters, searchParams);
 
-  const { setPage } = useFilters(filters, searchParams);
+    const showThird = useIsAbove(847);
 
   useEffect(() => {
     const fetchFilters = async () => {
@@ -81,7 +87,7 @@ export default function CatalogPage() {
     };
 
     fetchProducts();
-  }, [searchParams]);
+  }, [page, searchParams]);
 
   if (showThird === null) {
     return null;
@@ -145,9 +151,9 @@ export default function CatalogPage() {
             ))}
           </CatalogGrid>
           <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
+                      currentPage={page}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
           />
         </div>
       </div>
