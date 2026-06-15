@@ -83,7 +83,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("MyCorsPolicy", policy =>
     {
         policy
-            .WithOrigins("http://localhost:3000") // разрешенные домены
+            .WithOrigins("http://localhost:3000",
+            "https://master.dkpdvlnjjzw4.amplifyapp.com") // разрешенные домены
             .AllowAnyHeader()                  // разрешить любые заголовки
             .AllowAnyMethod()                  // разрешить любые методы (GET, POST...)
             .AllowCredentials();               // куки

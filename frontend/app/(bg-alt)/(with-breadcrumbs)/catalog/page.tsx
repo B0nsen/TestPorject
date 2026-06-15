@@ -15,9 +15,11 @@ import { useIsAbove } from "@/lib/hooks/useIsAbove";
 import { useSearchParams } from "next/navigation";
 import { Limited } from "@/lib/types/limited";
 
-import { API_URL } from "@/lib/api/api";
+//import { API_URL } from "@/lib/api/api";
 
 export default function CatalogPage() {
+
+    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
   const [products, setProducts] = useState<any[]>([]);
   const [limitedProducts, setLimitedProducts] = useState<Limited[]>([]);
   const [filters, setFilters] = useState<any[]>([]);
