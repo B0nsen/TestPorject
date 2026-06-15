@@ -10,7 +10,8 @@ import BestSellersBanner from "@/components/BestSellersBanner";
 import CatalogSlider from "@/components/CatalogSlider";
 
 async function getHomepageData() {
-  const API_URL = "http://localhost:5012/api/homepage";
+    const url = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = `${url}http://localhost:5012/api/homepage`;
 
   try {
     const res = await fetch(API_URL, { cache: "no-store" });
