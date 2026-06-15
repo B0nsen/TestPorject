@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
+export const dynamic = 'force-dynamic';
 import ProductCard from "@/components/ProductCard";
 import FiltersDesktop from "@/components/FiltersDesktop";
 import FiltersMobile from "@/components/FiltersMobile";
