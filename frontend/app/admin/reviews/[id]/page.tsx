@@ -25,8 +25,6 @@ export default function EditReviewPage() {
             setForm({
                 ...data,
                 rating: String(data.rating ?? ""),
-                helpful: String(data.helpful ?? "0"),
-                userId: String(data.userId ?? ""),
                 productId: String(data.productId ?? ""),
                 createdAt: data.createdAt ? data.createdAt.slice(0, 10) : "",
             });
@@ -56,7 +54,6 @@ export default function EditReviewPage() {
                 ...form,
                 rating: Number(form.rating),
                 helpful: Number(form.helpful),
-                userId: Number(form.userId),
                 productId: Number(form.productId),
             }),
         });
@@ -99,27 +96,12 @@ export default function EditReviewPage() {
                         style={styles.textarea}
                     />
 
-                    <input
-                        name="helpful"
-                        value={form.helpful}
-                        onChange={handleChange}
-                        placeholder="Helpful"
-                        style={styles.input}
-                    />
 
                     <input
                         name="createdAt"
                         type="date"
                         value={form.createdAt}
                         onChange={handleChange}
-                        style={styles.input}
-                    />
-
-                    <input
-                        name="userId"
-                        value={form.userId}
-                        onChange={handleChange}
-                        placeholder="User ID"
                         style={styles.input}
                     />
 

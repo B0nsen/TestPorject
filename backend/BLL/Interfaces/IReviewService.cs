@@ -11,5 +11,6 @@ public interface IReviewService
     Task<IEnumerable<ReviewDTO>> GetAll();
     Task<IEnumerable<ReviewGetDTO>> GetAllProductReview();
     Task<ReviewGetDTO> CreateReview(CreateReviewDTO entity, long uid);
+    Task UpdateReview(CreateReviewDTO entity, int Id);
     Task<bool> AddHelpful(int reviewId, int uid);
 }

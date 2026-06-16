@@ -66,12 +66,12 @@ export default function ReviewsPage() {
             <div style={styles.header}>
                 <h1 style={styles.title}>Reviews</h1>
 
-                <button
-                    style={styles.addBtn}
-                    onClick={() => router.push("/admin/reviews/create")}
-                >
-                    + Add
-                </button>
+                {/*<button*/}
+                {/*    style={styles.addBtn}*/}
+                {/*    onClick={() => router.push("/admin/reviews/create")}*/}
+                {/*>*/}
+                {/*    + Add*/}
+                {/*</button>*/}
             </div>
 
             <input

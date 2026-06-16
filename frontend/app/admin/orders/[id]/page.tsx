@@ -10,6 +10,7 @@ type OrderItemForm = {
     id?: number;
     orderId?: number;
     productId: string;
+    userId: number;
     quantity: string;
 };
 

@@ -70,6 +70,15 @@ namespace backend.Controllers
             );
         }
 
+        [HttpPost("edit/{id:int}")]
+        public async Task<ActionResult> EditReview([FromForm] CreateReviewDTO entity, int id)
+        {
+
+            await _service.UpdateReview(entity, id);
+            return NoContent();
+
+        }
+
         [HttpPut("helpful/{id}")]
         public async Task<ActionResult> AddHelpful(int id)
         {

@@ -217,6 +217,39 @@ public class ReviewService : IReviewService
         }
     }
 
+    public async Task UpdateReview(CreateReviewDTO entity, int Id)
+    {
+        if (entity == null)
+        {
+            logger.LogWarning("Null entity given to Update function in ReviewService");
+            throw new ArgumentNullException(nameof(entity));
+        }
+
+        if (Id <= 0)
+        {
+            logger.LogWarning("Invalid ID {Id} in Update function in ReviewService", Id);
+            throw new ArgumentException("ID must be greater than 0", nameof(Id));
+        }
+
+        try
+        {
+            var exists = await db.R_Review.GetById(Id);
+            if (exists == null)
+            {
+                logger.LogWarning("Review with ID {Id} not found in Update function", Id);
+                throw new KeyNotFoundException($"Review with ID {Id} not found");
+            }
+            mapper.Map(entity, exists);
+            await db.R_Review.Update(exists);
+            await db.SaveAsync();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error updating Review with ID {Id} in ReviewService", Id);
+            throw new ApplicationException("Error updating Review", ex);
+        }
+    }
+
     public async Task<bool> AddHelpful(int reviewId, int uid)
     {
         if (reviewId <= 0 || uid <= 0)

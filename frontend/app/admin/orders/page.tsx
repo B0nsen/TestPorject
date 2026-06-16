@@ -85,12 +85,12 @@ export default function OrdersPage() {
             <div style={styles.header}>
                 <h1 style={styles.title}>Orders</h1>
 
-                <button
-                    style={styles.addBtn}
-                    onClick={() => router.push("/admin/orders/create")}
-                >
-                    + Add
-                </button>
+                {/*<button*/}
+                {/*    style={styles.addBtn}*/}
+                {/*    onClick={() => router.push("/admin/orders/create")}*/}
+                {/*>*/}
+                {/*    + Add*/}
+                {/*</button>*/}
             </div>
 
             <input
