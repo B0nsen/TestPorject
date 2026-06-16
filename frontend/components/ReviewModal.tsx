@@ -195,12 +195,12 @@ export default function ReviewModal({
                   setImages((prev) => [...prev, ...files]);
                 }}
               />
-              <MediaUploadButton
-                type="video"
-                onFilesSelect={(files) => {
-                  setVideos((prev) => [...prev, ...files]);
-                }}
-              />
+              {/*<MediaUploadButton*/}
+              {/*  type="video"*/}
+              {/*  onFilesSelect={(files) => {*/}
+              {/*    setVideos((prev) => [...prev, ...files]);*/}
+              {/*  }}*/}
+              {/*/>*/}
             </div>
           </UserReviewField>
 
