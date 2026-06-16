@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 const ORDER_API = `${process.env.NEXT_PUBLIC_API_URL}/api/order`;
-const ORDER_ITEM_API = `${process.env.NEXT_PUBLIC_API_URL}/api/orderitem`;
+const ORDER_ITEM_API = `${process.env.NEXT_PUBLIC_API_URL}/api/order`;
 
 type OrderItemForm = {
     id?: number;

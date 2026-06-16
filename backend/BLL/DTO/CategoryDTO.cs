@@ -24,5 +24,5 @@ public class CategoryDTO
 public class CreateCategoryDTO
 {
     public string Name { get; set; }
-    public IFormFile file { get; set; } = null!;
+    public IFormFile? file { get; set; }
 }

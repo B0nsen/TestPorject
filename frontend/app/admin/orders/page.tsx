@@ -30,7 +30,7 @@ export default function OrdersPage() {
 
     useEffect(() => {
         const loadOrders = async () => {
-            const res = await fetch(API);
+            const res = await fetch(ORDER_API);
 
             if (!res.ok) {
                 console.error("Failed to load orders:", res.status);
@@ -49,7 +49,7 @@ export default function OrdersPage() {
 
         if (!confirmed) return;
 
-        const res = await fetch(`${API}/${id}`, {
+        const res = await fetch(`${ORDER_API}/${id}`, {
             method: "DELETE",
         });
 
