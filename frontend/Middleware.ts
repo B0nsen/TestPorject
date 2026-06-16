@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
         }
 
         const isAdmin = await res.json();
-
+        console.log(isAdmin);
         if (!isAdmin) {
             return NextResponse.redirect(new URL("/login", request.url));
         }
