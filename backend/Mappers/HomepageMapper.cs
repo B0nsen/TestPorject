@@ -46,7 +46,7 @@ namespace backend.Mappers
                         Title = "Home & Kitchen",
                         Items = new List<CategoryDTO>
                         {
-                            new CategoryDTO(categories[7]),
+                            new CategoryDTO(categories[11]),
                             new CategoryDTO(categories[8]),
                             new CategoryDTO(categories[9]),
                             new CategoryDTO(categories[10]),
@@ -57,7 +57,7 @@ namespace backend.Mappers
                         Title = "Gaming & Entertainment",
                         Items = new List<CategoryDTO>
                         {
-                            new CategoryDTO(categories[11]),
+                            new CategoryDTO(categories[40]),
                             new CategoryDTO(categories[12]),
                             new CategoryDTO(categories[13]),
                             new CategoryDTO(categories[14]),

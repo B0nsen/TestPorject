@@ -36,7 +36,7 @@ export default function AboutProduct({
 
       <div className="flex justify-between items-center">
         <span className="flex flex-col">
-          <ProductPrice price={product.price.currentPrice} />
+          <ProductPrice price={product.price.currentPrice} colorClass="text-main" />
           <span className="flex items-center text-xs leading-4">
             <span className="layout-product-product-hidden ">
               List Price: ${product.price.listPrice}
