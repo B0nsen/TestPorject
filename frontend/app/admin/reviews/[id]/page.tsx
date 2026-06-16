@@ -45,7 +45,7 @@ export default function EditReviewPage() {
     };
 
     const handleSave = async () => {
-        const res = await fetch(`${API}/${id}`, {
+        const res = await fetch(`${API}/edit/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
