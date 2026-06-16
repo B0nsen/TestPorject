@@ -51,7 +51,8 @@ export default function EditReviewPage() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                ...form,
+                title: String(form.title),
+                review: String(form.comment),
                 rating: Number(form.rating),
                 helpful: Number(form.helpful),
                 productId: Number(form.productId),

@@ -234,12 +234,20 @@ public class ReviewService : IReviewService
         try
         {
             var exists = await db.R_Review.GetById(Id);
+            var review = new Review
+            {
+                ProductId = entity.ProductId,
+                Comment = entity.Review,
+                Title = entity.Title,
+                Rating = entity.Rating,
+                UserId = exists.UserId,
+            };
             if (exists == null)
             {
                 logger.LogWarning("Review with ID {Id} not found in Update function", Id);
                 throw new KeyNotFoundException($"Review with ID {Id} not found");
             }
-            mapper.Map(entity, exists);
+            mapper.Map(review, exists);
             await db.R_Review.Update(exists);
             await db.SaveAsync();
         }
