@@ -22,7 +22,7 @@ export default async function AccountLayout({
 
     const isLoggedIn = await res.json();
     console.log(isLoggedIn);
-  if (!isLoggedIn) {
+  if (isLoggedIn) {
     redirect("/login");
   }
 
