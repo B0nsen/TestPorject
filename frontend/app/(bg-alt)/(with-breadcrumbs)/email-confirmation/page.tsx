@@ -4,8 +4,7 @@ import { Button } from "@/components/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5012";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EmailConfirmationPage() {
   const router = useRouter();

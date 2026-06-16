@@ -306,7 +306,7 @@ public async Task Register(RegisterDTO dto)
     await db.R_EmailConfirmationToken.Add(confirmationToken);
 
     var confirmationLink =
-        $"http://localhost:3000/email-confirmation?token={token}";
+        $"https://master.dkpdvlnjjzw4.amplifyapp.com/email-confirmation?token={token}";
 
     await emailService.SendAsync(
         user.Email,
@@ -367,7 +367,7 @@ public async Task ForgotPassword(string email)
 
     await db.R_PasswordResetToken.Add(resetToken);
 
-    var resetLink = $"http://localhost:3000/reset-password?token={token}";
+    var resetLink = $"https://master.dkpdvlnjjzw4.amplifyapp.com/reset-password?token={token}";
 
     await emailService.SendAsync(
         user.Email,

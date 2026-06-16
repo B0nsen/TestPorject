@@ -13,8 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5012";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ResetPasswordPage() {
   const [error, setError] = useState("");

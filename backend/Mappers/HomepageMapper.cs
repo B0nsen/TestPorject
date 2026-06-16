@@ -57,7 +57,7 @@ namespace backend.Mappers
                         Title = "Gaming & Entertainment",
                         Items = new List<CategoryDTO>
                         {
-                            new CategoryDTO(categories[40]),
+                            new CategoryDTO(categories[22]),
                             new CategoryDTO(categories[12]),
                             new CategoryDTO(categories[13]),
                             new CategoryDTO(categories[14]),
@@ -80,7 +80,7 @@ namespace backend.Mappers
                     new CategoryDTO(categories[19]),
                             new CategoryDTO(categories[20]),
                             new CategoryDTO(categories[21]),
-                            new CategoryDTO(categories[22]),
+                            new CategoryDTO(categories[23]),
                 },
                 catalogSlider = dtoItems.Take(8).ToList(),
                 recommendedRow3 = new List<RecommendedRow3>
