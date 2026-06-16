@@ -15,11 +15,10 @@ export default async function AccountLayout({
     .join("; ");
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/islogin`, {
-        headers: {
-            Cookie: cookieHeader,
-        },
-        cache: "no-store",
+        credentials: "include",
     });
+
+
 
   const isLoggedIn = await res.json();
   if (!isLoggedIn) {
