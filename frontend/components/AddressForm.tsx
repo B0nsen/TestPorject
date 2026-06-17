@@ -41,7 +41,6 @@ export default function AddressForm({
     errors.street,
     errors.houseNumber,
     errors.city,
-    errors.state,
     errors.postalCode,
   ]);
   return (
@@ -53,15 +52,14 @@ export default function AddressForm({
         <NameFields register={register} errors={errors} />
 
         <PhoneField register={register} error={errors} />
-
         <InputWrapper label="Address" className="gap-[5px]">
           <div className="flex gap-[4px]">
             <FormInput {...register("street")} placeholder="Street" />
-            <FormInput {...register("houseNumber")} placeholder="House" />
           </div>
           <div className="flex gap-[4px]">
+            <FormInput {...register("houseNumber")} placeholder="House number" />
+
             <FormInput {...register("city")} placeholder="City" />
-            <FormInput {...register("state")} placeholder="State" />
             <FormInput {...register("postalCode")} placeholder="Postal code" />
           </div>
           <FormError message={addressError} />
