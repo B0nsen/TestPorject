@@ -2,18 +2,30 @@ import { useEffect, useMemo } from "react";
 import Image from "next/image";
 import Close from "@/assets/icons/close_small_alt.svg?react";
 
+
+type ImageFileItemProps = {
+  file?: File;
+  src?: string;
+  onRemove: () => void;
+};
 export default function ImageFileItem({
   file,
+  src,
   onRemove,
-}: {
-  file: File;
-  onRemove: () => void;
-}) {
-  const previewUrl = useMemo(() => URL.createObjectURL(file), [file]);
+}: ImageFileItemProps) {
+  const previewUrl = useMemo(() => {
+    if (src) return src;
+    if (file) return URL.createObjectURL(file);
+    return "";
+  }, [file, src]);
 
   useEffect(() => {
-    return () => URL.revokeObjectURL(previewUrl);
-  }, [previewUrl]);
+    if (!file) return;
+
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl, file]);
 
   return (
     <div
@@ -22,7 +34,7 @@ export default function ImageFileItem({
     >
       <Image
         src={previewUrl}
-        alt={file.name}
+        alt={file?.name ?? "image"}
         fill
         unoptimized
         className="object-cover rounded-[8px] transition duration-200 group-hover:scale-105 group-hover:brightness-75"

@@ -30,7 +30,7 @@ export default function ReviewModal({
   const [review, setReview] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [videos, setVideos] = useState<File[]>([]);
-
+  const [existingImages, setExistingImages] = useState<string[]>([]);
   const hasReview = !!userReview;
   const hasInitialized = useRef(false);
 
@@ -49,19 +49,21 @@ export default function ReviewModal({
       setTitle(userReview.title ?? "");
       setReview(userReview.fullText ?? "");
       setRating(userReview.rating ?? 5);
+
+      setExistingImages(userReview.images ?? []);
     } else {
       resetForm();
     }
 
     hasInitialized.current = true;
   }, [isOpen, userReview]);
-
   const resetForm = () => {
     setRating(5);
     setTitle("");
     setReview("");
     setImages([]);
     setVideos([]);
+    setExistingImages([]);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -192,9 +194,15 @@ export default function ReviewModal({
             <div className="sm:flex-row flex-col flex items-top gap-[20px] sm:items-center items-start">
               <UploadedFilesList
                 images={images}
+                existingImages={existingImages}
                 videos={videos}
                 onRemoveImage={(index) =>
                   setImages((prev) => prev.filter((_, i) => i !== index))
+                }
+                onRemoveExistingImage={(index) =>
+                  setExistingImages((prev) =>
+                    prev.filter((_, i) => i !== index),
+                  )
                 }
                 onRemoveVideo={(index) =>
                   setVideos((prev) => prev.filter((_, i) => i !== index))
