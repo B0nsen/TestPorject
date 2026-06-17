@@ -6,7 +6,6 @@ import { NameFields } from "@/components/NameFields";
 import { PhoneField } from "@/components/PhoneField";
 import FormButton from "@/components/FormButton";
 import { getFirstErrorMessage } from "@/lib/utils/formErrors";
-
 import {
   AddressFormValues,
   addressSchema,
@@ -15,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "./FormError";
 import CountrySelect from "./CountrySelector";
+import { DEFAULT_COUNTRY } from "@/lib/utils/countries";
+
 
 type AddressFormProps = {
   defaultValues?: any;
@@ -26,7 +27,7 @@ export default function AddressForm({
   onSubmit,
   submitLabel = "Save",
 }: AddressFormProps) {
-  
+
   const {
     register,
     handleSubmit,
@@ -37,10 +38,10 @@ export default function AddressForm({
     resolver: zodResolver(addressSchema),
     defaultValues: {
       ...defaultValues,
-      country: defaultValues?.country ?? "US",
+      country: defaultValues?.country || DEFAULT_COUNTRY,
     },
   });
-  
+
   const country = watch("country");
   const addressError = getFirstErrorMessage([
     errors.street,
@@ -76,7 +77,7 @@ export default function AddressForm({
 
         <InputWrapper className="max-w-[200px]" label="Country">
           <CountrySelect
-            value={country}
+            value={country || DEFAULT_COUNTRY}
             onChange={(val) => setValue("country", val)}
             error={errors.country?.message}
           />

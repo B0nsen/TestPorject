@@ -1,16 +1,5 @@
+import { countryOptions, DEFAULT_COUNTRY } from "@/lib/utils/countries";
 import { useMemo, useState } from "react";
-import countries from "world-countries";
-
-type CountryOption = {
-  label: string;
-  value: string;
-};
-export const countryOptions: CountryOption[] = countries
-  .map((c) => ({
-    label: c.name.common,
-    value: c.cca2,
-  }))
-  .sort((a, b) => a.label.localeCompare(b.label));
 
 type CountrySelectProps = {
   value: string;
@@ -26,10 +15,14 @@ export default function CountrySelect({
   const [open, setOpen] = useState(false);
   const getFlagUrl = (code: string) =>
     `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
-  const selected = useMemo(() => {
-    return countryOptions.find((c) => c.value === value) ?? countryOptions[0];
-  }, [value]);
 
+  const selected = useMemo(() => {
+    return (
+      countryOptions.find((c) => c.value === value) ||
+      countryOptions.find((c) => c.value === DEFAULT_COUNTRY) ||
+      countryOptions[0]
+    );
+  }, [value]);
   return (
     <div className="relative w-full text-input">
       <div className="w-full h-[40px] bg-input-surface-default flex items-center rounded-[10px]  ">
@@ -48,20 +41,23 @@ export default function CountrySelect({
 
         <button
           type="button"
-          className="h-full flex items-center pr-[15px]"
+          className="h-full flex items-center pr-[15px] cursor-pointer"
+          onClick={() => setOpen((v) => !v)}
         >
-          <span className="text-[13px]">▾</span> 
+          <span className="text-[13px]">▾</span>
         </button>
       </div>
 
       {open && (
-        <div className="absolute left-0 top-[44px] w-full overflow-hidden z-50 max-h-[220px] overflow-y-auto no-scrollbar
-        bg-input-surface-default rounded-[10px] shadow-md  ">
+        <div
+          className="absolute left-0 top-[44px] w-full overflow-hidden z-50 max-h-[220px] overflow-y-auto no-scrollbar
+        bg-input-surface-default rounded-[10px] shadow-md  "
+        >
           {countryOptions.map((c) => (
             <button
               key={c.value}
               type="button"
-              className="w-full text-left px-[12px] py-[10px] hover:bg-gray-100 text-[13px]  cursor-pointer"
+              className="w-full text-left px-[12px] py-[10px] hover:bg-surface-accent-muted text-[13px]  cursor-pointer"
               onClick={() => {
                 onChange(c.value);
                 setOpen(false);
