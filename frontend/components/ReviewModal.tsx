@@ -126,7 +126,32 @@ export default function ReviewModal({
     resetForm();
     onClose();
   };
+  const handleDeleteReview = async () => {
+    if (!userReview?.id) return;
 
+    try {
+      setIsSubmitting(true);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/Review/${userReview.id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      if (!response.ok) {
+        console.error("Failed to delete review");
+        return;
+      }
+      onReviewCreated();
+      handleClose();
+    } catch (err) {
+      console.error("Error deleting review:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   if (!isOpen) return null;
 
   return (
@@ -139,9 +164,7 @@ export default function ReviewModal({
         className="card-default p-[20px] rounded-[20px] w-[1082px] max-h-[95vh] flex flex-col gap-[24px]"
         onClick={(e) => e.stopPropagation()}
       >
-        {userReview && (
-          <UserReviewStatus onDelete={() => console.log("delete review")} />
-        )}
+        {userReview && <UserReviewStatus onDelete={handleDeleteReview} />}
         <div className="overflow-y-auto flex flex-col gap-[18px] no-scrollbar">
           <UserReviewField label="Make a review about">
             <div className="flex items-top gap-[12px]">
