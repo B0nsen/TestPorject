@@ -10,6 +10,7 @@ import { Review } from "@/lib/types/review";
 import UserReviewStatus from "./UserReviewActions";
 
 import { createReview, deleteReview, editReview } from "@/lib/api/review";
+import ConfirmModal from "./ConfirmModal";
 
 type ReviewModalProps = {
   isOpen: boolean;
@@ -26,12 +27,15 @@ export default function ReviewModal({
   onClose,
 }: ReviewModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
   const [rating, setRating] = useState(5);
   const [title, setTitle] = useState("");
   const [review, setReview] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [videos, setVideos] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
+
   const hasReview = !!userReview;
   const hasInitialized = useRef(false);
 
@@ -117,6 +121,9 @@ export default function ReviewModal({
       setIsSubmitting(false);
     }
   };
+  const handleRequestDelete = () => {
+    setShowDeleteConfirm(true);
+  };
   const handleClose = () => {
     resetForm();
     onClose();
@@ -133,7 +140,7 @@ export default function ReviewModal({
         className="card-default p-[20px] rounded-[20px] w-[1082px] max-h-[95vh] flex flex-col gap-[24px]"
         onClick={(e) => e.stopPropagation()}
       >
-        {userReview && <UserReviewStatus onDelete={handleDeleteReview} />}
+        {userReview && <UserReviewStatus onDelete={handleRequestDelete} />}
         <div className="overflow-y-auto flex flex-col gap-[18px] no-scrollbar">
           <UserReviewField label="Make a review about">
             <div className="flex items-top gap-[12px]">
@@ -222,6 +229,18 @@ export default function ReviewModal({
           </CtaButton>
         </div>
       </form>
+
+      <ConfirmModal
+        open={showDeleteConfirm}
+        title="Delete review?"
+        description="This action cannot be undone."
+        confirmText="Delete"
+        onCancel={() => setShowDeleteConfirm(false)}
+        onConfirm={async () => {
+          setShowDeleteConfirm(false);
+          await handleDeleteReview();
+        }}
+      />
     </div>
   );
 }
