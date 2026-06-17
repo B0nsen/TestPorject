@@ -41,7 +41,7 @@ export default function CatalogProductCard({
           src={product.imageUrl}
           alt={product.title}
           fill
-          className="object-contain object-center p-2"
+          className="object-contain object-center p-2 transition-transform duration-300 hover:scale-105"
           sizes="(max-width: 640px) 100vw, 50vw"
         />
 
