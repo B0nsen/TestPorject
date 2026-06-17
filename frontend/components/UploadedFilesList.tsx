@@ -17,7 +17,7 @@ export default function UploadedFilesList({
   if (!hasFiles) return null;
 
   return (
-    <div className="flex flex-wrap gap-[8px] text-accent">
+    <div className="flex flex-wrap gap-[20px] text-accent">
       {images.map((file, index) => (
         <ReviewImagePreview
           key={`img-${index}`}

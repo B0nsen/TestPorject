@@ -36,7 +36,7 @@ export default function ReviewModal({
 
   console.log(userReview);
   useLockBodyScroll(isOpen);
-  
+
   useEffect(() => {
     if (!isOpen) {
       hasInitialized.current = false;
@@ -92,8 +92,8 @@ export default function ReviewModal({
 
     try {
       const url = isEditMode
-          ? `${process.env.NEXT_PUBLIC_API_URL}/api/review/edit`
-          : `${process.env.NEXT_PUBLIC_API_URL}/api/review/create`;
+        ? `${process.env.NEXT_PUBLIC_API_URL}/api/review/edit`
+        : `${process.env.NEXT_PUBLIC_API_URL}/api/review/create`;
 
       const method = isEditMode ? "PUT" : "POST";
 
@@ -189,7 +189,17 @@ export default function ReviewModal({
             />
           </UserReviewField>
           <UserReviewField label="Add real photos of the product">
-            <div className="flex items-top gap-[10px]">
+            <div className="sm:flex-row flex-col flex items-top gap-[20px] sm:items-center items-start">
+              <UploadedFilesList
+                images={images}
+                videos={videos}
+                onRemoveImage={(index) =>
+                  setImages((prev) => prev.filter((_, i) => i !== index))
+                }
+                onRemoveVideo={(index) =>
+                  setVideos((prev) => prev.filter((_, i) => i !== index))
+                }
+              />
               <MediaUploadButton
                 type="image"
                 onFilesSelect={(files) => {
@@ -198,16 +208,7 @@ export default function ReviewModal({
               />
             </div>
           </UserReviewField>
-          <UploadedFilesList
-            images={images}
-            videos={videos}
-            onRemoveImage={(index) =>
-              setImages((prev) => prev.filter((_, i) => i !== index))
-            }
-            onRemoveVideo={(index) =>
-              setVideos((prev) => prev.filter((_, i) => i !== index))
-            }
-          />
+
           <CtaButton
             type="submit"
             disabled={isSubmitting}

@@ -17,8 +17,8 @@ export default function ImageFileItem({
 
   return (
     <div
+      className="relative size-[77px] group cursor-pointer"
       onClick={onRemove}
-      className="relative size-[77px] group cursor-pointer "
     >
       <Image
         src={previewUrl}
@@ -30,9 +30,11 @@ export default function ImageFileItem({
 
       <button
         type="button"
-        className="absolute bottom-[-6px] right-[-6px] size-[19px] rounded-full bg-surface-accent flex items-center justify-center shadow-md z-10"
+        className="cursor-pointer absolute bottom-[-6px] right-[-6px] size-[19px] rounded-full bg-surface-accent flex items-center justify-center shadow-md z-10
+                 transition duration-200
+                 group-hover:scale-125 active:scale-95"
       >
-        <Close className="size-[11px] text-white" />
+        <Close className="size-[7px] text-white" />
       </button>
     </div>
   );
