@@ -4,11 +4,12 @@ import MediaUploadButton from "./MediaUploadButton";
 import UserReviewField from "./UserReviewField";
 import Image from "next/image";
 import { validateReviewForm } from "@/lib/validation/reviewValidation";
-import { useLockBodyScroll } from "@/lib/hooks/useLockBodyScroll";
 import CtaButton from "./CtaButton";
 import UploadedFilesList from "./UploadedFilesList";
 import { Review } from "@/lib/types/review";
 import UserReviewStatus from "./UserReviewActions";
+
+import { createReview, deleteReview, editReview } from "@/lib/api/review";
 
 type ReviewModalProps = {
   isOpen: boolean;
@@ -35,28 +36,23 @@ export default function ReviewModal({
   const hasInitialized = useRef(false);
 
   console.log(userReview);
-  useLockBodyScroll(isOpen);
-
   useEffect(() => {
     if (!isOpen) {
       hasInitialized.current = false;
       return;
     }
-
     if (hasInitialized.current) return;
-
     if (userReview) {
       setTitle(userReview.title ?? "");
       setReview(userReview.fullText ?? "");
       setRating(userReview.rating ?? 5);
-
       setExistingImages(userReview.images ?? []);
     } else {
       resetForm();
     }
-
     hasInitialized.current = true;
   }, [isOpen, userReview]);
+
   const resetForm = () => {
     setRating(5);
     setTitle("");
@@ -65,7 +61,6 @@ export default function ReviewModal({
     setVideos([]);
     setExistingImages([]);
   };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -93,31 +88,31 @@ export default function ReviewModal({
     }
 
     try {
-      const url = isEditMode
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/review/edit`
-        : `${process.env.NEXT_PUBLIC_API_URL}/api/review/create`;
+      const result = isEditMode
+        ? await editReview(content)
+        : await createReview(content);
 
-      const method = isEditMode ? "PUT" : "POST";
-
-      const response = await fetch(url, {
-        method,
-        credentials: "include",
-        body: content,
-      });
-
-      if (!response.ok) {
-        console.error(
-          isEditMode ? "Failed to update review" : "Failed to create review",
-        );
-        return;
-      }
-
-      const result = await response.json();
       console.log("Success:", result);
+
       onReviewCreated();
       resetForm();
     } catch (err) {
-      console.error("Error:", err);
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  const handleDeleteReview = async () => {
+    if (!userReview?.id) return;
+
+    try {
+      setIsSubmitting(true);
+      await deleteReview(userReview.id);
+
+      onReviewCreated();
+      handleClose();
+    } catch (err) {
+      console.error(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -125,32 +120,6 @@ export default function ReviewModal({
   const handleClose = () => {
     resetForm();
     onClose();
-  };
-  const handleDeleteReview = async () => {
-    if (!userReview?.id) return;
-
-    try {
-      setIsSubmitting(true);
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/Review/${userReview.id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      if (!response.ok) {
-        console.error("Failed to delete review");
-        return;
-      }
-      onReviewCreated();
-      handleClose();
-    } catch (err) {
-      console.error("Error deleting review:", err);
-    } finally {
-      setIsSubmitting(false);
-    }
   };
   if (!isOpen) return null;
 
