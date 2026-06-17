@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import useSWR from "swr";
-import { USER_KEY, fetcher } from "@/lib/api/user";
+import useSWR, { mutate } from "swr";
+import { USER_KEY, fetcher, userApi } from "@/lib/api/user";
 
 import personIcon from "@/assets/icons/person.svg";
 import ordersIcon from "@/assets/icons/orders.svg";
@@ -37,9 +37,9 @@ export const accountNavigationLinks = [
   { label: "Account Details", href: "/account", icon: personIcon },
 ];
 export default function AccountNavigation() {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  type ModalMode = "delete" | "logout" | null;
+  const [modalMode, setModalMode] = useState<ModalMode>(null);
   const [wishlistHref, setWishlistHref] = useState("/account/wishlist");
-
   const { data: userData } = useSWR<UserData>(USER_KEY, fetcher);
   useEffect(() => {
     const loadWishlistLink = async () => {
@@ -54,31 +54,29 @@ export default function AccountNavigation() {
     };
     loadWishlistLink();
   }, []);
-  
-  const handleConfirmDelete = async () => {
+  const handleConfirm = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/user/account`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-      if (!response.ok) {
-        throw new Error("Failed to delete account");
+      if (modalMode === "delete") {
+        await userApi.deleteAccount();
+        console.log("Account deleted");
       }
-      console.log("Account deleted");
+
+      if (modalMode === "logout") {
+        await userApi.logout();
+
+        console.log("logged out");
+
+        mutate(USER_KEY, null, false);
+        window.location.href = "/login";
+      }
     } catch (err) {
-      console.error("Delete failed:", err);
+      console.error("Action failed:", err);
     } finally {
-      setIsDeleteModalOpen(false);
+      setModalMode(null);
     }
   };
-  const handleCancelDelete = () => {
-    setIsDeleteModalOpen(false);
-  };
-  const handleLogOut = () => {
-    console.log("Log Out account clicked");
+  const handleCancel = () => {
+    setModalMode(null);
   };
   return (
     <div className="flex flex-col layout-account-sm:gap-[30px] gap-[20px]">
@@ -126,12 +124,15 @@ export default function AccountNavigation() {
             })}
         </div>
         <div className="flex flex-col gap-3">
-          <FormButton className="self-center" onClick={handleLogOut}>
+          <FormButton
+            className="self-center"
+            onClick={() => setModalMode("logout")}
+          >
             Log Out
           </FormButton>
           <FormButton
             className="self-center"
-            onClick={() => setIsDeleteModalOpen(true)}
+            onClick={() => setModalMode("delete")}
           >
             Delete Account
           </FormButton>
@@ -139,12 +140,16 @@ export default function AccountNavigation() {
       </div>
 
       <ConfirmModal
-        open={isDeleteModalOpen}
-        title="Delete account?"
-        description="This action cannot be undone."
-        confirmText="Delete"
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
+        open={modalMode !== null}
+        title={modalMode === "delete" ? "Delete account?" : "Log out?"}
+        description={
+          modalMode === "delete"
+            ? "This action cannot be undone."
+            : "You will be signed out of your account."
+        }
+        confirmText={modalMode === "delete" ? "Delete" : "Log out"}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
       />
     </div>
   );
