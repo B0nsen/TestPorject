@@ -75,6 +75,7 @@ export default function CatalogPage() {
       setLimitedProducts(data.limited);
 
       console.log(data.limited);
+      console.log(data.products);
     };
 
     fetchProducts();

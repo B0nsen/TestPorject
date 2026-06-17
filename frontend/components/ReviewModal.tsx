@@ -142,12 +142,12 @@ export default function ReviewModal({
         <div className="overflow-y-auto flex flex-col gap-[18px] no-scrollbar">
           <UserReviewField label="Make a review about">
             <div className="flex items-top gap-[12px]">
-              <div className="size-[72px] relative shrink-0 rounded-[10px] overflow-hidden">
+              <div className="size-[72px] relative shrink-0 rounded-[10px] overflow-hidden bg-img">
                 <Image
                   src={product.images.main}
                   alt={product.title}
                   fill
-                  className="object-cover"
+                  className="object-contain object-center p-[3px]"
                 />
               </div>
               <div className="flex-col flex gap-[8px]">

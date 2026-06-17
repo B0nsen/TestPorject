@@ -100,16 +100,11 @@ export default function ProductPage() {
     }
   };
 
-  // ИСПРАВЛЕНО ТУТ: Смена цвета сердечка происходит СТРОГО при подтверждении и сохранении
   const handleConfirmWishlist = (wishlistId: number) => {
     if (!productData) return;
     addToWishlist(productData.id, wishlistId);
-    
-    // Включаем инверсию цветов у кнопки, так как товар успешно сохранен в список
     setIsProductFavorite(true);
   };
-
-  // Загружаем данные продукта
   useEffect(() => {
     const loadData = async () => {
       try {

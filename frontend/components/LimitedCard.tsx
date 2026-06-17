@@ -24,7 +24,7 @@ export default function LimitedCard({ product }: { product: Limited }) {
                     src={product.imageUrl}
                     alt={product.title}
                     fill
-                    className="object-contain object-center h-full"
+                    className="object-contain object-center h-full p-2"
                     sizes="(max-width: 640px) 100vw, 50vw"
                 />
                 <div className="absolute top-[10px] left-[8px] bg-surface-accent text-main text-[11px] leading-[16px] px-[6px] py-[4px] rounded-[3px]">

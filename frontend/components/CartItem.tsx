@@ -31,13 +31,13 @@ export default function CartItem({
         <CheckCircle checked={checked} onClick={onToggleCheck} />
       )}
       <CartItemCard>
-        <div className="relative size-[60px] sm:size-[135px] rounded-[10px] overflow-hidden shrink-0">
+        <div className="relative size-[60px] sm:size-[135px] rounded-[10px] overflow-hidden shrink-0 bg-img">
           <Image
             src={image}
             alt={title}
             fill
             sizes="(max-width: 640px) 60px, 135px"
-            className="object-cover"
+            className="object-contain object-center p-[5px]"
           />
         </div>
 
