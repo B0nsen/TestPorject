@@ -33,9 +33,9 @@ export default function ReviewModal({
 
   const hasReview = !!userReview;
   const hasInitialized = useRef(false);
+
+  console.log(userReview);
   useLockBodyScroll(isOpen);
-
-
   
   useEffect(() => {
     if (!isOpen) {
@@ -63,6 +63,7 @@ export default function ReviewModal({
     setImages([]);
     setVideos([]);
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -187,7 +188,7 @@ export default function ReviewModal({
               rows={6}
             />
           </UserReviewField>
-          <UserReviewField label="Add real photos/videos of the product">
+          <UserReviewField label="Add real photos of the product">
             <div className="flex items-top gap-[10px]">
               <MediaUploadButton
                 type="image"
@@ -195,15 +196,8 @@ export default function ReviewModal({
                   setImages((prev) => [...prev, ...files]);
                 }}
               />
-              {/*<MediaUploadButton*/}
-              {/*  type="video"*/}
-              {/*  onFilesSelect={(files) => {*/}
-              {/*    setVideos((prev) => [...prev, ...files]);*/}
-              {/*  }}*/}
-              {/*/>*/}
             </div>
           </UserReviewField>
-
           <UploadedFilesList
             images={images}
             videos={videos}

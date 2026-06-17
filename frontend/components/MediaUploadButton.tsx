@@ -22,6 +22,7 @@ export default function MediaUploadButton({
     if (!files || !onFilesSelect) return;
 
     onFilesSelect(Array.from(files));
+    e.target.value = "";
   };
 
   const accept = type === "image" ? "image/*" : "video/*";
