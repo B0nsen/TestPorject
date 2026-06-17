@@ -16,6 +16,7 @@ import Avatar from "./Avatar";
 import FormButton from "./FormButton";
 import { useEffect, useState } from "react";
 import { loadUserWishlists } from "@/lib/api/wishlist";
+import ConfirmModal from "./ConfirmModal";
 
 type UserData = {
   avatar?: string;
@@ -36,32 +37,48 @@ export const accountNavigationLinks = [
   { label: "Account Details", href: "/account", icon: personIcon },
 ];
 export default function AccountNavigation() {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [wishlistHref, setWishlistHref] = useState("/account/wishlist");
+
   const { data: userData } = useSWR<UserData>(USER_KEY, fetcher);
-
-  const [wishlistHref, setWishlistHref] = useState(
-    "/account/wishlist"
-  );
-
   useEffect(() => {
     const loadWishlistLink = async () => {
       try {
         const wishlists = await loadUserWishlists();
-
         if (wishlists?.length > 0) {
-          setWishlistHref(
-            `/account/wishlist/${wishlists[0].id}`
-          );
+          setWishlistHref(`/account/wishlist/${wishlists[0].id}`);
         }
       } catch (e) {
         console.error("Failed to load wishlist link", e);
       }
     };
-
     loadWishlistLink();
   }, []);
-
-  const handleDelete = () => {
-    console.log("Delete account clicked");
+  
+  const handleConfirmDelete = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/account`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete account");
+      }
+      console.log("Account deleted");
+    } catch (err) {
+      console.error("Delete failed:", err);
+    } finally {
+      setIsDeleteModalOpen(false);
+    }
+  };
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false);
+  };
+  const handleLogOut = () => {
+    console.log("Log Out account clicked");
   };
   return (
     <div className="flex flex-col layout-account-sm:gap-[30px] gap-[20px]">
@@ -80,13 +97,11 @@ export default function AccountNavigation() {
 
       <div className="flex flex-col py-[30px] layout-account-sm:gap-[80px] gap-[30px] card-default">
         <div>
-         {accountNavigationLinks
+          {accountNavigationLinks
             .filter((item) => item.href !== "/account")
             .map((item) => {
               const href =
-                item.href === "/account/wishlist"
-                  ? wishlistHref
-                  : item.href;
+                item.href === "/account/wishlist" ? wishlistHref : item.href;
 
               return (
                 <Link
@@ -110,10 +125,27 @@ export default function AccountNavigation() {
               );
             })}
         </div>
-        <FormButton className="self-center" onClick={handleDelete}>
-          Delete Account
-        </FormButton>
+        <div className="flex flex-col gap-3">
+          <FormButton className="self-center" onClick={handleLogOut}>
+            Log Out
+          </FormButton>
+          <FormButton
+            className="self-center"
+            onClick={() => setIsDeleteModalOpen(true)}
+          >
+            Delete Account
+          </FormButton>
+        </div>
       </div>
+
+      <ConfirmModal
+        open={isDeleteModalOpen}
+        title="Delete account?"
+        description="This action cannot be undone."
+        confirmText="Delete"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </div>
   );
 }
