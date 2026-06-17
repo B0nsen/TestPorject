@@ -7,8 +7,6 @@ import { PhoneField } from "@/components/PhoneField";
 import FormButton from "@/components/FormButton";
 import { getFirstErrorMessage } from "@/lib/utils/formErrors";
 
-import Image from "next/image";
-import flagRomania from "@/assets/img/flag-romania.png";
 import {
   AddressFormValues,
   addressSchema,
@@ -16,33 +14,41 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "./FormError";
+import CountrySelect from "./CountrySelector";
 
 type AddressFormProps = {
   defaultValues?: any;
   onSubmit: (data: any) => Promise<void> | void;
   submitLabel?: string;
 };
-
 export default function AddressForm({
   defaultValues,
   onSubmit,
   submitLabel = "Save",
 }: AddressFormProps) {
+  
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<AddressFormValues>({
     resolver: zodResolver(addressSchema),
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      country: defaultValues?.country ?? "US",
+    },
   });
-
+  
+  const country = watch("country");
   const addressError = getFirstErrorMessage([
     errors.street,
     errors.houseNumber,
     errors.city,
     errors.postalCode,
   ]);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -57,7 +63,10 @@ export default function AddressForm({
             <FormInput {...register("street")} placeholder="Street" />
           </div>
           <div className="flex gap-[4px]">
-            <FormInput {...register("houseNumber")} placeholder="House number" />
+            <FormInput
+              {...register("houseNumber")}
+              placeholder="House number"
+            />
 
             <FormInput {...register("city")} placeholder="City" />
             <FormInput {...register("postalCode")} placeholder="Postal code" />
@@ -66,34 +75,11 @@ export default function AddressForm({
         </InputWrapper>
 
         <InputWrapper className="max-w-[200px]" label="Country">
-          <div className="w-full h-[40px] bg-input-surface-default flex items-center rounded-[10px]">
-            <button
-              type="button"
-              className="h-full flex items-center pl-[15px] gap-[6px]"
-            >
-              <Image
-                src={flagRomania}
-                alt="Romania Flag"
-                width={30}
-                height={16}
-                className="rounded-[2px] object-cover mr-[3px]"
-              />
-            </button>
-
-            <FormInput
-              className="h-full pl-[4px] flex-1"
-              placeholder="Country"
-              {...register("country")}
-            />
-
-            <button
-              type="button"
-              className="h-full flex items-center pr-[15px]"
-            >
-              <span className="rotate-90 text-[13px]">›</span>
-            </button>
-          </div>
-          <FormError message={errors.country?.message} />
+          <CountrySelect
+            value={country}
+            onChange={(val) => setValue("country", val)}
+            error={errors.country?.message}
+          />
         </InputWrapper>
       </div>
 
