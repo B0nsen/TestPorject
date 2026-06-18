@@ -20,6 +20,7 @@ import { useEditableList } from "@/lib/hooks/useEditableList";
 import { useSelectableList } from "@/lib/hooks/useSelectableList";
 import CheckoutDesktopAlt from "@/components/CheckoutDesktopAlt";
 import { useRouter } from "next/navigation";
+
 export type StepMode = "form" | "card" | "open";
 
 export default function CheckoutPage() {
@@ -49,6 +50,7 @@ export default function CheckoutPage() {
     decreaseQuantity,
     removeFromCart,
   } = useCart();
+
   const shippingChecks = [
     {
       label: "9 - 14 businessdays after shipping",
@@ -60,7 +62,8 @@ export default function CheckoutPage() {
     },
   ] as const;
   const router = useRouter();
-  const handleCheckout = () => {
+
+  const handleCheckout = async () => {
     if (address.items.length === 0) {
       address.setMode("form");
       return;
@@ -75,8 +78,31 @@ export default function CheckoutPage() {
       setCartMode("open");
       return;
     }
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: checkedItems.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            productName: item.title,
+            productPrice: item.price,
+            productImageUrl: item.image,
+          })),
+        }),
+      });
 
-    router.push("/order-success");
+      if (!res.ok) {
+        throw new Error("Failed to create order");
+      }
+      const data = await res.json();
+      router.push(`/order-success?orderId=${data.id}`);
+    } catch (error) {
+      console.error("Checkout failed:", error);
+    }
   };
   const mockPayment = {
     cardNumber: "4242 4242 4242 4242",

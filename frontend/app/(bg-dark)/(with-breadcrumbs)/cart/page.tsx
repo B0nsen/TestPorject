@@ -13,7 +13,6 @@ import CheckoutLayout from "@/components/CheckoutLayout";
 import CatalogSlider from "@/components/CatalogSlider";
 
 import { CartItemType } from "@/contexts/cart.context";
-import { API_URL } from "@/lib/api/api";
 
 export default function CartPage() {
   const [open, setOpen] = useState(false);
@@ -39,7 +38,7 @@ export default function CartPage() {
   useEffect(() => {
     const loadSliderData = async () => {
       try {
-       const res = await fetch(`${API_URL}/api/homepage`, { cache: "no-store" });
+       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/homepage`, { cache: "no-store" });
         
         if (!res.ok) {
           throw new Error(`Server responded with status: ${res.status}`);
@@ -57,7 +56,7 @@ export default function CartPage() {
 
       } catch (error) {
         console.warn(
-          `Корзина: бэкенд (${API_URL}) недоступен. Переключаюсь на локальный homepage.json...`
+          `Корзина: бэкенд (${process.env.NEXT_PUBLIC_API_URL}) недоступен. Переключаюсь на локальный homepage.json...`
         );
         
         try {
