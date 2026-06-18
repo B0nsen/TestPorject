@@ -6,7 +6,7 @@ import {
 } from "next/navigation";
 
 const parseKey = (key: string) => {
-  return key.replace(/(_min|_max|_gte)$/, "");
+ return key.replace(/(_min|_max)$/, "");
 };
 
 export function useFilters(
@@ -69,17 +69,6 @@ export function useFilters(
 
         return;
       }
-      if (key.endsWith("_gte")) {
-        const baseKey = parseKey(key);
-
-        result[baseKey] = {
-          type: "rating",
-          value: Number(value),
-        };
-
-        return;
-      }
-
       if (value.includes(",")) {
         result[key] = {
           type: "multiselect",
@@ -141,7 +130,7 @@ export function useFilters(
     }
 
     if (type === "rating") {
-      params.set(`${key}_gte`, value);
+    params.set(key, value);
     }
 
     setQueryParams(params, { scroll: false });
@@ -149,11 +138,11 @@ export function useFilters(
   const removeFilter = (key: string, value?: any) => {
     const params = cloneParams();
 
-    if (selectedFilters[key]?.type === "rating") {
-      params.delete(`${key}_gte`);
-      setQueryParams(params, { scroll: false });
-      return;
-    }
+   if (selectedFilters[key]?.type === "rating") {
+  params.delete(key);
+  setQueryParams(params, { scroll: false });
+  return;
+}
     if (selectedFilters[key]?.type === "range") {
       params.delete(`${key}_min`);
       params.delete(`${key}_max`);
