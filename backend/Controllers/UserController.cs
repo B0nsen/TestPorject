@@ -235,6 +235,35 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
 
             return Ok(false);
         }
- 
+
+        [HttpDelete("account")]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var uid = HttpContext.Session.GetString("UserId");
+            if (uid == null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                await _service.Delete(int.Parse(uid));
+            }
+            return NoContent();
+        }
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var uid = HttpContext.Session.GetString("UserId");
+            if (uid == null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                HttpContext.Session.Clear();
+                await HttpContext.Session.CommitAsync();
+            }
+            return NoContent();
+        }
     }
 }
