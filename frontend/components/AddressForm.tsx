@@ -34,13 +34,6 @@ export default function AddressForm({
   onSubmit,
   submitLabel = "Save",
 }: AddressFormProps) {
-  const [open, setOpen] = useState(false);
-  const countries = getCountries() as CountryCode[];
-  const [selectedCountry, setSelectedCountry] = useState<CountryCode>("UA");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const phone = parsePhoneNumberFromString(phoneNumber, selectedCountry);
-
-  const isValid = phone?.isValid() ?? false;
   const {
     register,
     handleSubmit,
@@ -69,51 +62,7 @@ export default function AddressForm({
       className="flex flex-col gap-[30px]"
     >
       <div className="flex flex-col gap-[10px]">
-        <div className="flex bg-white relative">
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              className="flex items-center gap-2 px-3 h-full border"
-            >
-              <span>+{getCountryCallingCode(selectedCountry)}</span>
-              <span>▼</span>
-            </button>
-
-            {open && (
-              <div className="absolute top-full left-0 mt-1 bg-white border shadow-md rounded-md z-10 max-h-60 overflow-auto">
-                {countries.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => {
-                      setSelectedCountry(c);
-                      setOpen(false);
-                      setPhoneNumber("");
-                    }}
-                    className={`block w-full text-left px-3 py-2 hover:bg-gray-100 ${
-                      country === c ? "bg-gray-100" : ""
-                    }`}
-                  >
-                    {c} (+{getCountryCallingCode(c)})
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <input
-            className="flex-1 px-3 outline-none"
-            value={phoneNumber}
-            onChange={(e) =>
-              setPhoneNumber(e.target.value.replace(/[^\d+]/g, ""))
-            }
-            placeholder="Phone number"
-          />
-        </div>
-        {!isValid && phoneNumber.length > 0 && (
-          <p style={{ color: "red" }}>Not valid</p>
-        )}
-
+       
         <NameFields register={register} errors={errors} />
 
         {/* <PhoneField register={register} error={errors} /> */}
