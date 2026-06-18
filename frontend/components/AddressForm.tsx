@@ -3,7 +3,6 @@
 import { InputWrapper } from "@/components/InputWrapper";
 import { FormInput } from "@/components/FormInput";
 import { NameFields } from "@/components/NameFields";
-import { PhoneField } from "@/components/PhoneField";
 import FormButton from "@/components/FormButton";
 import { getFirstErrorMessage } from "@/lib/utils/formErrors";
 import {
@@ -15,10 +14,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "./FormError";
 import CountrySelect from "./CountrySelector";
 import { DEFAULT_COUNTRY } from "@/lib/utils/countries";
+
 import { useState } from "react";
+
 import {
   getCountries,
   getCountryCallingCode,
+  parsePhoneNumberFromString,
   type CountryCode,
 } from "libphonenumber-js";
 
@@ -35,7 +37,10 @@ export default function AddressForm({
   const [open, setOpen] = useState(false);
   const countries = getCountries() as CountryCode[];
   const [selectedCountry, setSelectedCountry] = useState<CountryCode>("UA");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const phone = parsePhoneNumberFromString(phoneNumber, selectedCountry);
 
+  const isValid = phone?.isValid() ?? false;
   const {
     register,
     handleSubmit,
@@ -84,6 +89,7 @@ export default function AddressForm({
                     onClick={() => {
                       setSelectedCountry(c);
                       setOpen(false);
+                      setPhoneNumber("");
                     }}
                     className={`block w-full text-left px-3 py-2 hover:bg-gray-100 ${
                       country === c ? "bg-gray-100" : ""
@@ -95,8 +101,18 @@ export default function AddressForm({
               </div>
             )}
           </div>
-          <input className="flex-1 px-3 outline-none" />
+          <input
+            className="flex-1 px-3 outline-none"
+            value={phoneNumber}
+            onChange={(e) =>
+              setPhoneNumber(e.target.value.replace(/[^\d+]/g, ""))
+            }
+            placeholder="Phone number"
+          />
         </div>
+        {!isValid && phoneNumber.length > 0 && (
+          <p style={{ color: "red" }}>Not valid</p>
+        )}
 
         <NameFields register={register} errors={errors} />
 
