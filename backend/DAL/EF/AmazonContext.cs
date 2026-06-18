@@ -36,7 +36,7 @@ namespace backend.DAL.EF
             modelBuilder.Entity<ProductCategory>().HasKey(c => new {c.CategoryId, c.ProductId});
             modelBuilder.Entity<CartItem>().HasIndex(r => new { r.UserId, r.ProductId }).IsUnique();
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-            modelBuilder.Entity<Review>().HasOne(r => r.User).WithMany(u => u.Reviews).HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Review>().HasOne(r => r.User).WithMany(u => u.Reviews).HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Review>().HasMany(r => r.UsersLiked).WithMany();
             modelBuilder.Entity<Product>(entity =>
             {
