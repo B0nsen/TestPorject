@@ -59,6 +59,8 @@ export default function AccountNavigation() {
       if (modalMode === "delete") {
         await userApi.deleteAccount();
         console.log("Account deleted");
+        mutate(USER_KEY, null, false);
+        window.location.href = "/login";
       }
 
       if (modalMode === "logout") {
