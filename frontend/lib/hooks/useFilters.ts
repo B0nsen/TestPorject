@@ -6,7 +6,7 @@ import {
 } from "next/navigation";
 
 const parseKey = (key: string) => {
- return key.replace(/(_min|_max)$/, "");
+  return key.replace(/(_min|_max)$/, "");
 };
 
 export function useFilters(
@@ -16,7 +16,7 @@ export function useFilters(
   const router = useRouter();
   const pathname = usePathname();
   const cloneParams = () => new URLSearchParams(searchParams.toString());
-  
+
   const setQueryParams = (
     params: URLSearchParams,
     options?: { scroll?: boolean },
@@ -130,7 +130,13 @@ export function useFilters(
     }
 
     if (type === "rating") {
-    params.set(key, value);
+      const current = params.get(key);
+
+      if (current === String(value)) {
+        params.delete(key);
+      } else {
+        params.set(key, String(value));
+      }
     }
 
     setQueryParams(params, { scroll: false });
@@ -138,11 +144,11 @@ export function useFilters(
   const removeFilter = (key: string, value?: any) => {
     const params = cloneParams();
 
-   if (selectedFilters[key]?.type === "rating") {
-  params.delete(key);
-  setQueryParams(params, { scroll: false });
-  return;
-}
+    if (selectedFilters[key]?.type === "rating") {
+      params.delete(key);
+      setQueryParams(params, { scroll: false });
+      return;
+    }
     if (selectedFilters[key]?.type === "range") {
       params.delete(`${key}_min`);
       params.delete(`${key}_max`);
