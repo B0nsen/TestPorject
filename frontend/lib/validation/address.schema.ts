@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { CountryCode, parsePhoneNumberFromString } from "libphonenumber-js";
 
 export const addressSchema = z
   .object({
@@ -16,7 +16,9 @@ export const addressSchema = z
     number: z.string().min(1, "Phone number is required"),
   })
   .superRefine((val, ctx) => {
-    const phone = parsePhoneNumberFromString(val.number, "UA");
+ const country = val.country as CountryCode;
+
+    const phone = parsePhoneNumberFromString(val.number, country);
 
     if (!phone?.isValid()) {
       ctx.addIssue({

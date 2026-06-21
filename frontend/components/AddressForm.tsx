@@ -15,7 +15,7 @@ import { FormError } from "./FormError";
 import CountrySelect from "./CountrySelector";
 import { DEFAULT_COUNTRY } from "@/lib/utils/countries";
 import { getCountryCallingCode } from "libphonenumber-js";
-
+import type { CountryCode } from "libphonenumber-js";
 const DEFAULT_PHONE_COUNTRY = "UA";
 
 type AddressFormProps = {
@@ -45,8 +45,10 @@ export default function AddressForm({
     },
   });
   const country = watch("country");
-  const callingCode = `+${getCountryCallingCode(DEFAULT_PHONE_COUNTRY)}`;
-  
+  const selectedCountry = (country || DEFAULT_PHONE_COUNTRY) as CountryCode;
+
+  const callingCode = `+${getCountryCallingCode(selectedCountry)}`;
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
