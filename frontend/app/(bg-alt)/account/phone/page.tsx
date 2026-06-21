@@ -1,74 +1,84 @@
-"use client";
-
-import { useForm } from "react-hook-form";
+"use client";import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 
-import {
-  CountryCode,
-  getCountries,
-  getCountryCallingCode,
-} from "libphonenumber-js";
 import { PhoneSchema } from "@/lib/validation/phone";
 
 type FormData = {
+  name: string;
+  email: string;
   country: CountryCode;
   number: string;
 };
 
 export default function AccountPhones() {
-  const countries = getCountries();
-
   const {
     register,
-    watch,
-    setValue,
-    formState: { errors, isValid },
+    handleSubmit,
+    formState: { errors, isSubmitted },
   } = useForm<FormData>({
     resolver: zodResolver(PhoneSchema),
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     defaultValues: {
+      name: "",
+      email: "",
       country: "UA",
       number: "",
     },
   });
 
-  const country = watch("country");
-  const callingCode = `+${getCountryCallingCode(country)}`;
+  const callingCode = `+${getCountryCallingCode("UA")}`;
+
+  const onSubmit = (data: FormData) => {
+    console.log("Saved:", data);
+  };
 
   return (
-    <div>
-      <p>Phones</p>
-
-      <div className="flex gap-2 items-center">
-        <span>{callingCode}</span>
-
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <div>
         <input
-          {...register("number")}
-          placeholder="phone number"
-          className="border px-2 py-1"
+          {...register("name")}
+          placeholder="Name"
+          className="border px-2 py-1 w-full"
         />
+
+        {isSubmitted && errors.name && (
+          <p className="text-red-500">{errors.name.message}</p>
+        )}
       </div>
 
-      <p style={{ color: isValid ? "green" : "red" }}>
-        {isValid ? "Valid number" : errors.number?.message ?? "Invalid number"}
-      </p>
+      <div>
+        <input
+          {...register("email")}
+          placeholder="Email"
+          className="border px-2 py-1 w-full"
+        />
 
-      <div className="max-h-40 overflow-auto border mt-3">
-        {countries.map((c) => (
-          <div
-            key={c}
-            onClick={() => {
-              setValue("country", c);
-              setValue("number", "");
-            }}
-            className={`p-2 cursor-pointer hover:bg-gray-100 ${
-              country === c ? "bg-gray-200" : ""
-            }`}
-          >
-            {c} (+{getCountryCallingCode(c)})
-          </div>
-        ))}
+        {isSubmitted && errors.email && (
+          <p className="text-red-500">{errors.email.message}</p>
+        )}
       </div>
-    </div>
+
+      <div>
+        <div className="flex gap-2 items-center">
+          <span>{callingCode}</span>
+
+          <input
+            {...register("number")}
+            placeholder="Phone number"
+            className="border px-2 py-1"
+          />
+        </div>
+
+        {isSubmitted && (
+          <p style={{ color: errors.number ? "red" : "green" }}>
+            {errors.number?.message ?? "Valid number"}
+          </p>
+        )}
+      </div>
+
+      <button type="submit">Save</button>
+    </form>
   );
 }
