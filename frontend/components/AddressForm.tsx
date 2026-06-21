@@ -33,6 +33,7 @@ export default function AddressForm({
     register,
     handleSubmit,
     watch,
+    trigger,
     setValue,
     formState: { errors, isSubmitted },
   } = useForm<AddressFormValues>({
@@ -90,12 +91,14 @@ export default function AddressForm({
 
       <CountrySelect
         value={country}
-        onChange={(val) =>
+        onChange={(val) => {
           setValue("country", val, {
             shouldValidate: true,
             shouldDirty: true,
-          })
-        }
+          });
+          console.log("revalidate");
+          trigger("number");
+        }}
         error={errors.country?.message}
       />
 
