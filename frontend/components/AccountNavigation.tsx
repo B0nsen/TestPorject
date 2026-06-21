@@ -59,17 +59,15 @@ export default function AccountNavigation() {
       if (modalMode === "delete") {
         await userApi.deleteAccount();
         console.log("Account deleted");
-        mutate(USER_KEY, null, false);
         window.location.href = "/login";
+        mutate(USER_KEY, null, false);
       }
-
       if (modalMode === "logout") {
         await userApi.logout();
-
         console.log("logged out");
-
-        mutate(USER_KEY, null, false);
         window.location.href = "/login";
+        mutate(USER_KEY, null, false);
+
       }
     } catch (err) {
       console.error("Action failed:", err);

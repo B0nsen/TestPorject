@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/lib/stores/auth-store";
 
 export default function AdminGuard({
   children,
@@ -10,13 +9,43 @@ export default function AdminGuard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const isAdmin = useAuthStore((s) => s.isAdmin());
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (!isAdmin) {
-      router.push("/login");
+    const checkAdmin = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/user/isadmin`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
+        );
+
+        if (!res.ok) {
+          setIsAdmin(false);
+          return;
+        }
+        const data = await res.json();
+        const result = typeof data === "boolean" ? data : data?.isAdmin;
+        setIsAdmin(!!result);
+      } catch (err) {
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdmin();
+  }, []);
+
+  useEffect(() => {
+    if (isAdmin === false) {
+      router.replace("/login");
     }
   }, [isAdmin, router]);
+
+  if (isAdmin === null) {
+    return null;
+  }
 
   if (!isAdmin) {
     return null;

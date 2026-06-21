@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import AccountLayoutClient from "@/components/AccountLayoutClient";
+
+import { redirect } from "next/navigation";
 
 export default async function AccountLayout({
   children,
@@ -9,20 +10,17 @@ export default async function AccountLayout({
 }) {
   const cookieStore = await cookies();
 
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((cookie) => `${cookie.name}=${cookie.value}`)
-    .join("; ");
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/islogin`, {
-        credentials: "include",
-    });
-
-
-
-    const isLoggedIn = await res.json();
-    console.log(isLoggedIn);
-  if (isLoggedIn) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/user/islogin`,
+    {
+      headers: {
+        cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    }
+  );
+  const loggedIn = await res.json();
+  if (!loggedIn) {
     redirect("/login");
   }
 
