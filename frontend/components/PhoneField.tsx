@@ -36,7 +36,7 @@ export function PhoneField({ register, error }: PhoneFieldProps) {
           {...register("phone")}
         />
       </div>
-<FormError message={error.phone?.message} />
+      <FormError message={error.phone?.message} />
     </InputWrapper>
   );
 }
