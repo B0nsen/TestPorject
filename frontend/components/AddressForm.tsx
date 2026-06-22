@@ -13,9 +13,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "./FormError";
 import CountrySelect from "./CountrySelector";
+
 import { DEFAULT_COUNTRY } from "@/lib/utils/countries";
+
 import { getCountryCallingCode } from "libphonenumber-js";
 import type { CountryCode } from "libphonenumber-js";
+import { PhoneInput } from "./PhoneInput";
+
 const DEFAULT_PHONE_COUNTRY = "UA";
 
 type AddressFormProps = {
@@ -41,13 +45,12 @@ export default function AddressForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues: {
-      ...defaultValues,
       country: defaultValues?.country || DEFAULT_COUNTRY,
+      ...defaultValues,
     },
   });
   const country = watch("country");
   const selectedCountry = (country || DEFAULT_PHONE_COUNTRY) as CountryCode;
-
   const callingCode = `+${getCountryCallingCode(selectedCountry)}`;
 
   return (
@@ -55,91 +58,54 @@ export default function AddressForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-[30px]"
     >
-      <NameFields register={register} errors={errors} />
-      <div>
-        <div className="flex gap-2 items-center">
-          <span>{callingCode}</span>
-
-          <input
-            {...register("number")}
-            placeholder="Phone number"
-            className="border px-2 py-1"
-          />
-        </div>
-
-        {isSubmitted && (
-          <span style={{ color: errors.number ? "red" : "green" }}>
-            {errors.number?.message ?? "Valid phone number"}
-          </span>
-        )}
-      </div>
-      <div>
-        <FormInput {...register("street")} placeholder="Street" />
-        <FormInput {...register("houseNumber")} placeholder="House number" />
-        <FormInput {...register("city")} placeholder="City" />
-        <FormInput {...register("postalCode")} placeholder="Postal code" />
-
-        <FormError
-          message={getFirstErrorMessage([
-            errors.street,
-            errors.houseNumber,
-            errors.city,
-            errors.postalCode,
-          ])}
+      <div className="flex flex-col gap-[10px]">
+        <NameFields register={register} errors={errors} />
+        <PhoneInput
+          countryCode={selectedCountry}
+          callingCode={callingCode}
+          register={register}
+          errors={errors}
+          isSubmitted={isSubmitted}
         />
+        <InputWrapper label="Address" className="gap-[5px]">
+          <div className="flex gap-[4px]">
+            <FormInput {...register("street")} placeholder="Street" />
+          </div>
+          <div className="flex gap-[4px]">
+            <FormInput
+              {...register("houseNumber")}
+              placeholder="House number"
+            />
+
+            <FormInput {...register("city")} placeholder="City" />
+            <FormInput {...register("postalCode")} placeholder="Postal code" />
+          </div>
+          <FormError
+            message={getFirstErrorMessage([
+              errors.street,
+              errors.houseNumber,
+              errors.city,
+              errors.postalCode,
+            ])}
+          />
+        </InputWrapper>
+
+        <InputWrapper className="max-w-[200px]" label="Country">
+          <CountrySelect
+            value={country}
+            onChange={(val) => {
+              setValue("country", val, {
+                shouldValidate: true,
+                shouldDirty: true,
+              });
+              console.log("revalidate");
+              trigger("number");
+            }}
+            error={errors.country?.message}
+          />
+        </InputWrapper>
       </div>
-
-      <CountrySelect
-        value={country}
-        onChange={(val) => {
-          setValue("country", val, {
-            shouldValidate: true,
-            shouldDirty: true,
-          });
-          console.log("revalidate");
-          trigger("number");
-        }}
-        error={errors.country?.message}
-      />
-
       <FormButton type="submit">{submitLabel}</FormButton>
     </form>
   );
 }
-
-//  <form
-//     onSubmit={handleSubmit(onSubmit)}
-//     className="flex flex-col gap-[30px]"
-//   >
-//     <div className="flex flex-col gap-[10px]">
-
-//       <NameFields register={register} errors={errors} />
-
-//       {/* <PhoneField register={register} error={errors} /> */}
-//       <InputWrapper label="Address" className="gap-[5px]">
-//         <div className="flex gap-[4px]">
-//           <FormInput {...register("street")} placeholder="Street" />
-//         </div>
-//         <div className="flex gap-[4px]">
-//           <FormInput
-//             {...register("houseNumber")}
-//             placeholder="House number"
-//           />
-
-//           <FormInput {...register("city")} placeholder="City" />
-//           <FormInput {...register("postalCode")} placeholder="Postal code" />
-//         </div>
-//         <FormError message={addressError} />
-//       </InputWrapper>
-
-//       <InputWrapper className="max-w-[200px]" label="Country">
-//         <CountrySelect
-//           value={country || DEFAULT_COUNTRY}
-//           onChange={(val) => setValue("country", val)}
-//           error={errors.country?.message}
-//         />
-//       </InputWrapper>
-//     </div>
-
-//     <FormButton type="submit">{submitLabel}</FormButton>
-//   </form>
