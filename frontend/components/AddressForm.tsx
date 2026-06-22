@@ -20,8 +20,6 @@ import { getCountryCallingCode } from "libphonenumber-js";
 import type { CountryCode } from "libphonenumber-js";
 import { PhoneInput } from "./PhoneInput";
 
-const DEFAULT_PHONE_COUNTRY = "UA";
-
 type AddressFormProps = {
   defaultValues?: Partial<AddressFormValues>;
   onSubmit: (data: AddressFormValues) => Promise<void> | void;
@@ -45,12 +43,12 @@ export default function AddressForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues: {
-      country: defaultValues?.country || DEFAULT_COUNTRY,
       ...defaultValues,
+      country: defaultValues?.country || DEFAULT_COUNTRY,
     },
   });
   const country = watch("country");
-  const selectedCountry = (country || DEFAULT_PHONE_COUNTRY) as CountryCode;
+  const selectedCountry = country as CountryCode;
   const callingCode = `+${getCountryCallingCode(selectedCountry)}`;
 
   return (

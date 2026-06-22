@@ -1,6 +1,6 @@
 
 import countries from "world-countries";
-export const DEFAULT_COUNTRY = "US";
+export const DEFAULT_COUNTRY = "UA";
 
 type CountryOption = {
   label: string;

@@ -16,13 +16,13 @@ export default function CountrySelect({
   const getFlagUrl = (code: string) =>
     `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
 
-  const selected = useMemo(() => {
-    return (
-      countryOptions.find((c) => c.value === value) ||
-      countryOptions.find((c) => c.value === DEFAULT_COUNTRY) ||
-      countryOptions[0]
-    );
-  }, [value]);
+const selected = useMemo(() => {
+  return (
+    countryOptions.find((c) => c.value === value) ||
+    countryOptions.find((c) => c.value === DEFAULT_COUNTRY) ||
+    countryOptions[0]
+  );
+}, [value, countryOptions]);
   return (
     <div className="relative w-full text-input">
       <div className="w-full h-[40px] bg-input-surface-default flex items-center rounded-[10px]  ">
