@@ -184,6 +184,15 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
                 
             }
         }
+        [HttpPost("create-order")]
+        public async Task<ActionResult> AddOrder(OrderDTO order)
+        {
+            //var uid = HttpContext.Session.GetString("UserId");
+            var uid = "17";
+            await _service.AddOrder(order, long.Parse(uid));
+            return Ok();
+        }
+        
 
         [HttpPut("info")]
         public async Task<IActionResult> Update([FromForm] UpdateUserInfoDTO entity)

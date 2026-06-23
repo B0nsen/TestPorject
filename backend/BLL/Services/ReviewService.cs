@@ -233,22 +233,33 @@ public class ReviewService : IReviewService
 
         try
         {
-            var exists = await db.R_Review.GetById(Id);
-            var review = new Review
-            {
-                ProductId = entity.ProductId,
-                Comment = entity.Review,
-                Title = entity.Title,
-                Rating = entity.Rating,
-                UserId = exists.UserId,
-            };
+            var exists = await _reviewRepository.GetById(Id);
+            exists.Comment = entity.Review;
+            exists.Title = entity.Title;
+            exists.Rating = entity.Rating;
             if (exists == null)
             {
                 logger.LogWarning("Review with ID {Id} not found in Update function", Id);
                 throw new KeyNotFoundException($"Review with ID {Id} not found");
             }
-            mapper.Map(review, exists);
-            await db.R_Review.Update(exists);
+            if (entity.Images != null && entity.Images.Any())
+            {
+                foreach (var file in entity.Images)
+                {
+
+                    string filename = $"{Guid.NewGuid()}_{file.FileName}";
+                    string url = await storage.UploadFileAsync(file, filename);
+
+                    var newImage = new ReviewImages
+                    {
+                        ReviewId = exists.Id,
+                        FileName = filename,
+                        ImageUrl = url
+                    };
+
+                    exists.ReviewImages.Add(newImage);
+                }
+            }
             await db.SaveAsync();
         }
         catch (Exception ex)

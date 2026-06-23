@@ -14,6 +14,7 @@ public interface IUserService
     Task<UserDTO> Get(int id);
     Task<UserEntityDTO?> GetByEmail(string email);
     Task<IEnumerable<UserDTO>> GetAll();
+    Task AddOrder(OrderDTO order, long uid);
 
     Task UpdateAddress(UpdateAddressInfoDTO address, long uid);
 

@@ -385,6 +385,18 @@ public async Task ConfirmEmail(string token)
     await db.SaveAsync();
 }
 
+    public async Task AddOrder(OrderDTO order, long uid)
+    {
+        var user = await _userRepository.GetById(uid);
+        if(user == null)
+        {
+            throw new Exception("User not found");
+        }
+        order.OrderDate = DateTime.UtcNow;
+        user.Orders.Add(mapper.Map<Order>(order));
+        await db.SaveAsync();
+    }
+
 
 public async Task ForgotPassword(string email)
 {
