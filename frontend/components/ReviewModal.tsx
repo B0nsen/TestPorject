@@ -170,13 +170,13 @@ export default function ReviewModal({
                 />
               </div>
               <div className="flex-col flex gap-[8px]">
-               <span className="text-[20px] leading-[18px] line-clamp-3">
-  {product.title}
-</span>
+                <span className="text-[20px] leading-[18px] line-clamp-3">
+                  {product.title}
+                </span>
 
-<span className="font-normal text-[14px] leading-[20px] align-middle opacity-60 line-clamp-5">
-  {product.description}
-</span>
+                <span className="font-normal text-[14px] leading-[20px] align-middle opacity-60 line-clamp-5">
+                  {product.description}
+                </span>
               </div>
             </div>
           </UserReviewField>
@@ -189,7 +189,7 @@ export default function ReviewModal({
               onChange={setRating}
             />
           </UserReviewField>
-          <UserReviewField label="Review Title" optional>
+          <UserReviewField label="Review Title">
             <input
               type="text"
               value={title}
@@ -233,18 +233,31 @@ export default function ReviewModal({
               />
             </div>
           </UserReviewField>
-
-          <CtaButton
-            type="submit"
-            disabled={isSubmitting}
-            className="text-[16px] max-w-[289px] shrink-0"
-          >
-            {isSubmitting
-              ? "Submitting review"
-              : hasReview
-                ? "Save changes"
-                : "Submit review"}
-          </CtaButton>
+          <div className="flex w-full  gap-2">
+            <CtaButton
+              type="submit"
+              disabled={isSubmitting}
+              className="text-[16px] w-[200px]"
+            >
+              {isSubmitting
+                ? "Submitting review"
+                : hasReview
+                  ? "Save changes"
+                  : "Submit review"}
+            </CtaButton>
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-[16px] max-w-[100px] w-full  
+                border border-accent-muted
+                text-accent-muted
+                h-[32px]
+                rounded-[100px]
+                cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </form>
 
