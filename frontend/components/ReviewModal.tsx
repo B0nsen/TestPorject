@@ -56,6 +56,7 @@ export default function ReviewModal({
       window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) {
       hasInitialized.current = false;
@@ -169,12 +170,13 @@ export default function ReviewModal({
                 />
               </div>
               <div className="flex-col flex gap-[8px]">
-                <span className="text-[20px] leading-[18px]">
-                  {product.title}
-                </span>
-                <span className="font-normal text-[14px] leading-[20px] align-middle opacity-60">
-                  {product.description}
-                </span>
+               <span className="text-[20px] leading-[18px] line-clamp-3">
+  {product.title}
+</span>
+
+<span className="font-normal text-[14px] leading-[20px] align-middle opacity-60 line-clamp-5">
+  {product.description}
+</span>
               </div>
             </div>
           </UserReviewField>
