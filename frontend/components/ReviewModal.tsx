@@ -38,7 +38,7 @@ export default function ReviewModal({
 
   const hasReview = !!userReview;
   const hasInitialized = useRef(false);
-  
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -56,8 +56,6 @@ export default function ReviewModal({
       window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
-  
-  console.log(userReview);
   useEffect(() => {
     if (!isOpen) {
       hasInitialized.current = false;
@@ -111,13 +109,13 @@ export default function ReviewModal({
 
     try {
       const result = isEditMode
-        ? await editReview(content)
+        ? await editReview(userReview.id, content)
         : await createReview(content);
 
-      console.log("Success:", result);
-
+      console.log("after request", result);
       onReviewCreated();
       resetForm();
+      onClose();
     } catch (err) {
       console.error(err);
     } finally {

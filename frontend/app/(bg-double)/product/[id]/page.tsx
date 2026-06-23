@@ -45,6 +45,7 @@ export default function ProductPage() {
   const [isProductFavorite, setIsProductFavorite] = useState(false);
 
   const fetchReviews = async () => {
+    console.log("enter fetch reviews")
     try {
       const reviewsRes = await fetch(
         `${API_BASE}/api/product/reviews/${params.id}`,
