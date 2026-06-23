@@ -9,7 +9,7 @@ export default function AccountAddresses() {
 
   if (!userData) return <div>Loading...</div>;
   console.log(userData);
-  
+
   const handleSubmit = async (data: any) => {
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/address/info`, {
       method: "PUT",
@@ -21,6 +21,15 @@ export default function AccountAddresses() {
     });
     console.log("Saved data:", data);
   };
-
-  return <AddressForm defaultValues={userData} onSubmit={handleSubmit} />;
+const normalizedUserData = userData
+  ? {
+      ...userData,
+      address: {
+        ...userData.address,
+        houseNumber: String(userData.address?.houseNumber ?? ""),
+      },
+    }
+  : undefined;
+  return <AddressForm defaultValues={normalizedUserData}
+ onSubmit={handleSubmit} />;
 }

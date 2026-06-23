@@ -53,13 +53,20 @@ export default function AddressForm({
     reValidateMode: "onChange",
     defaultValues: {
       ...defaultValues,
+       address: {
+    street: defaultValues?.address?.street ?? "",
+    houseNumber: defaultValues?.address?.houseNumber ?? "",
+    city: defaultValues?.address?.city ?? "",
+    postalCode: defaultValues?.address?.postalCode ?? "",
+  },
       country: defaultValues?.country || DEFAULT_COUNTRY,
     },
   });
+  
   const country = watch("country");
   const selectedCountry = country as CountryCode;
   const callingCode = `+${getCountryCallingCode(selectedCountry)}`;
-  
+
   const handleFormSubmit = (data: AddressFormValues) => {
     const flattened = {
       firstName: data.firstName,
