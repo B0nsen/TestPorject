@@ -22,7 +22,9 @@ import { useRouter } from "next/navigation";
 import { AddressFormValues } from "@/lib/validation/address.schema";
 
 export type StepMode = "form" | "card" | "open";
+
 export type AddressData = AddressFormValues;
+
 export default function CheckoutPage() {
   const [open, setOpen] = useState(false);
 
@@ -106,7 +108,7 @@ export default function CheckoutPage() {
   };
   const mockPayment = {
     cardNumber: "4242 4242 4242 4242",
-    nameOnCard: "Andrei Popescu",
+    nameOnCard: "Oleksandr Kovalenko",
     expiryDate: "01/29",
     cvv: "123",
   };
@@ -142,17 +144,32 @@ export default function CheckoutPage() {
                 address.editingIndex !== null
                   ? address.items[address.editingIndex]
                   : {
-                      firstName: "Andrei",
-                      lastName: "Popescu",
-                      phone: "962907872",
-                      street: "Strada Mihai Eminescu",
-                      houseNumber: "42B",
-                      city: "Odesa",
-                      postalCode: "900123",
+                      firstName: "Oleksandr",
+                      lastName: "Kovalenko",
+                      phone: "674821935",
+                      address: {
+                        street: "vul. Derebasivska",
+                        houseNumber: "15",
+                        city: "Odesa",
+                        postalCode: "65000",
+                      },
                       country: "UA",
                     }
               }
-              onSubmit={address.saveItem}
+              onSubmit={(data) => {
+                address.saveItem({
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  phone: data.phone,
+                  country: data.country,
+                  address: {
+                    street: data.street,
+                    houseNumber: data.houseNumber,
+                    city: data.city,
+                    postalCode: data.postalCode,
+                  },
+                } as AddressData);
+              }}
               submitLabel="Use this address"
             />
           )}
@@ -163,7 +180,7 @@ export default function CheckoutPage() {
               renderItem={(a) => [
                 `${a.firstName} ${a.lastName}`,
                 `Phone number: ${a.phone}`,
-                `${a.street} ${a.houseNumber}, ${a.city}, ${a.country}, ${a.postalCode}`,
+                `${a.address?.street} ${a.address?.houseNumber}, ${a.address?.city}, ${a.country}, ${a.address?.postalCode}`,
               ]}
               onEdit={address.editItem}
               onAdd={address.addNew}
