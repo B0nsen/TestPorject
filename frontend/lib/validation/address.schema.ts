@@ -14,31 +14,12 @@ export const addressSchema = z
       .trim()
       .min(1, "Last name is required")
       .regex(/^[\p{L}\s'-]+$/u, "Last name contains invalid characters"),
-
-    street: z
-      .string()
-      .trim()
-      .min(1, "Street is required")
-      .max(100, "Street is too long"),
-
-    houseNumber: z
-      .string()
-      .trim()
-      .min(1, "House number is required")
-      .max(20, "House number is too long"),
-
-    city: z
-      .string()
-      .trim()
-      .min(1, "City is required")
-      .regex(/^[\p{L}\s.'-]+$/u, "City contains invalid characters"),
-
-    postalCode: z
-      .string()
-      .trim()
-      .min(1, "Postal code is required")
-      .regex(/^[A-Za-z0-9\s-]{3,10}$/, "Invalid postal code format"),
-
+    address: z.object({
+      street: z.string().min(1),
+      houseNumber: z.string().min(1),
+      city: z.string().min(1),
+      postalCode: z.string().min(1),
+    }),
     country: z.string().min(1, "Country is required"),
     phone: z.string().min(1, "Phone number is required"),
   })

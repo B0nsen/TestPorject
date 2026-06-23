@@ -22,10 +22,19 @@ import { PhoneInput } from "./PhoneInput";
 
 type AddressFormProps = {
   defaultValues?: Partial<AddressFormValues>;
-  onSubmit: (data: AddressFormValues) => Promise<void> | void;
+  onSubmit: (data: AddressPayload) => Promise<void> | void;
   submitLabel?: string;
 };
-
+type AddressPayload = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  country: string;
+  street: string;
+  houseNumber: string;
+  city: string;
+  postalCode: string;
+};
 export default function AddressForm({
   defaultValues,
   onSubmit,
@@ -50,10 +59,24 @@ export default function AddressForm({
   const country = watch("country");
   const selectedCountry = country as CountryCode;
   const callingCode = `+${getCountryCallingCode(selectedCountry)}`;
+  
+  const handleFormSubmit = (data: AddressFormValues) => {
+    const flattened = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+      country: data.country,
+      street: data.address.street,
+      houseNumber: data.address.houseNumber,
+      city: data.address.city,
+      postalCode: data.address.postalCode,
+    };
 
+    return onSubmit(flattened);
+  };
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleFormSubmit)}
       className="flex flex-col gap-[30px]"
     >
       <div className="flex flex-col gap-[10px]">
@@ -67,23 +90,26 @@ export default function AddressForm({
         />
         <InputWrapper label="Address" className="gap-[5px]">
           <div className="flex gap-[4px]">
-            <FormInput {...register("street")} placeholder="Street" />
+            <FormInput {...register("address.street")} placeholder="Street" />
           </div>
           <div className="flex gap-[4px]">
             <FormInput
-              {...register("houseNumber")}
+              {...register("address.houseNumber")}
               placeholder="House number"
             />
 
-            <FormInput {...register("city")} placeholder="City" />
-            <FormInput {...register("postalCode")} placeholder="Postal code" />
+            <FormInput {...register("address.city")} placeholder="City" />
+            <FormInput
+              {...register("address.postalCode")}
+              placeholder="Postal code"
+            />
           </div>
           <FormError
             message={getFirstErrorMessage([
-              errors.street,
-              errors.houseNumber,
-              errors.city,
-              errors.postalCode,
+              errors.address?.street,
+              errors.address?.houseNumber,
+              errors.address?.city,
+              errors.address?.postalCode,
             ])}
           />
         </InputWrapper>
