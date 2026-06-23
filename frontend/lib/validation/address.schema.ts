@@ -40,17 +40,16 @@ export const addressSchema = z
       .regex(/^[A-Za-z0-9\s-]{3,10}$/, "Invalid postal code format"),
 
     country: z.string().min(1, "Country is required"),
-    number: z.string().min(1, "Phone number is required"),
+    phone: z.string().min(1, "Phone number is required"),
   })
   .superRefine((val, ctx) => {
     const country = val.country as CountryCode;
-
-    const phone = parsePhoneNumberFromString(val.number, country);
+    const phone = parsePhoneNumberFromString(val.phone, country);
 
     if (!phone?.isValid()) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["number"],
+        path: ["phone"],
         message: "Invalid phone number",
       });
     }

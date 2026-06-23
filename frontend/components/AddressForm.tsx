@@ -97,7 +97,7 @@ export default function AddressForm({
                 shouldDirty: true,
               });
               console.log("revalidate");
-              trigger("number");
+              trigger("phone");
             }}
             error={errors.country?.message}
           />

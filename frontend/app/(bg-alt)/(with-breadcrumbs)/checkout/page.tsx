@@ -14,15 +14,15 @@ import ShippingChecks from "@/components/ShippingChecks";
 import AddressForm from "@/components/AddressForm";
 import PaymentForm from "@/components/PaymentForm";
 
-import { AddressData } from "@/lib/types/address";
 import { PaymentData } from "@/lib/types/payment";
 import { useEditableList } from "@/lib/hooks/useEditableList";
 import { useSelectableList } from "@/lib/hooks/useSelectableList";
 import CheckoutDesktopAlt from "@/components/CheckoutDesktopAlt";
 import { useRouter } from "next/navigation";
+import { AddressFormValues } from "@/lib/validation/address.schema";
 
 export type StepMode = "form" | "card" | "open";
-
+export type AddressData = AddressFormValues;
 export default function CheckoutPage() {
   const [open, setOpen] = useState(false);
 
@@ -144,13 +144,12 @@ export default function CheckoutPage() {
                   : {
                       firstName: "Andrei",
                       lastName: "Popescu",
-                      phone: "(415) 782-1049",
+                      phone: "962907872",
                       street: "Strada Mihai Eminescu",
                       houseNumber: "42B",
-                      city: "Constanța",
-                      state: "Constanța",
+                      city: "Odesa",
                       postalCode: "900123",
-                      country: "Romania",
+                      country: "UA",
                     }
               }
               onSubmit={address.saveItem}
@@ -164,7 +163,7 @@ export default function CheckoutPage() {
               renderItem={(a) => [
                 `${a.firstName} ${a.lastName}`,
                 `Phone number: ${a.phone}`,
-                `${a.street} ${a.houseNumber}, ${a.city}, ${a.state}, ${a.country}, ${a.postalCode}`,
+                `${a.street} ${a.houseNumber}, ${a.city}, ${a.country}, ${a.postalCode}`,
               ]}
               onEdit={address.editItem}
               onAdd={address.addNew}
