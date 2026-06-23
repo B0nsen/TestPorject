@@ -70,7 +70,7 @@ namespace backend.Controllers
             );
         }
 
-        [HttpPost("edit/{id:int}")]
+        [HttpPut("edit/{id:int}")]
         public async Task<ActionResult> EditReview([FromForm] CreateReviewDTO entity, int id)
         {
 

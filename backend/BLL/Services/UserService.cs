@@ -11,6 +11,7 @@ using AspNetCoreGeneratedDocument;
 using Microsoft.Identity.Client.Extensions.Msal;
 using System.Security.Cryptography;
 using System.Text;
+using static Amazon.S3.Util.S3EventNotification;
 
 public class UserService : IUserService
 {
@@ -266,6 +267,44 @@ public class UserService : IUserService
             logger.LogError(ex, "Error updating User with ID {Id} in UserService", uid);
             throw new ApplicationException("Error updating User", ex);
         }
+    }
+    public async Task<User> GetRawUserByUid(long uid)
+    {
+        return await _userRepository.GetById(uid);
+    }
+
+    public async Task UpdateAddress(UpdateAddressInfoDTO entity, long uid)
+    {
+        var user = await _userRepository.GetById(uid);
+        if(user == null)
+        {
+            throw new Exception("User not found");
+        }
+
+        user.Name = entity.firstName + " " + entity.lastName;
+        user.Phone = entity.phone;
+        var existingAddress = user.Addresses.FirstOrDefault();
+        
+        if (existingAddress == null)
+        {
+            Address address = new Address();
+            address.Country = entity.country;
+            address.City = entity.city;
+            address.PostalCode = entity.postalCode;
+            address.Street = entity.street;
+            address.HouseNumber = int.Parse(entity.houseNumber);
+            address.IsDefault = true;
+            user.Addresses.Add(address);
+        }
+        else
+        {
+            existingAddress.Country = entity.country;
+            existingAddress.City = entity.city;
+            existingAddress.PostalCode = entity.postalCode;
+            existingAddress.Street = entity.street;
+            existingAddress.HouseNumber = int.Parse(entity.houseNumber);
+        }
+        await db.SaveAsync();
     }
 
 

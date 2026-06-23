@@ -68,22 +68,22 @@ namespace backend.Controllers
         public async Task<IActionResult> UpdateInfo([FromBody] UpdateAddressInfoDTO entity)
         {
             var uid = HttpContext.Session.GetString("UserId");
-            var user = await _userService.Get(int.Parse(uid));
-            var address = await _service.GetByUserId(int.Parse(uid));
-            
-            user.Name = entity.firstName + " " + entity.lastName;
-            user.Phone = entity.phone;
 
-            await _userService.Update(user);
+            await _userService.UpdateAddress(entity, long.Parse(uid));
+            //else
+            //{
+            //    await _service.Update(address);
+            //}
+            //await _userService.Update(user);
 
-            address.Country = entity.country;
-            address.City = entity.city;
-            address.PostalCode = entity.postalCode;
-            address.Street = entity.street;
-            address.HouseNumber = int.Parse(entity.houseNumber);
-            
 
-            await _service.Update(address);
+            //if(address == null)
+            //{
+            //    address.UserId = long.Parse(uid);
+            //}
+
+            Console.WriteLine("Test");
+            //await _service.UpdateOrCreate(address);
             return NoContent();
         }
         

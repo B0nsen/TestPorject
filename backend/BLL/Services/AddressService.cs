@@ -172,4 +172,38 @@ public class AddressService : IAddressService
             throw new ApplicationException("Error getting Address", ex);
         }
     }
+
+    public async Task UpdateOrCreate(AddressDTO entity)
+    {
+        if (entity == null)
+        {
+            logger.LogWarning("Null entity given to Update function in AddressService");
+            throw new ArgumentNullException(nameof(entity));
+        }
+
+        if (entity.Id <= 0)
+        {
+            logger.LogWarning("Invalid ID {Id} in Update function in AddressService", entity.Id);
+            throw new ArgumentException("ID must be greater than 0", nameof(entity.Id));
+        }
+
+        try
+        {
+            var exists = await db.R_Address.GetById(entity.Id);
+            if (exists == null)
+            {
+                logger.LogWarning("Address with ID {Id} not found in Update function", entity.Id);
+                throw new KeyNotFoundException($"Address with ID {entity.Id} not found");
+            }
+
+            mapper.Map(entity, exists);
+            await db.R_Address.Update(exists);
+            await db.SaveAsync();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error updating Address with ID {Id} in AddressService", entity.Id);
+            throw new ApplicationException("Error updating Address", ex);
+        }
+    }
 }

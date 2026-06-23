@@ -9,10 +9,13 @@ public interface IUserService
     // Task Create(RegisterDTO entity);
     Task Register(RegisterDTO dto);
     Task Update(UserDTO entity);
+    Task<User> GetRawUserByUid(long uid);
     Task Delete(int id);
     Task<UserDTO> Get(int id);
     Task<UserEntityDTO?> GetByEmail(string email);
     Task<IEnumerable<UserDTO>> GetAll();
+
+    Task UpdateAddress(UpdateAddressInfoDTO address, long uid);
 
     Task<UserInfoDTO> GetUserInfo(int id);
     Task<bool> HasReview(int uid, int productId);
