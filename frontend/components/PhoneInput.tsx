@@ -19,7 +19,7 @@ export const PhoneInput = ({
   register,
   errors,
   isSubmitted,
-  name = "number",
+  name = "phone",
 }: Props) => {
   const getFlagUrl = (code: string) =>
     `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
