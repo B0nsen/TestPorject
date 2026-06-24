@@ -46,7 +46,8 @@ export default function CatalogPage() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/product/filters?department=${department}`,
       );
-      const data = await res.json();
+        const data = await res.json();
+     
       setFilters(data);
     };
 
@@ -59,7 +60,6 @@ export default function CatalogPage() {
     const fetchProducts = async () => {
       console.log("fetch for page:", page);
       console.log("raw filters:", selectedFilters);
-
       const params = new URLSearchParams(searchParams.toString());
       const queryString = params.toString();
 

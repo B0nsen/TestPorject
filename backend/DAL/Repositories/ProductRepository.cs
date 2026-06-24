@@ -60,7 +60,7 @@ namespace backend.DAL.Repositories
             {
                 query = query.Where(p => p.ProductCategories.Any(pc => pc.Category.Name == category));
             }
-            var res = await query.Include(p => p.ProductCategories).ThenInclude(c => c.Category).AsSplitQuery().OrderBy(p => p.Id).ToListAsync();
+            var res = await query.Include(p => p.Images).Include(p => p.Reviews).ThenInclude(r => r.User).Include(p => p.ProductCategories).ThenInclude(c => c.Category).Include(p => p.Reviews).ThenInclude(r => r.ReviewImages).AsSplitQuery().OrderBy(p => p.Id).ToListAsync();
             return res;
         }
         public async Task <IEnumerable<Product>> GetAllPage(FilterGetDTO filters)

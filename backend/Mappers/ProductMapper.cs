@@ -86,14 +86,14 @@ public static class ProductMapper
         };
     }
 
-    public static IEnumerable<FilterCellDTO> MapToCellList (this IEnumerable<Product> products)
+    public static IEnumerable<FilterCellDTO> MapToCellList (this IEnumerable<Product> productssorted, IEnumerable<Product> productsraw)
     {
         FilterCellDTO deparment = new FilterCellDTO
         {
             key = "department",
             title = "Department",
             type = "single_select",
-            options = products
+            options = productsraw
             .SelectMany(p => p.ProductCategories)
             .Select(pc => pc.Category.Name)
             .Distinct()
@@ -110,15 +110,15 @@ public static class ProductMapper
             key = "brand",
             title = "Featured Brands",
             type = "multiselect",
-            options = products.Select(p => p.Brand).Distinct().ToList()
+            options = productssorted.Select(p => p.Brand).Distinct().ToList()
         };
         FilterCellDTO price = new FilterCellDTO
         {
             key = "price",
             title = "Price",
             type = "range",
-            min = products.Min(p => p.Price),
-            max = products.Max(p => p.Price)
+            min = productssorted.Min(p => p.Price),
+            max = productssorted.Max(p => p.Price)
         };
         FilterCellDTO condition = new FilterCellDTO
         {

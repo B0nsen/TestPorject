@@ -5,6 +5,7 @@ using backend.BLL.Interfaces;
 using backend.DAL.Interfaces;
 using backend.Mappers;
 using DefaultNamespace;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Identity.Client.Extensions.Msal;
 
 public class ProductService : IProductService
@@ -190,9 +191,19 @@ public class ProductService : IProductService
     {
         try
         {
-            var products = await _productRepository.GetAllCategory(category);
-            var res = products.MapToCellList();
-            return res;
+            if (!string.IsNullOrEmpty(category))
+            {
+                var products = await _productRepository.GetAllCategory(category);
+                var productsraw = await _productRepository.GetAll();
+                var res = products.MapToCellList(productsraw);
+                return res;
+            }
+            else
+            {
+                var products = await _productRepository.GetAll();
+                var res = products.MapToCellList(products);
+                return res;
+            }
         }
         catch (Exception ex)
         {
