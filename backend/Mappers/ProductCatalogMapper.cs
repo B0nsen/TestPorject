@@ -13,7 +13,10 @@ namespace backend.Mappers
                 title = product.Name,
                 price = Math.Round(product.Price * (1 - (product.Sale ?? 0.0) / 100.0),2),
                 rating = Math.Round(product.Reviews != null && product.Reviews.Any() ? product.Reviews.Average(r => r.Rating) : 0, 1),
-                imageUrl = product.Images?.Where(i => i.IsMain).FirstOrDefault()?.ImageUrl ?? "placeholder.png"
+                imageUrl = product.Images?
+                    .OrderByDescending(i => i.IsMain) 
+                    .ThenBy(i => i.Id)
+                    .FirstOrDefault()?.ImageUrl ?? "placeholder.png"
             };
         }
         public static IEnumerable<ProductCatalogGetDTO> MapToDtoList(this IEnumerable<Product> products)

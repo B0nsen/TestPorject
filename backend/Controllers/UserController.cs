@@ -19,14 +19,15 @@ namespace backend.Controllers
         private readonly PasswordCache _passwordCache;
         private readonly IEmailService emailService;
         private readonly JwtService _jwtService;
+        private readonly IWebHostEnvironment _env;
 
-        public UserController(IUserService service, PasswordCache passwordCache, IEmailService emailService, JwtService jwtService)
+        public UserController(IUserService service, PasswordCache passwordCache, IEmailService emailService, JwtService jwtService, IWebHostEnvironment env)
         {
             _service = service;
             _passwordCache = passwordCache;
             this.emailService = emailService;
             _jwtService = jwtService;
-
+            _env = env;
         }
 
 
@@ -84,14 +85,15 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
     {
                 var token = _jwtService.GenerateToken(user);
                 _passwordCache.CachePassword(dto.Email, hash, salt, TimeSpan.FromMinutes(10));
-        //HttpContext.Session.SetString("UserEmail", user.Email);
-        //HttpContext.Session.SetString("UserRole", user.RoleId.ToString());
-        //HttpContext.Session.SetString("UserId", user.Id.ToString());
+                //HttpContext.Session.SetString("UserEmail", user.Email);
+                //HttpContext.Session.SetString("UserRole", user.RoleId.ToString());
+                //HttpContext.Session.SetString("UserId", user.Id.ToString());
+                var isProd = _env.IsProduction();
                 Response.Cookies.Append("access_token", token, new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = false,
-                    SameSite = SameSiteMode.Lax,
+                    Secure = isProd,
+                    SameSite = isProd ? SameSiteMode.None : SameSiteMode.Lax,
                     Path = "/",
                     Expires = DateTime.UtcNow.AddMinutes(60)
                 });

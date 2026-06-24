@@ -53,7 +53,16 @@ namespace backend.DAL.Repositories
             // Сохраняем все изменения разом
             await _context.SaveChangesAsync();
         }
-
+        public async Task<IEnumerable<Product>> GetAllCategory(string category)
+        {
+            var query = _dbSet.AsNoTracking();
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(p => p.ProductCategories.Any(pc => pc.Category.Name == category));
+            }
+            var res = await query.Include(p => p.ProductCategories).ThenInclude(c => c.Category).AsSplitQuery().OrderBy(p => p.Id).ToListAsync();
+            return res;
+        }
         public async Task <IEnumerable<Product>> GetAllPage(FilterGetDTO filters)
         {
             var query = _dbSet.AsNoTracking();

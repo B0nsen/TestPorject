@@ -186,11 +186,11 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<IEnumerable<FilterCellDTO>> GetAllFilters()
+    public async Task<IEnumerable<FilterCellDTO>> GetAllFilters(string category)
     {
         try
         {
-            var products = await _productRepository.GetAll();
+            var products = await _productRepository.GetAllCategory(category);
             var res = products.MapToCellList();
             return res;
         }

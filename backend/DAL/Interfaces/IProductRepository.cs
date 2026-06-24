@@ -13,5 +13,6 @@ namespace backend.DAL.Interfaces
         Task Delete(long id);
         Task SaveAsync();
         Task<IEnumerable<Product>> GetAllPage(FilterGetDTO filters);
+        Task<IEnumerable<Product>> GetAllCategory(string category);
     }
 }

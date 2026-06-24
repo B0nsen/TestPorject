@@ -38,7 +38,7 @@ namespace backend.Mappers
                 Email = user.Email,
                 Phone = user.Phone,
                 Password = "",
-                Country = user.Country,
+                Country = address.Country,
                 Dob = user.DateOfBirth.ToString() != null ? user.DateOfBirth.ToString() : "",
                 Address = new AddressInfoDTO
                 {

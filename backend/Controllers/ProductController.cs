@@ -130,10 +130,10 @@ namespace backend.Controllers
             await _service.Delete(id);
             return NoContent();
         }
-        [HttpGet("filters")]
-        public async Task<ActionResult<IEnumerable<FilterCellDTO>>> GetFilters()
+        [HttpGet("filters/{category}")]
+        public async Task<ActionResult<IEnumerable<FilterCellDTO>>> GetFilters(string category)
         {
-            var result = await _service.GetAllFilters();
+            var result = await _service.GetAllFilters(category);
             return Ok(result);
         }
         
