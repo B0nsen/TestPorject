@@ -38,7 +38,15 @@ export default function ReviewModal({
 
   const hasReview = !!userReview;
   const hasInitialized = useRef(false);
-
+  const initCreateDefaults = () => {
+    setTitle("Good product overall");
+    setReview(
+      "This is a solid product. It works as expected and meets most of my needs. There are a few minor drawbacks, but overall I’m satisfied and would recommend it.",
+    );
+    setImages([]);
+    setVideos([]);
+    setExistingImages([]);
+  };
   useEffect(() => {
     if (!isOpen) return;
 
@@ -69,7 +77,7 @@ export default function ReviewModal({
       setRating(userReview.rating ?? 5);
       setExistingImages(userReview.images ?? []);
     } else {
-      resetForm();
+      initCreateDefaults();
     }
     hasInitialized.current = true;
   }, [isOpen, userReview]);
