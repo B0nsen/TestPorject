@@ -40,6 +40,7 @@ export default function CheckoutPage() {
   const payment = useEditableList<PaymentData>((index) => {
     paymentSelect.select(index);
   });
+  
   const {
     checkedItems,
     shipping,
@@ -81,25 +82,29 @@ export default function CheckoutPage() {
       return;
     }
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Order`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const payload = {
+        items: checkedItems.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+        })),
+      };
+
+      console.log("Sending order payload:", payload);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/User/create-order`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify({
-          items: checkedItems.map((item) => ({
-            productId: item.id,
-            quantity: item.quantity,
-            productName: item.title,
-            productPrice: item.price,
-            productImageUrl: item.image,
-          })),
-        }),
-      });
+      );
 
       if (!res.ok) {
         throw new Error("Failed to create order");
       }
+
       const data = await res.json();
       router.push(`/order-success?orderId=${data.id}`);
     } catch (error) {

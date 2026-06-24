@@ -88,7 +88,7 @@ export default function AccountOrders() {
             <div
               key={order.id}
               onClick={() => router.push(`/account/orders/${order.id}`)}
-              className="cursor-pointer w-full bg-white rounded-[10px] overflow-hidden flex flex-col"
+              className="cursor-pointer w-full bg-non-active rounded-[10px] overflow-hidden flex flex-col"
             >
               <div className="aspect-[241/204] w-full relative bg-gray-300 overflow-hidden">
                 {firstItem?.productImageUrl ? (
@@ -101,7 +101,7 @@ export default function AccountOrders() {
               </div>
 
               <div className="p-[10px] flex flex-col gap-[6px] text-default">
-                <p className="text-[14px] leading-[20px] line-clamp-2">
+                <p className="text-[14px] leading-[20px] line-clamp-2 text-accent-muted">
                   Order #{order.id}
                 </p>
                 <p className="text-[13px] text-text-main-muted">
@@ -111,7 +111,7 @@ export default function AccountOrders() {
                   {order.items?.length || 0} items
                 </p>
                 <p className="flex items-start font-sans">
-                  <span className="text-[28px] leading-[100%] font-normal">
+                  <span className="text-[28px] leading-[100%] text-main font-normal">
                     ${total.toFixed(2)}
                   </span>
                 </p>
