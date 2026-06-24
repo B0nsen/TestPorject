@@ -11,12 +11,12 @@ import searchIcon from "@/assets/icons/search.svg";
 const API = `${process.env.NEXT_PUBLIC_API_URL}/api/product`;
 
 const CATEGORIES = [
-    "Tech",
-    "Home",
-    "Fashion",
-    "Beauty",
+    "Smartphones",
+    "Keyboards",
+    "VR",
+    "Coffee",
     "Sports",
-    "Toys",
+    "Sneakers",
     "Pets",
     "Grocery",
     "Accessories"
