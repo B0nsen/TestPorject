@@ -11,12 +11,11 @@ interface BannerProps {
 
 export default function SalesBanner({ title, imageSrc, children }: BannerProps) {
   return (
-    /* ИСПРАВЛЕНО: 
-      Убираем лишние внешние отступы, мешающие встать в край, 
-      и делаем ширину строго w-full, чтобы он наследовал ширину родительского контейнера страницы,
-      либо подстраивался под max-w вашего основного макета (1528px).
+    /* ИСПРАВЛЕНО: Внутренние отступы полностью убраны, чтобы баннер занимал 
+      всю ширину контейнера (w-full). Границы адаптивности (px-4 md:px-0) 
+      теперь вынесены на уровень выше в макет страницы для идеального выравнивания.
     */
-    <div className="w-full max-w-[1528px] mx-auto px-4 sm:px-0">
+    <div className="w-full">
       <div className="
         relative w-full overflow-hidden rounded-[15px] border border-[#2F3A52] shrink-0
         h-[160px] sm:h-[220px] md:h-[281px] transition-all duration-300

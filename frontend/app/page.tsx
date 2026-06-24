@@ -10,8 +10,8 @@ import BestSellersBanner from "@/components/BestSellersBanner";
 import CatalogSlider from "@/components/CatalogSlider";
 
 async function getHomepageData() {
-    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/homepage`;
-    console.log(API_URL);
+  const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/homepage`;
+  console.log(API_URL);
   try {
     const res = await fetch(API_URL, { cache: "no-store" });
     if (res.ok) {
@@ -58,19 +58,24 @@ export default async function Home() {
       <span className="is-homepage_desktop_bg_active hidden" />
       <div className="hidden layout-sm:block h-[140px] w-full shrink-0" />
 
+      {/* Ряди товарних рекомендацій */}
       <RecommendRow1 data={data.recommendedRow1 || []} />
 
-      <BestSellersBanner
-        title="Best Sellers in Grocery & Gourmet Food"
-        imageSrc="/images/homepage/best_sellers.jpg"
-        href="/catalog?department=grocery"
-      />
+      {/* Обертка для BestSellersBanner (Синхронізація відступів px-4 md:px-0) */}
+      <div className="w-full max-w-[1528px] mx-auto px-4 md:px-0">
+        <BestSellersBanner
+          title="Best Sellers in Grocery & Gourmet Food"
+          imageSrc="/images/homepage/best_sellers.jpg"
+          href="/catalog?department=grocery"
+        />
+      </div>
 
       <RecommendRow2 data={data.recommendedRow2 || []} />
       
       <CatalogSlider data={data.catalogSlider || []} />
 
-      <div className="w-full layout-px">
+      {/* Обертка для SalesBanner (Синхронізація відступів px-4 md:px-0) */}
+      <div className="w-full max-w-[1528px] mx-auto px-4 md:px-0">
         <SalesBanner
           title="Cosmic Sale"
           imageSrc="/images/homepage/cosmic_sales1.png" 
@@ -85,9 +90,9 @@ export default async function Home() {
             </div>
           </div>
 
-                  <Link href="/catalog?sale=true" className="banner-btn">
-                      Shop Now
-                  </Link>
+          <Link href="/catalog?sale=true" className="banner-btn">
+            Shop Now
+          </Link>
         </SalesBanner>
       </div>
 

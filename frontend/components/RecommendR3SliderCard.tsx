@@ -4,10 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from 'next/image';
 
+// Імпорт Ваших SVG іконок як React-компонентів
+import ArrowLeft from "@/assets/icons/arrow-left.svg?react";
+import ArrowRight from "@/assets/icons/arrow-right.svg?react";
+
 interface ProductItem {
   productName: string;
   price: string;
-  imageSrc: string | null; // Разрешаем null, чтобы избежать ошибок Next.js Image
+  imageSrc: string | null;
   href: string; 
 }
 
@@ -43,7 +47,6 @@ export default function RecommendR3SliderCard({
   const prevSlide = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // ИСПРАВЛЕНО: возвращаем prev - 1 вместо prev + 1, чтобы слайдер корректно листал назад
     setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
   };
 
@@ -56,21 +59,23 @@ export default function RecommendR3SliderCard({
         </h2>
       </div>
 
-      {/* Контейнер слайдера с чистым фоном для карточки товара */}
+      {/* Контейнер слайдера з чистим фоном для картки товару */}
       <div className="relative flex-1 w-full flex items-center justify-center bg-[#E6ECF5] min-h-0">
         
+        {/* Кнопка "Назад": Повернуто оригінальну темну плашку-заокруглення, 
+            але додано анімацію збільшення (hover:scale-110) як у CatalogSlider.
+            Текст іконки примусово фарбуємо в білий (text-white).
+        */}
         <button 
           onClick={prevSlide}
-          className="absolute left-[16px] z-10 w-[45px] h-[55px] md:w-[55px] md:h-[69px] bg-[#1A2030]/50 rounded-[10px] flex items-center justify-center hover:bg-[#1A2030]/70 transition-colors"
+          type="button"
+          className="absolute left-[16px] z-10 w-[45px] h-[55px] md:w-[55px] md:h-[69px] bg-[#1A2030]/50 rounded-[10px] flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-[#1A2030]/70 active:scale-95 cursor-pointer text-white border-none outline-none select-none"
           aria-label="Previous image"
         >
-          <svg width="20" height="34" className="md:w-[26px] md:h-[44px]" viewBox="0 0 26 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 4L6 22L22 40" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <ArrowLeft className="w-[26px] h-[44px] block text-white" />
         </button>
 
         <div className="relative w-[150px] h-[210px] md:w-[181px] md:h-[255px]">
-          {/* Рендерим изображение только при его наличии, иначе показываем заглушку */}
           {currentProduct.imageSrc ? (
             <Image
               key={currentIndex}
@@ -88,14 +93,17 @@ export default function RecommendR3SliderCard({
           )}
         </div>
 
+        {/* Кнопка "Вперед": Повернуто оригінальну темну плашку-заокруглення,
+            але додано анімацію збільшення (hover:scale-110) як у CatalogSlider.
+            Текст іконки примусово фарбуємо в білий (text-white).
+        */}
         <button 
           onClick={nextSlide}
-          className="absolute right-[16px] z-10 w-[45px] h-[55px] md:w-[55px] md:h-[69px] bg-[#1A2030]/50 rounded-[10px] flex items-center justify-center hover:bg-[#1A2030]/70 transition-colors"
+          type="button"
+          className="absolute right-[16px] z-10 w-[45px] h-[55px] md:w-[55px] md:h-[69px] bg-[#1A2030]/50 rounded-[10px] flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-[#1A2030]/70 active:scale-95 cursor-pointer text-white border-none outline-none select-none"
           aria-label="Next image"
         >
-          <svg width="20" height="34" className="md:w-[26px] md:h-[44px]" viewBox="0 0 26 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4L20 22L4 40" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <ArrowRight className="w-[26px] h-[44px] block text-white" />
         </button>
       </div>
 

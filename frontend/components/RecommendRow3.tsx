@@ -48,7 +48,6 @@ export default function RecommendRow3({ data }: RecommendRow3Props) {
       {alternatedData.map((item, idx) => {
         const pairIndex = Math.floor(idx / 2);
         const isEvenRow = pairIndex % 2 === 1;
-        const desktopOrder = `lg:order-${idx + 1}`;
 
         if (item.type === "product") {
           const productImages = item.images || [];
@@ -59,29 +58,32 @@ export default function RecommendRow3({ data }: RecommendRow3Props) {
             href: `/product/${item.id}`
           }));
 
-          const tabletOrder = isEvenRow ? "md:order-2" : "md:order-none";
+          /* ІСПРАВЛЕНО: Для планшетів (md) залишаємо чергування блоків 2x3, 
+             а для десктопу (lg) скидаємо порядок в lg:order-none, оскільки 
+             елементи в масиві alternatedData вже стоять один за одним. */
+          const cardGridOrder = isEvenRow ? "md:order-2 lg:order-none" : "md:order-none lg:order-none";
 
           return (
-            <div key={idx} className={`col-span-1 md:col-span-2 lg:col-span-1 ${tabletOrder} ${desktopOrder}`}>
+            <div key={idx} className={`col-span-1 md:col-span-2 lg:col-span-1 ${cardGridOrder}`}>
               <RecommendR3SliderCard requestTitle={item.title || ""} items={formattedItems} />
             </div>
           );
         }
 
         if (item.type === "category") {
-          const tabletOrder = isEvenRow ? "md:order-1" : "md:order-none";
+          /* ІСПРАВЛЕНО: Аналогічно скидаємо десктопний порядок в lg:order-none */
+          const cardGridOrder = isEvenRow ? "md:order-1 lg:order-none" : "md:order-none lg:order-none";
 
           const formattedCategory = {
             id: item.id,
             type: item.type,
             title: item.title || "",
             imageSrc: item.imageSrc || null, 
-            // ИСПРАВЛЕНО: передаем текстовое имя категории с Большой буквы вместо id под бэк Артема
             url: `/catalog?department=${encodeURIComponent(item.name || item.title || "")}`
           };
 
           return (
-            <div key={idx} className={`col-span-1 md:col-span-3 lg:col-span-1 ${tabletOrder} ${desktopOrder}`}>
+            <div key={idx} className={`col-span-1 md:col-span-3 lg:col-span-1 ${cardGridOrder}`}>
               <RecommendR3CategoryCard category={formattedCategory} />
             </div>
           );
