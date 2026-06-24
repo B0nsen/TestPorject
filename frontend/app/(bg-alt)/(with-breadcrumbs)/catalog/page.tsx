@@ -25,7 +25,7 @@ export default function CatalogPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [pageSize, setPageSize] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const department = searchParams.get("department");
   const page = Number(searchParams.get("page")) || 1;
 
   const {
@@ -42,13 +42,18 @@ export default function CatalogPage() {
 
   useEffect(() => {
     const fetchFilters = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/filters`);
+      console.log(`trigger fetch filters for ${department}`)
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/product/filters?department=${department}`,
+      );
       const data = await res.json();
       setFilters(data);
     };
 
-    fetchFilters();
-  }, []);
+    if (department) {
+      fetchFilters();
+    }
+  }, [department]);
 
   useEffect(() => {
     const fetchProducts = async () => {
