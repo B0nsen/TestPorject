@@ -14,7 +14,7 @@ export default function Avatar({
   const hasImage = Boolean(src);
   return (
     <div
-      className={`relative rounded-full overflow-hidden flex items-center justify-center ${
+      className={`relative rounded-full overflow-hidden flex items-center justify-center shrink-0 ${
         hasImage ? "" : "bg-main"
       }`}
       style={{

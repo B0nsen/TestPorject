@@ -67,7 +67,6 @@ export default function AccountNavigation() {
         console.log("logged out");
         window.location.href = "/login";
         mutate(USER_KEY, null, false);
-
       }
     } catch (err) {
       console.error("Action failed:", err);
@@ -124,12 +123,20 @@ export default function AccountNavigation() {
             })}
         </div>
         <div className="flex flex-col gap-3">
-          <FormButton
-            className="self-center"
+          <button
+            className={`rounded-[20px] px-[34px] py-[10px] text-[20px] leading-[100%] align-middle text-dark
+              bg-accent-muted w-fit cursor-pointer self-center !w-[200px] border-transparent border
+              hover:bg-transparent
+              hover:text-surface-accent-muted
+              hover:border-surface-accent-muted
+              active:bg-transparent
+              active:text-surface-accent-muted
+              active:border-surface-accent-muted
+    `}
             onClick={() => setModalMode("logout")}
           >
             Log Out
-          </FormButton>
+          </button>
           <FormButton
             className="self-center"
             onClick={() => setModalMode("delete")}
