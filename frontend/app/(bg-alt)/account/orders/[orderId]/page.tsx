@@ -74,12 +74,12 @@ export default async function OrderDetailsPage({
             key={item.id}
             className="bg-non-active rounded-[10px] flex p-[10px] gap-[8px] max-w-[615px] "
           >
-            <div className="size-[105px] rounded-[10px] shrink-0 bg-gray-300 relative overflow-hidden">
+            <div className="size-[105px] rounded-[10px] shrink-0 bg-white relative overflow-hidden">
               {item.productImageUrl ? (
                 <img
                   src={getImageSrc(item.productImageUrl)}
                   alt={item.productName || "Order item"}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain object-center p-1"
                 />
               ) : null}
             </div>

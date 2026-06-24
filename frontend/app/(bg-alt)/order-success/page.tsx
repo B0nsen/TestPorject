@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePaymentStore } from "@/lib/stores/payment-store";
 export default function OrderSuccessPage() {
   const { checkedItems } = useCart();
-  
+
   const router = useRouter();
   console.log(checkedItems);
 
@@ -57,7 +57,9 @@ export default function OrderSuccessPage() {
           {checkedItems.map((item) => (
             <div key={item.id} className="flex justify-between gap-[10px]">
               <div className="flex flex-col gap-[6px]">
-                <span className="title-checkout-item">{item.title}</span>
+                <span className="title-checkout-item line-clamp-3">
+                  {item.title}
+                </span>
 
                 <span className="text-checkout-item">
                   {item.quantity} item: ${item.price * item.quantity}
@@ -70,11 +72,11 @@ export default function OrderSuccessPage() {
                 </span>
               </div>
 
-              <div className="size-[112px] shrink-0 rounded-[10px]">
+              <div className="size-[112px] shrink-0 rounded-[10px] bg-white">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover rounded-[10px]"
+                  className="w-full h-full object-contain object-center p-1"
                 />
               </div>
             </div>

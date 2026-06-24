@@ -90,12 +90,12 @@ export default function AccountOrders() {
               onClick={() => router.push(`/account/orders/${order.id}`)}
               className="cursor-pointer w-full bg-non-active rounded-[10px] overflow-hidden flex flex-col"
             >
-              <div className="aspect-[241/204] w-full relative bg-gray-300 overflow-hidden">
+              <div className="aspect-[241/204] w-full relative bg-white overflow-hidden">
                 {firstItem?.productImageUrl ? (
                   <img
                     src={getImageSrc(firstItem.productImageUrl)}
                     alt={firstItem.productName || "Order item"}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain object-center"
                   />
                 ) : null}
               </div>
