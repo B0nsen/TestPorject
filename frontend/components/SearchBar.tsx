@@ -11,7 +11,7 @@ import searchIcon from "@/assets/icons/search.svg";
 const API = `${process.env.NEXT_PUBLIC_API_URL}/api/product`;
 
 const CATEGORIES = [
-    "Smartphones",
+    "Smartphones"
     "Keyboards",
     "VR",
     "Coffee",
