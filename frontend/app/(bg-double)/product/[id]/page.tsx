@@ -17,6 +17,7 @@ import { useWishlist } from "@/lib/hooks/useWishlist";
 import { useRouter } from "next/navigation";
 
 import CatalogSlider from "@/components/CatalogSlider";
+import { useCatalogSlider } from "@/lib/hooks/useCatalogSlider";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
@@ -33,19 +34,17 @@ export default function ProductPage() {
   const [productData, setProductData] = useState<any>(null);
   const [reviewsData, setReviewsData] = useState<any>(null);
   const [wishlists, setWishlists] = useState<Wishlist[]>([]);
+  
   const router = useRouter();
 
-  // Стейт для хранения товаров слайдера
-  const [sliderProducts, setSliderProducts] = useState<any[]>([]);
-
   const [isWishlistAuthorized, setIsWishlistAuthorized] = useState(true);
-  const { addToWishlist } = useWishlist();
-
-  // ДОБАВЛЕНО ТУТ: Глобальный стейт для отслеживания статуса инверсии кнопки на странице товара
   const [isProductFavorite, setIsProductFavorite] = useState(false);
 
+  const { sliderProducts } = useCatalogSlider();
+  const { addToWishlist } = useWishlist();
+
   const fetchReviews = async () => {
-    console.log("enter fetch reviews")
+    console.log("enter fetch reviews");
     try {
       const reviewsRes = await fetch(
         `${API_BASE}/api/product/reviews/${params.id}`,
@@ -106,6 +105,7 @@ export default function ProductPage() {
     addToWishlist(productData.id, wishlistId);
     setIsProductFavorite(true);
   };
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -114,7 +114,9 @@ export default function ProductPage() {
         );
 
         if (!productRes.ok) {
-          throw new Error(`Failed to load product page main content: ${productRes.status}`);
+          throw new Error(
+            `Failed to load product page main content: ${productRes.status}`,
+          );
         }
 
         const product = await productRes.json();
@@ -131,45 +133,6 @@ export default function ProductPage() {
     loadData();
   }, [params.id]);
 
-  useEffect(() => {
-    const loadSliderData = async () => {
-      const HOMEPAGE_API = `${API_BASE}/api/homepage`;
-      
-      try {
-        const res = await fetch(HOMEPAGE_API, { cache: "no-store" });
-        if (!res.ok) {
-          throw new Error(`Server responded with status: ${res.status}`);
-        }
-        
-        const data = await res.json();
-        if (data && data.catalogSlider) {
-          console.log("Карточка товара: данные слайдера успешно получены с API!");
-          setSliderProducts(data.catalogSlider);
-          return;
-        }
-        
-        throw new Error("Свойства catalogSlider нет в ответе бэкенда");
-        
-      } catch (err) {
-        console.warn(
-          `Карточка товара: бэкенд упал или недоступен. Тяну слайдер из локального JSON...`
-        );
-        
-        try {
-          const res = await fetch("/data/homepage.json");
-          const data = await res.json();
-          
-          if (data && data.catalogSlider) {
-            setSliderProducts(data.catalogSlider);
-          }
-        } catch (fileError) {
-          console.error("Карточка товара: критическая ошибка чтения резервного JSON:", fileError);
-        }
-      }
-    };
-
-    loadSliderData();
-  }, []);
 
   const openWishlistModal = () => {
     if (!isWishlistAuthorized) {
@@ -196,7 +159,6 @@ export default function ProductPage() {
             product={productData}
             onWishlistClick={openWishlistModal}
           />
-          {/* ИСПРАВЛЕНО ТУТ: Передаем состояние isFavorite в блок действий */}
           <ProductActionsSection
             product={productData}
             isFavorite={isProductFavorite}
