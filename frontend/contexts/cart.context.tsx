@@ -12,6 +12,7 @@ export type CartItemType = {
   quantity: number;
   inStock: boolean;
   listPrice: number;
+  productId: number;
   discount: number;
 };
 
