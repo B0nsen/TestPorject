@@ -12,6 +12,7 @@ public class CartItemPageDTO
 {
     public long Id { get; set; }
     public string title { get; set; }
+    public long productId { get; set; }
     public decimal? listPrice { get; set; }
     public decimal price { get; set; }
     public int? discount { get; set; }

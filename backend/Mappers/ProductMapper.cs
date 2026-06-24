@@ -45,6 +45,7 @@ public static class ProductMapper
 
     public static ImagesDTO MapImages(Product product)
     {
+        Console.WriteLine(product.Images.Where(i => i.IsMain).Select(i => i.ImageUrl).FirstOrDefault());
         return new ImagesDTO
         {
             Main = product.Images.Where(i => i.IsMain).Select(i => i.ImageUrl).FirstOrDefault(),

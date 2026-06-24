@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using DefaultNamespace;
 using Microsoft.AspNetCore.WebSockets;
+using backend.DAL.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -153,5 +154,11 @@ app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AmazonContext>();
+    await dbContext.Database.MigrateAsync();
+}
 
 app.Run();

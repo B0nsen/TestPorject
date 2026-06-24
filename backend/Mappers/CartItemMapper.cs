@@ -22,12 +22,13 @@ namespace backend.Mappers
             {
                 Id = cartitem.Id,
                 title = cartitem.Product.Name,
+                productId = cartitem.Product.Id,
                 listPrice = listprice,
                 price = price,
                 discount = cartitem.Product.Sale,
                 quantity = cartitem.Quantity,
                 inStock = cartitem.Product.Available,
-                image = cartitem.Product.Images.FirstOrDefault().ImageUrl,
+                image = cartitem.Product.Images.Where(i => i.IsMain).FirstOrDefault().ImageUrl,
             };
         }
         public static IEnumerable<CartItemPageDTO> MapToDtoList(this IEnumerable<CartItem> cartitem)
