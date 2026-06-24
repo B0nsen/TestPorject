@@ -36,7 +36,10 @@ export default function AboutProduct({
 
       <div className="flex justify-between items-center">
         <span className="flex flex-col">
-          <ProductPrice price={product.price.currentPrice} colorClass="text-main" />
+          <ProductPrice
+            price={product.price.currentPrice}
+            colorClass="text-main"
+          />
           <span className="flex items-center text-xs leading-4">
             <span className="layout-product-product-hidden ">
               List Price: ${product.price.listPrice}
@@ -45,9 +48,12 @@ export default function AboutProduct({
           </span>
         </span>
 
-        <span className="flex flex-col items-center text-2xl leading-8 font-light  layout-product-product-hidden">
-          -{product.price.discountPercent}%
-        </span>
+        {typeof product.price.discountPercent === "number" &&
+          product.price.discountPercent > 0 && (
+            <span className="flex flex-col items-center text-2xl leading-8 font-light layout-product-product-hidden">
+              -{product.price.discountPercent}%
+            </span>
+          )}
       </div>
 
       <ProductPurchaseActions

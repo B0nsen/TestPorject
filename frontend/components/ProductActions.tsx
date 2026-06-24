@@ -26,7 +26,7 @@ export default function ProductActionsSection({
                 <div className="flex items-start justify-between w-full mb-0.5">
                     <ProductPrice price={product.price?.currentPrice} />
                     <span
-                        className={`text-[20px] font-normal mt-1 tracking-tight select-none ${isNoDiscount ? "text-[#10141C]/30" : "text-[#10141C]/60"
+                        className={`text-[20px] font-normal mt-1 tracking-tight select-none ${isNoDiscount ? "text-transparent" : "text-[#10141C]/60"
                             }`}
                     >
                         -{discount}%
