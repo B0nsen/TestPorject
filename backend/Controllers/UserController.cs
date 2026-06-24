@@ -286,6 +286,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         public async Task<IActionResult> Logout()
         {
             var uid = User.FindFirst("UserId")?.Value;
+            var isProd = _env.IsProduction();
             if (uid == null)
             {
                 return NoContent();
@@ -295,8 +296,8 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
                 Response.Cookies.Append("access_token", "", new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = false,
-                    SameSite = SameSiteMode.Lax,
+                    Secure = isProd,
+                    SameSite = isProd ? SameSiteMode.None : SameSiteMode.Lax,
                     Path = "/",
                     Expires = DateTime.UtcNow.AddDays(-1)
                 });

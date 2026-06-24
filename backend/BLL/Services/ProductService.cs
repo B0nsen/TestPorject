@@ -1,4 +1,5 @@
 using System.Threading.Tasks.Dataflow;
+using Amazon.S3.Model;
 using AutoMapper;
 using backend.BLL.DTO;
 using backend.BLL.Interfaces;
@@ -191,8 +192,9 @@ public class ProductService : IProductService
     {
         try
         {
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category) && category != "null")
             {
+                Console.WriteLine(1 + category);
                 var products = await _productRepository.GetAllCategory(category);
                 var productsraw = await _productRepository.GetAll();
                 var res = products.MapToCellList(productsraw);
@@ -200,6 +202,7 @@ public class ProductService : IProductService
             }
             else
             {
+                Console.WriteLine(2);
                 var products = await _productRepository.GetAll();
                 var res = products.MapToCellList(products);
                 return res;

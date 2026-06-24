@@ -57,9 +57,15 @@ export default function CatalogPage() {
   }, [department]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      console.log("fetch for page:", page);
-      console.log("raw filters:", selectedFilters);
+      const fetchProducts = async () => {
+          console.log(`trigger fetch filters for ${department}`)
+          const res1 = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/api/product/filters?department=${department}`,
+          );
+          const data1 = await res1.json();
+
+          setFilters(data1);
+       console.log("fetch for page:", page);
       const params = new URLSearchParams(searchParams.toString());
       const queryString = params.toString();
 
