@@ -67,7 +67,7 @@ namespace backend.Controllers
         [HttpPut("info")]
         public async Task<IActionResult> UpdateInfo([FromBody] UpdateAddressInfoDTO entity)
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
 
             await _userService.UpdateAddress(entity, long.Parse(uid));
             //else

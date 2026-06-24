@@ -69,7 +69,7 @@ namespace backend.Controllers
         [HttpPost("add")]
         public async Task<ActionResult> Create([FromBody] CreditCardCreateDTO entity)
         {
-            var userIdString = HttpContext.Session.GetString("UserId");
+            var userIdString = User.FindFirst("UserId")?.Value;
 
             if (!long.TryParse(userIdString, out var userId))
             {

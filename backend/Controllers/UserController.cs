@@ -18,17 +18,19 @@ namespace backend.Controllers
         private readonly IUserService _service;
         private readonly PasswordCache _passwordCache;
         private readonly IEmailService emailService;
-       
-        public UserController(IUserService service, PasswordCache passwordCache, IEmailService emailService)
+        private readonly JwtService _jwtService;
+
+        public UserController(IUserService service, PasswordCache passwordCache, IEmailService emailService, JwtService jwtService)
         {
             _service = service;
             _passwordCache = passwordCache;
             this.emailService = emailService;
-            
+            _jwtService = jwtService;
+
         }
-        
-        
-     [HttpPost("login")]
+
+
+        [HttpPost("login")]
 public async Task<IActionResult> Login([FromBody] LoginDTO dto)
 {
     var email = dto.Email.ToLower().Trim();
@@ -49,19 +51,30 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
 
     if (cached != null)
     {
-        if (PasswordHelper.VerifyPassword(dto.Password, cached.Hash, cached.Salt))
-          
-        return Ok(new
-           {
-                 message = "Success",
-                 userId = user.Id,
-                 roleId = user.RoleId
-           });
+                if (PasswordHelper.VerifyPassword(dto.Password, cached.Hash, cached.Salt))
+                {
+                    var token = _jwtService.GenerateToken(user);
 
-        return Unauthorized("Invalid email or password");
-    }
+                    return Ok(new
+                    {
+                        Token = token
+                    });
+                }
 
-    var hash = Convert.FromBase64String(user.HashPassword);
+                // return Ok(new
+                //    {
+                //          message = "Success",
+                //          userId = user.Id,
+                //          roleId = user.RoleId
+                //    });
+
+
+
+
+                return Unauthorized("Invalid email or password");
+            }
+
+            var hash = Convert.FromBase64String(user.HashPassword);
     var salt = Convert.FromBase64String(user.Salt);
 
     bool isValid = PasswordHelper.VerifyPassword(dto.Password, hash, salt);
@@ -69,11 +82,20 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
 
     if (isValid)
     {
-        _passwordCache.CachePassword(dto.Email, hash, salt, TimeSpan.FromMinutes(10));
-        HttpContext.Session.SetString("UserEmail", user.Email);
-        HttpContext.Session.SetString("UserRole", user.RoleId.ToString());
-        HttpContext.Session.SetString("UserId", user.Id.ToString());
-           return Ok(new
+                var token = _jwtService.GenerateToken(user);
+                _passwordCache.CachePassword(dto.Email, hash, salt, TimeSpan.FromMinutes(10));
+        //HttpContext.Session.SetString("UserEmail", user.Email);
+        //HttpContext.Session.SetString("UserRole", user.RoleId.ToString());
+        //HttpContext.Session.SetString("UserId", user.Id.ToString());
+                Response.Cookies.Append("access_token", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = false,
+                    SameSite = SameSiteMode.Lax,
+                    Path = "/",
+                    Expires = DateTime.UtcNow.AddMinutes(60)
+                });
+                return Ok(new
              {
                  message = "Success",
                  userId = user.Id,
@@ -153,7 +175,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpGet("account")]
         public async Task<ActionResult<UserInfoDTO>> GetAccountInfo()
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             if (int.TryParse(uid, out int userId))
             {
 
@@ -170,7 +192,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpGet("islogin")]
         public async Task<ActionResult<bool>> GetIsLogin()
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             if (uid != null)
             {
                 Console.WriteLine(true);
@@ -187,8 +209,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpPost("create-order")]
         public async Task<ActionResult> AddOrder(OrderDTO order)
         {
-            //var uid = HttpContext.Session.GetString("UserId");
-            var uid = "17";
+            var uid = User.FindFirst("UserId")?.Value;
             await _service.AddOrder(order, long.Parse(uid));
             return Ok();
         }
@@ -197,7 +218,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpPut("info")]
         public async Task<IActionResult> Update([FromForm] UpdateUserInfoDTO entity)
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             await _service.UpdateInfo(entity, int.Parse(uid));
             return NoContent();
         }
@@ -205,7 +226,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpGet("hasreview/{id}")]
         public async Task<ActionResult<bool>> HasReview(int id)
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             return await _service.HasReview(int.Parse(uid), id);
         }
         
@@ -235,7 +256,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpGet("isadmin")]
         public IActionResult IsAdmin()
         {
-            var role = HttpContext.Session.GetString("UserRole");
+            var role = User.FindFirst("UserRole")?.Value;
 
             if (role == "2" || role == "3")
              {
@@ -248,7 +269,7 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpDelete("account")]
         public async Task<IActionResult> DeleteAccount()
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             if (uid == null)
             {
                 return NoContent();
@@ -262,15 +283,21 @@ public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             if (uid == null)
             {
                 return NoContent();
             }
             else
             {
-                HttpContext.Session.Clear();
-                await HttpContext.Session.CommitAsync();
+                Response.Cookies.Append("access_token", "", new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = false,
+                    SameSite = SameSiteMode.Lax,
+                    Path = "/",
+                    Expires = DateTime.UtcNow.AddDays(-1)
+                });
             }
             return NoContent();
         }

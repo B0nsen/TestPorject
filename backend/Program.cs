@@ -12,10 +12,15 @@ using Serilog;
 using DefaultNamespace;
 using Microsoft.AspNetCore.WebSockets;
 using backend.DAL.EF;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+var jwtSettings = builder.Configuration.GetSection("Jwt");
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 Console.WriteLine("CONNECTION STRING: " + connectionString);
@@ -38,9 +43,45 @@ builder.Services.AddSession(options =>
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+
+
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
+            };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["access_token"];
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<JwtService>();
 services.AddScoped<ICartItemService, CartItemService>();
 services.AddScoped<ICategoryService, CategoryService>();
 services.AddScoped<ICreditCardService, CreditCardService>();
@@ -145,11 +186,11 @@ app.UseCors("MyCorsPolicy");
 
 app.UseSession(); 
 
-app.UseAuthorization();
-
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.MapControllers(); 
+app.MapControllers();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

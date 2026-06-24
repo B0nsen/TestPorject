@@ -39,7 +39,7 @@ namespace backend.Controllers
         [HttpGet("reviews/{id:int}")]
         public async Task<ActionResult<IEnumerable<ProductCatalogGetDTO>>> GetProductReview(int id)
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             var result = await _service.GetProductReview(id, int.Parse(uid ?? "0"));
 
             return Ok(new { result });

@@ -70,7 +70,7 @@ namespace backend.Controllers
         [HttpGet("cart")]
         public async Task<ActionResult<IEnumerable<CartDTO>>> GetAllCart()
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             Console.WriteLine(uid);
             var res = await _service.GetAllPage(long.Parse(uid));
             var items = new CartDTO()
@@ -89,7 +89,7 @@ namespace backend.Controllers
                 ProductId = entity.ProductId,
                 Quantity = entity.Quantity,
             };
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
             res.UserId = long.Parse(uid);
             
             await _service.Create(res);

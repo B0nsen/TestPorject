@@ -57,7 +57,7 @@ namespace backend.Controllers
         [HttpPost("create")]
         public async Task<ActionResult> CreateReview([FromForm] CreateReviewDTO entity)
         {
-            var uid = HttpContext.Session.GetString("UserId");
+            var uid = User.FindFirst("UserId")?.Value;
 
             if (string.IsNullOrEmpty(uid)) return Unauthorized();
 
@@ -82,8 +82,8 @@ namespace backend.Controllers
         [HttpPut("helpful/{id}")]
         public async Task<ActionResult> AddHelpful(int id)
         {
-            var uid = HttpContext.Session.GetString("UserId");
-            if(uid == null)
+            var uid = User.FindFirst("UserId")?.Value;
+            if (uid == null)
             {
                 return Unauthorized();
             }

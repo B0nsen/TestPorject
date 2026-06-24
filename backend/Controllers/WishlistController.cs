@@ -71,7 +71,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<WishlistDTO>> Create([FromBody] WishlistCreateDTO entity)
         {
-            var userIdString = HttpContext.Session.GetString("UserId");
+            var userIdString = User.FindFirst("UserId")?.Value;
 
             if (!long.TryParse(userIdString, out var userId))
             {
@@ -96,7 +96,7 @@ namespace backend.Controllers
         [HttpGet("my")]
         public async Task<ActionResult<IEnumerable<WishlistDTO>>> GetMy()
         {
-            var userId = HttpContext.Session.GetString("UserId");
+            var userId = User.FindFirst("UserId")?.Value;
 
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
@@ -110,7 +110,7 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] WishlistUpdateDTO entity)
         {
-            var userIdString = HttpContext.Session.GetString("UserId");
+            var userIdString = User.FindFirst("UserId")?.Value;
 
             if (!long.TryParse(userIdString, out var userId))
             {
@@ -135,9 +135,9 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            
-            var userIdString = HttpContext.Session.GetString("UserId");
-            
+
+            var userIdString = User.FindFirst("UserId")?.Value;
+
             if (!long.TryParse(userIdString, out var userId))
             {
                 return Unauthorized();

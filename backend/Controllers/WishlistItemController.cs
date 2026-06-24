@@ -36,9 +36,9 @@ using Microsoft.AspNetCore.Mvc;
        [HttpPost]
 public async Task<ActionResult> Create([FromBody] WishlistItemCreateDTO entity)
 {
-    var userIdString = HttpContext.Session.GetString("UserId");
+        var userIdString = User.FindFirst("UserId")?.Value;
 
-    if (!long.TryParse(userIdString, out var userId))
+        if (!long.TryParse(userIdString, out var userId))
     {
         return Unauthorized();
     }
