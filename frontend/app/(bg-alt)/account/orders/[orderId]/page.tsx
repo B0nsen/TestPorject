@@ -72,7 +72,7 @@ export default async function OrderDetailsPage({
         {(order.items || []).map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-[10px] flex p-[10px] gap-[8px] max-w-[615px]"
+            className="bg-non-active rounded-[10px] flex p-[10px] gap-[8px] max-w-[615px] "
           >
             <div className="size-[105px] rounded-[10px] shrink-0 bg-gray-300 relative overflow-hidden">
               {item.productImageUrl ? (
@@ -84,7 +84,7 @@ export default async function OrderDetailsPage({
               ) : null}
             </div>
 
-            <div className="flex flex-col justify-between flex-1 text-default gap-[20px]">
+            <div className="flex flex-col justify-between flex-1 gap-[20px]">
               <span className="font-normal text-[16px] leading-[28px]">
                 {item.productName || `Product #${item.productId}`} x
                 {item.quantity}
