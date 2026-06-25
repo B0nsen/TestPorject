@@ -260,11 +260,11 @@ export default function CheckoutPage() {
                     />
                   ))}
                 </div>
-                <ShippingChecks
+                {/* <ShippingChecks
                   items={shippingChecks}
                   selectedIndex={shippingSelect.selectedIndex}
                   onSelect={shippingSelect.select}
-                />
+                /> */}
               </div>
             </>
           )}
