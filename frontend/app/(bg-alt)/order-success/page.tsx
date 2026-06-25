@@ -4,6 +4,7 @@ import { useCart } from "@/lib/hooks/useCart";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { usePaymentStore } from "@/lib/stores/payment-store";
+import { formatPrice } from "@/lib/utils/formatPrice";
 export default function OrderSuccessPage() {
   const { checkedItems } = useCart();
 
@@ -62,7 +63,7 @@ export default function OrderSuccessPage() {
                 </span>
 
                 <span className="text-checkout-item">
-                  {item.quantity} item: ${item.price * item.quantity}
+                  {item.quantity} item: ${formatPrice(item.price * item.quantity)}$
                 </span>
                 <span className="text-checkout-item">
                   Order ID: RO-123-456789012345
